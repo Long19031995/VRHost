@@ -6,7 +6,7 @@ public class Grabble : NetworkBehaviour
 {
     public bool isGrabbed => handCurrent != null;
 
-    [SerializeField] private Hand handCurrent;
+    [SerializeField] private HandNetwork handCurrent;
     [SerializeField] private Rigidbody rb;
 
     private Vector3 offsetPosition;
@@ -17,7 +17,12 @@ public class Grabble : NetworkBehaviour
         if (rb == null) rb = GetComponent<Rigidbody>();
     }
 
-    public void SetTarget(Hand hand)
+    private void Awake()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Grabble");
+    }
+
+    public void SetTarget(HandNetwork hand)
     {
         handCurrent = hand;
         offsetPosition = hand.transform.InverseTransformPoint(transform.position);
@@ -25,7 +30,7 @@ public class Grabble : NetworkBehaviour
         rb.isKinematic = true;
     }
 
-    public void RemoveTarget(Hand hand)
+    public void RemoveTarget(HandNetwork hand)
     {
         if (hand == handCurrent)
         {

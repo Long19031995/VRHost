@@ -1,49 +1,45 @@
 using Fusion;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
-public class Hand : NetworkBehaviour
+public class HandNetwork : NetworkBehaviour
 {
-    public ActionBasedController Controller;
-
-    [Networked] public bool IsGrabbed { get; set; }
-
-    [SerializeField] private LayerMask layerMask;
+    [Networked] public float GripValue { get; set; }
 
     private Collider[] colliders = new Collider[1];
-
     private Grabble grabble;
-
-    private void OnValidate()
-    {
-        if (Controller == null) Controller = GetComponentInParent<ActionBasedController>();
-    }
 
     public override void FixedUpdateNetwork()
     {
         base.FixedUpdateNetwork();
 
-        if (HasInputAuthority)
+        if (GripValue == 1)
         {
-            var grip = Controller.selectActionValue.action.ReadValue<float>();
-            IsGrabbed = grip == 1;
-        }
-
-        if (IsGrabbed && grabble == null)
-        {
-            Runner.GetPhysicsScene().OverlapSphere(transform.position, 1, colliders, layerMask, QueryTriggerInteraction.Ignore);
-            if (colliders[0] != null)
+            if (grabble == null)
             {
-                if (colliders[0].TryGetComponent(out grabble) && !grabble.isGrabbed)
+                Runner.GetPhysicsScene().OverlapSphere(transform.position, 1, colliders, 1 << LayerMask.NameToLayer("Grabble"), QueryTriggerInteraction.Ignore);
+                if (colliders[0] != null)
                 {
-                    grabble.SetTarget(this);
+                    if (colliders[0].TryGetComponent(out grabble))
+                    {
+                        if (grabble.isGrabbed)
+                        {
+                            grabble = null;
+                        }
+                        else
+                        {
+                            grabble.SetTarget(this);
+                        }
+                    }
                 }
             }
         }
-        else if (grabble != null)
+        else
         {
-            grabble.RemoveTarget(this);
-            grabble = null;
+            if (grabble != null)
+            {
+                grabble.RemoveTarget(this);
+                grabble = null;
+            }
         }
     }
 }
