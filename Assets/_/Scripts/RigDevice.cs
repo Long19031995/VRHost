@@ -1,24 +1,38 @@
+using Fusion;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
+public struct PoseDevice : INetworkStruct
+{
+    public Vector3 LocalPosition;
+    public Quaternion LocalRotation;
+}
+
 public class RigDevice : MonoBehaviour
 {
-    public Vector3 HeadLocalPosition;
-    public Quaternion HeadLocalRotation;
-    public Vector3 LeftLocalPosition;
-    public Quaternion LeftLocalRotation;
-    public Vector3 RightLocalPosition;
-    public Quaternion RightLocalRotation;
+    public Transform HeadTransform;
+    public Transform LeftHandTransform;
+    public Transform RightHandTransform;
 
-    public void SetLocalPose()
+    public PoseDevice PoseHead;
+    public PoseDevice PoseLeftHand;
+    public PoseDevice PoseRightHand;
+
+    private void Update()
     {
-        SetLocalPoseFromDevice(InputDeviceCharacteristics.HeadMounted, out HeadLocalPosition, out HeadLocalRotation);
-        SetLocalPoseFromDevice(InputDeviceCharacteristics.Left, out LeftLocalPosition, out LeftLocalRotation);
-        SetLocalPoseFromDevice(InputDeviceCharacteristics.Right, out RightLocalPosition, out RightLocalRotation);
+        GetLocalPose();
+        SetLocalPose();
     }
 
-    public void SetLocalPoseFromDevice(InputDeviceCharacteristics characteristics, out Vector3 localPosition, out Quaternion localRotation)
+    public void GetLocalPose()
+    {
+        GetLocalPoseFromDevice(InputDeviceCharacteristics.HeadMounted, out PoseHead.LocalPosition, out PoseHead.LocalRotation);
+        GetLocalPoseFromDevice(InputDeviceCharacteristics.Left, out PoseLeftHand.LocalPosition, out PoseLeftHand.LocalRotation);
+        GetLocalPoseFromDevice(InputDeviceCharacteristics.Right, out PoseRightHand.LocalPosition, out PoseRightHand.LocalRotation);
+    }
+
+    private void GetLocalPoseFromDevice(InputDeviceCharacteristics characteristics, out Vector3 localPosition, out Quaternion localRotation)
     {
         var devices = new List<InputDevice>();
         InputDevices.GetDevicesWithCharacteristics(characteristics, devices);
@@ -31,6 +45,24 @@ public class RigDevice : MonoBehaviour
         {
             localPosition = default;
             localRotation = default;
+        }
+    }
+
+    public void SetLocalPose()
+    {
+        if (HeadTransform != null)
+        {
+            HeadTransform.SetLocalPositionAndRotation(PoseHead.LocalPosition, PoseHead.LocalRotation);
+        }
+
+        if (LeftHandTransform != null)
+        {
+            LeftHandTransform.SetLocalPositionAndRotation(PoseLeftHand.LocalPosition, PoseLeftHand.LocalRotation);
+        }
+
+        if (RightHandTransform != null)
+        {
+            RightHandTransform.SetLocalPositionAndRotation(PoseRightHand.LocalPosition, PoseRightHand.LocalRotation);
         }
     }
 }

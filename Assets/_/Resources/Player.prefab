@@ -81,9 +81,9 @@ MonoBehaviour:
   _settings:
     Shape: 1
     IsTrigger: 0
-    Radius: 0.35
+    Radius: 0.1
     Height: 1.8
-    Extent: 0.035
+    Extent: 0
     ColliderLayer: 0
     CollisionLayerMask:
       serializedVersion: 2
