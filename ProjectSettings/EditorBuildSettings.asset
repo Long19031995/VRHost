@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_/Scenes/NeworkPhysics.unity
+    guid: 8d6317bcce06ecd4fa5e27aa2d85940b
+  - enabled: 1
     path: Assets/_/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
