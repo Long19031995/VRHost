@@ -1,21 +1,18 @@
 using Fusion;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(NetworkRunner))]
 [RequireComponent(typeof(NetworkEvents))]
 public class RunnerConnection : MonoBehaviour
 {
-    [SerializeField] private NetworkEvents events;
-    [SerializeField] private NetworkObject[] objectsAssignInput;
-    [SerializeField] private NetworkObject[] objectsSpawn;
+    [SerializeField] private NetworkObject playerPrefab;
 
-    private void OnValidate()
-    {
-        if (!events) events = GetComponent<NetworkEvents>();
-    }
+    private Dictionary<PlayerRef, NetworkObject> playerObjects = new Dictionary<PlayerRef, NetworkObject>();
 
     private void Awake()
     {
+        var events = GetComponent<NetworkEvents>();
         events.PlayerJoined.AddListener(OnPlayerJoined);
         events.PlayerLeft.AddListener(OnPlayerLeft);
     }
@@ -24,16 +21,8 @@ public class RunnerConnection : MonoBehaviour
     {
         if (runner.IsServer)
         {
-            foreach (var obj in objectsAssignInput)
-            {
-                obj.AssignInputAuthority(playerRef);
-            }
-
-            foreach (var obj in objectsSpawn)
-            {
-                var objInstance = runner.Spawn(obj, inputAuthority: playerRef);
-                runner.SetPlayerObject(playerRef, objInstance);
-            }
+            var playerInstance = runner.Spawn(playerPrefab, inputAuthority: playerRef);
+            playerObjects.Add(playerRef, playerInstance);
         }
     }
 
@@ -41,8 +30,10 @@ public class RunnerConnection : MonoBehaviour
     {
         if (runner.IsServer)
         {
-            var obj = runner.GetPlayerObject(playerRef);
-            runner.Despawn(obj);
+            if (playerObjects.TryGetValue(playerRef, out var playerInstance))
+            {
+                runner.Despawn(playerInstance);
+            }
         }
     }
 }

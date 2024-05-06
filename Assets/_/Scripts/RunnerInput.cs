@@ -5,15 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkEvents))]
 public class RunnerInput : MonoBehaviour
 {
-    [SerializeField] private NetworkEvents events;
-
-    private void OnValidate()
-    {
-        if (!events) events = GetComponent<NetworkEvents>();
-    }
-
     private void Awake()
     {
+        var events = GetComponent<NetworkEvents>();
         events.OnInput.AddListener(OnInput);
     }
 
