@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 7567198224142488695}
   - component: {fileID: 1430949405378050387}
   - component: {fileID: 6837964653898000984}
-  - component: {fileID: 7677704534792257059}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -169,26 +168,3 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5196494689378124545}
-  - {fileID: 7677704534792257059}
---- !u!114 &7677704534792257059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9052035557582326789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncScale: 0
-  SyncParent: 1
-  _interpolationTarget: {fileID: 0}
-  UsePreciseRotation: 0
-  UseRenderSleepThresholds: 1
-  RenderThresholds:
-    UseEnergy: 1
-    Position: 0.01
-    Rotation: 0.01
-    Scale: 0.01

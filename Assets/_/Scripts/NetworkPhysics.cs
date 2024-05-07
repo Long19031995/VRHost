@@ -21,7 +21,7 @@ public class NetworkPhysics : NetworkBehaviour
 
         Runner.SetIsSimulated(Object, true);
 
-        if (!HasInputAuthority)
+        if (!Object.HasInputAuthority)
         {
             Object.RenderTimeframe = RenderTimeframe.Remote;
         }
