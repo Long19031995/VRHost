@@ -6,7 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkEvents))]
 public class RunnerConnection : MonoBehaviour
 {
-    [SerializeField] private NetworkObject playerPrefab;
+    [SerializeField] private NetworkObject grabberPrefab;
+    [SerializeField] private NetworkObject grabblePrefab;
 
     private Dictionary<PlayerRef, NetworkObject> playerObjects = new Dictionary<PlayerRef, NetworkObject>();
 
@@ -15,14 +16,23 @@ public class RunnerConnection : MonoBehaviour
         var events = GetComponent<NetworkEvents>();
         events.PlayerJoined.AddListener(OnPlayerJoined);
         events.PlayerLeft.AddListener(OnPlayerLeft);
+        events.OnSceneLoadDone.AddListener(OnSceneLoadDone);
+    }
+
+    private void OnSceneLoadDone(NetworkRunner runner)
+    {
+        if (runner.IsServer)
+        {
+            runner.Spawn(grabblePrefab);
+        }
     }
 
     private void OnPlayerJoined(NetworkRunner runner, PlayerRef playerRef)
     {
         if (runner.IsServer)
         {
-            var playerInstance = runner.Spawn(playerPrefab, inputAuthority: playerRef);
-            playerObjects.Add(playerRef, playerInstance);
+            var obj = runner.Spawn(grabberPrefab, inputAuthority: playerRef);
+            playerObjects.Add(playerRef, obj);
         }
     }
 
@@ -30,9 +40,9 @@ public class RunnerConnection : MonoBehaviour
     {
         if (runner.IsServer)
         {
-            if (playerObjects.TryGetValue(playerRef, out var playerInstance))
+            if (playerObjects.TryGetValue(playerRef, out var obj))
             {
-                runner.Despawn(playerInstance);
+                runner.Despawn(obj);
             }
         }
     }

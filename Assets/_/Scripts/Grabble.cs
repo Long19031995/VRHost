@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class NetworkPhysics : NetworkBehaviour
+public class Grabble : NetworkBehaviour
 {
     [SerializeField] private bool isHold;
     [SerializeField] private Collider collider;
@@ -52,7 +52,7 @@ public class NetworkPhysics : NetworkBehaviour
     private bool GetIsHold(Vector3 origin, Vector3 direction)
     {
         int deep = 1000;
-        Runner.GetPhysicsScene().Raycast(new Vector3(origin.x, origin.y, -deep / 2), direction * deep, out RaycastHit hitInfo);
+        Runner.GetPhysicsScene().Raycast(new Vector3(origin.x, origin.y, -deep / 2), direction * deep, out RaycastHit hitInfo, float.PositiveInfinity, 1 << LayerMask.NameToLayer("Cube"));
         return hitInfo.collider == collider;
     }
 

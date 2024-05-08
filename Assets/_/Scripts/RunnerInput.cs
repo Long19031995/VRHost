@@ -16,9 +16,10 @@ public class RunnerInput : MonoBehaviour
         var inputData = new InputData();
 
         var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;
+        mousePosition.z = Camera.main.transform.position.z;
         inputData.MousePosition = mousePosition;
         inputData.Buttons.Set(ButtonNetwork.LeftMouse, Input.GetMouseButton(0));
+        inputData.Far = Camera.main.farClipPlane;
 
         input.Set(inputData);
     }
@@ -28,6 +29,7 @@ public struct InputData : INetworkInput
 {
     public Vector3 MousePosition;
     public NetworkButtons Buttons;
+    public float Far;
 }
 
 public enum ButtonNetwork
