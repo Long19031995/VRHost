@@ -1,18 +1,18 @@
 using Fusion;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
 public class Grabble : NetworkBehaviour
 {
-    [SerializeField] private bool isHold;
-    [SerializeField] private Collider collider;
-    [SerializeField] private Rigidbody rigidbody;
+    [Networked] private Vector3 OffsetPosition { get; set; }
+    [Networked] private Quaternion OffsetRotation { get; set; }
 
-    private void OnValidate()
+    private Grabber grabber;
+    private Rigidbody rb;
+
+    private void Awake()
     {
-        if (!collider) collider = GetComponent<Collider>();
-        if (!rigidbody) rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     public override void Spawned()
@@ -20,46 +20,31 @@ public class Grabble : NetworkBehaviour
         base.Spawned();
 
         Runner.SetIsSimulated(Object, true);
+    }
 
-        if (!Object.HasInputAuthority)
-        {
-            Object.RenderTimeframe = RenderTimeframe.Remote;
-        }
+    public void Grab(Grabber grabber, Vector3 offsetPosition, Quaternion offsetRotation)
+    {
+        this.grabber = grabber;
+
+        OffsetPosition = offsetPosition;
+        OffsetRotation = offsetRotation;
+    }
+
+    public void Ungrab()
+    {
+        grabber = null;
     }
 
     public override void FixedUpdateNetwork()
     {
         base.FixedUpdateNetwork();
 
-        if (GetInput(out InputData inputData))
+        if (grabber)
         {
-            if (inputData.Buttons.IsSet(ButtonNetwork.LeftMouse))
-            {
-                if (!isHold) isHold = GetIsHold(inputData.MousePosition, Vector3.forward);
-            }
-            else
-            {
-                isHold = false;
-            }
+            var positionTarget = grabber.transform.TransformPoint(OffsetPosition);
+            var rotationTarget = transform.rotation * OffsetRotation;
 
-            if (isHold)
-            {
-                rigidbody.VelocityFollow(inputData.MousePosition, Quaternion.identity, Runner.DeltaTime);
-            }
+            rb.VelocityFollow(positionTarget, rotationTarget, Runner.DeltaTime);
         }
-    }
-
-    private bool GetIsHold(Vector3 origin, Vector3 direction)
-    {
-        int deep = 1000;
-        Runner.GetPhysicsScene().Raycast(new Vector3(origin.x, origin.y, -deep / 2), direction * deep, out RaycastHit hitInfo, float.PositiveInfinity, 1 << LayerMask.NameToLayer("Cube"));
-        return hitInfo.collider == collider;
-    }
-
-    public override void Render()
-    {
-        base.Render();
-
-
     }
 }

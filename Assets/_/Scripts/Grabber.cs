@@ -1,12 +1,16 @@
 using Fusion;
 using UnityEngine;
 
+public struct GrabInfo : INetworkStruct
+{
+    public NetworkBehaviourId GrabberId;
+    public NetworkBehaviourId GrabbleId;
+    public Vector3 PositionOffset;
+    public Quaternion RotationOffset;
+}
+
 public class Grabber : NetworkBehaviour
 {
-    [Networked] private Vector3 mousePosition { get; set; }
-
-    [SerializeField] private LayerMask layerMask;
-
     private Grabble grabble;
 
     public override void Spawned()
@@ -14,40 +18,24 @@ public class Grabber : NetworkBehaviour
         base.Spawned();
 
         Runner.SetIsSimulated(Object, true);
-        if (!Object.HasInputAuthority) Object.RenderTimeframe = RenderTimeframe.Remote;
     }
 
-    public override void FixedUpdateNetwork()
+    public void Grab(Grabble grabble)
     {
-        base.FixedUpdateNetwork();
+        this.grabble = grabble;
 
-        if (GetInput(out InputData inputData))
+        var offsetPosition = transform.InverseTransformPoint(grabble.transform.position);
+        var offsetRotation = Quaternion.Inverse(grabble.transform.rotation) * transform.rotation;
+
+        grabble.Grab(this, offsetPosition, offsetRotation);
+    }
+
+    public void Ungrab()
+    {
+        if (grabble)
         {
-            var mousePosition = inputData.MousePosition;
-            mousePosition.z = 0;
-            this.mousePosition = mousePosition;
-
-            if (inputData.Buttons.IsSet(ButtonNetwork.LeftMouse))
-            {
-                if (!grabble)
-                    grabble = GetGrabble(inputData.MousePosition, Vector3.forward, inputData.Far);
-            }
-            else
-            {
-                grabble = null;
-            }
+            grabble.Ungrab();
+            grabble = null;
         }
-
-        transform.position = mousePosition;
-    }
-
-    private Grabble GetGrabble(Vector3 origin, Vector3 direction, float far)
-    {
-        Physics.Raycast(origin, direction * far, out RaycastHit hitInfo, float.PositiveInfinity, layerMask);
-
-        if (hitInfo.collider)
-            return hitInfo.collider.GetComponentInChildren<Grabble>();
-
-        return null;
     }
 }
