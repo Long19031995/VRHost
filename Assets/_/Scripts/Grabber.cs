@@ -5,18 +5,9 @@ using UnityEngine;
 public class Grabber : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
-    [SerializeField][Range(0f, 3f)] private float velocityExtra = 2;
-    [SerializeField][Range(0f, 3f)] private float torqueExtra = 1;
-    [SerializeField] string tagCollision;
 
     private Vector3 positionTarget;
     private Quaternion rotationTarget;
-
-    public override void Spawned()
-    {
-        Runner.SetIsSimulated(Object, true);
-        if (!HasInputAuthority) Object.RenderTimeframe = RenderTimeframe.Remote;
-    }
 
     public void SetPositionAndRotation(Vector3 positionTarget, Quaternion rotationTarget)
     {
@@ -29,11 +20,11 @@ public class Grabber : NetworkBehaviour
         var rb = rbNet.Rigidbody;
 
         var direction = positionTarget - rb.position;
-        var force = 15 * velocityExtra * Extension.GetForce(direction, rb.velocity, rb.mass, Runner.DeltaTime, velocityExtra);
+        var force = Extension.GetForce(rb.velocity, direction, Runner.DeltaTime, 2) * 30;
         rb.AddForce(force);
 
         var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
-        var torque = 0.04f * torqueExtra * Extension.GetForce(directionAngular, rb.angularVelocity, rb.mass, Runner.DeltaTime, torqueExtra);
+        var torque = Extension.GetForce(rb.angularVelocity, directionAngular, Runner.DeltaTime, 1) / 25;
         rb.AddTorque(torque);
     }
 }

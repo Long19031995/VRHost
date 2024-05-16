@@ -25,9 +25,6 @@ public class Player : NetworkBehaviour
 
     public override void Spawned()
     {
-        Runner.SetIsSimulated(Object, true);
-        if (!HasInputAuthority) Object.RenderTimeframe = RenderTimeframe.Remote;
-
         if (HasInputAuthority)
         {
             Runner.GetComponent<NetworkEvents>().OnInput.AddListener(OnInput);
