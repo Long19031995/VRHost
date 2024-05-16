@@ -1,41 +1,39 @@
 using Fusion;
+using Fusion.Addons.Physics;
 using UnityEngine;
-
-public struct GrabInfo : INetworkStruct
-{
-    public NetworkBehaviourId GrabberId;
-    public NetworkBehaviourId GrabbleId;
-    public Vector3 PositionOffset;
-    public Quaternion RotationOffset;
-}
 
 public class Grabber : NetworkBehaviour
 {
-    private Grabble grabble;
+    [SerializeField] private NetworkRigidbody3D rbNet;
+    [SerializeField][Range(0f, 3f)] private float velocityExtra = 2;
+    [SerializeField][Range(0f, 3f)] private float torqueExtra = 1;
+    [SerializeField] string tagCollision;
+
+    private Vector3 positionTarget;
+    private Quaternion rotationTarget;
 
     public override void Spawned()
     {
-        base.Spawned();
-
         Runner.SetIsSimulated(Object, true);
+        if (!HasInputAuthority) Object.RenderTimeframe = RenderTimeframe.Remote;
     }
 
-    public void Grab(Grabble grabble)
+    public void SetPositionAndRotation(Vector3 positionTarget, Quaternion rotationTarget)
     {
-        this.grabble = grabble;
-
-        var offsetPosition = transform.InverseTransformPoint(grabble.transform.position);
-        var offsetRotation = Quaternion.Inverse(grabble.transform.rotation) * transform.rotation;
-
-        grabble.Grab(this, offsetPosition, offsetRotation);
+        this.positionTarget = positionTarget;
+        this.rotationTarget = rotationTarget;
     }
 
-    public void Ungrab()
+    public override void FixedUpdateNetwork()
     {
-        if (grabble)
-        {
-            grabble.Ungrab();
-            grabble = null;
-        }
+        var rb = rbNet.Rigidbody;
+
+        var direction = positionTarget - rb.position;
+        var force = 15 * velocityExtra * Extension.GetForce(direction, rb.velocity, rb.mass, Runner.DeltaTime, velocityExtra);
+        rb.AddForce(force);
+
+        var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
+        var torque = 0.04f * torqueExtra * Extension.GetForce(directionAngular, rb.angularVelocity, rb.mass, Runner.DeltaTime, torqueExtra);
+        rb.AddTorque(torque);
     }
 }

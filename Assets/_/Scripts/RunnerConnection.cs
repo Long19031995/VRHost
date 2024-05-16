@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkEvents))]
 public class RunnerConnection : MonoBehaviour
 {
+    [SerializeField] private XROriginHelper xrOriginHelper;
     [SerializeField] private NetworkObject grabberPrefab;
     [SerializeField] private NetworkObject grabblePrefab;
 
@@ -24,6 +25,13 @@ public class RunnerConnection : MonoBehaviour
         if (runner.IsServer)
         {
             runner.Spawn(grabblePrefab);
+        }
+
+        if (runner.IsPlayer)
+        {
+            var position = new Vector3(Random.Range(0, 0), 0, Random.Range(0, 0));
+            var rotation = Quaternion.identity;
+            Instantiate(xrOriginHelper, position, rotation);
         }
     }
 
