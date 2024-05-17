@@ -9,10 +9,10 @@ public class Grabber : NetworkBehaviour
     private Vector3 positionTarget;
     private Quaternion rotationTarget;
 
-    public void SetPositionAndRotation(Vector3 positionTarget, Quaternion rotationTarget)
+    public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
     {
-        this.positionTarget = positionTarget;
-        this.rotationTarget = rotationTarget;
+        positionTarget = position;
+        rotationTarget = rotation;
     }
 
     public override void FixedUpdateNetwork()
@@ -20,11 +20,9 @@ public class Grabber : NetworkBehaviour
         var rb = rbNet.Rigidbody;
 
         var direction = positionTarget - rb.position;
-        var force = Extension.GetForce(rb.velocity, direction, Runner.DeltaTime, 2) * 30;
-        rb.AddForce(force);
+        rb.velocity = direction / Runner.DeltaTime;
 
         var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
-        var torque = Extension.GetForce(rb.angularVelocity, directionAngular, Runner.DeltaTime, 1) / 25;
-        rb.AddTorque(torque);
+        rb.angularVelocity = directionAngular / Runner.DeltaTime;
     }
 }

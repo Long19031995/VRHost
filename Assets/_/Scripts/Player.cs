@@ -56,8 +56,8 @@ public class Player : NetworkBehaviour
         }
 
         Head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
-        LeftHand.SetPositionAndRotation(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
         RightHand.SetPositionAndRotation(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
+        LeftHand.SetPositionAndRotation(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
     }
 
     public override void Render()
