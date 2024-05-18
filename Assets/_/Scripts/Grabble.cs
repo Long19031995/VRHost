@@ -24,10 +24,12 @@ public class Grabble : NetworkBehaviour
             var rb = rbNet.Rigidbody;
 
             var direction = positionTarget - rb.position;
-            rb.AddForce((direction / Runner.DeltaTime - rb.velocity) * forceSpeed);
+            var force = (direction / Runner.DeltaTime - rb.velocity) * forceSpeed;
+            rb.AddForce(force);
 
             var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
-            rb.AddTorque((directionAngular / Runner.DeltaTime - rb.angularVelocity) * torqueSpeed);
+            var torque = (directionAngular / Runner.DeltaTime - rb.angularVelocity) * torqueSpeed;
+            rb.AddTorque(torque);
         }
     }
 }
