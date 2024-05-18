@@ -5,6 +5,8 @@ using UnityEngine;
 public class Grabble : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
+    [SerializeField] private float forceSpeed = 20;
+    [SerializeField] private float torqueSpeed = 0.08f;
 
     private Vector3 positionTarget;
     private Quaternion rotationTarget;
@@ -22,12 +24,10 @@ public class Grabble : NetworkBehaviour
             var rb = rbNet.Rigidbody;
 
             var direction = positionTarget - rb.position;
-            var force = Extension.GetForce(rb.velocity, direction, Runner.DeltaTime, 2) * 30;
-            rb.AddForce(force);
+            rb.AddForce((direction / Runner.DeltaTime - rb.velocity) * forceSpeed);
 
             var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
-            var torque = Extension.GetForce(rb.angularVelocity, directionAngular, Runner.DeltaTime, 1) / 25;
-            rb.AddTorque(torque);
+            rb.AddTorque((directionAngular / Runner.DeltaTime - rb.angularVelocity) * torqueSpeed);
         }
     }
 }

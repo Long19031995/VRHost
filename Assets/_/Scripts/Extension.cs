@@ -9,9 +9,4 @@ public static class Extension
 
         return angle * Mathf.Deg2Rad * axis;
     }
-
-    public static Vector3 GetForce(Vector3 current, Vector3 target, float deltaTime, float extra)
-    {
-        return (target - deltaTime * extra * current) / deltaTime;
-    }
 }

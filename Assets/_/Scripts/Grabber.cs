@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grabber : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
+    [SerializeField] private float followSpeed = 0.5f;
 
     private Vector3 positionTarget;
     private Quaternion rotationTarget;
@@ -20,9 +21,9 @@ public class Grabber : NetworkBehaviour
         var rb = rbNet.Rigidbody;
 
         var direction = positionTarget - rb.position;
-        rb.velocity = direction / Runner.DeltaTime;
+        rb.velocity = direction / Runner.DeltaTime * followSpeed;
 
         var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
-        rb.angularVelocity = directionAngular / Runner.DeltaTime;
+        rb.angularVelocity = directionAngular / Runner.DeltaTime * followSpeed;
     }
 }
