@@ -8,7 +8,7 @@ public class Hand : NetworkBehaviour
     public void Grab()
     {
         var colliders = new Collider[1];
-        if (Physics.OverlapSphereNonAlloc(transform.position, 0.1f, colliders, 1 << LayerMask.NameToLayer("Grabble")) > 0)
+        if (Physics.OverlapSphereNonAlloc(transform.position, 0.5f, colliders, 1 << LayerMask.NameToLayer("Grabble")) > 0)
         {
             var grabble = colliders[0].GetComponentInChildren<Grabble>();
             Grabber.Grab(grabble);

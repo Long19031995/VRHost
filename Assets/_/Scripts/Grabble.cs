@@ -1,7 +1,6 @@
 using Fusion;
 using UnityEngine;
 
-[DefaultExecutionOrder(1)]
 [RequireComponent(typeof(Follower))]
 public class Grabble : NetworkBehaviour
 {

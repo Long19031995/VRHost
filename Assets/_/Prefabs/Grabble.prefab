@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2977562366805242304}
   - component: {fileID: 554833592409647485}
   - component: {fileID: 5406045317175781443}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,11 +92,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9146166543599939514}
-  - component: {fileID: 5196494689378124545}
-  - component: {fileID: 8307663480229050781}
-  - component: {fileID: 4728444109327280}
-  - component: {fileID: 1430949405378050387}
+  - component: {fileID: 1615623838775340168}
+  - component: {fileID: 9197224986629812079}
+  - component: {fileID: 4576582570714586573}
   - component: {fileID: 7567198224142488695}
+  - component: {fileID: 5454003248816151744}
   - component: {fileID: 6837964653898000984}
   m_Layer: 6
   m_Name: Grabble
@@ -114,14 +114,14 @@ Transform:
   m_GameObject: {fileID: 9052035557582326789}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0.5}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2977562366805242304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5196494689378124545
+--- !u!114 &1615623838775340168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c1adf74dc788b43b44033303a538e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8307663480229050781
+--- !u!114 &9197224986629812079
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,11 +146,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  rbNet: {fileID: 4728444109327280}
+  rbNet: {fileID: 4576582570714586573}
   speed: 0.5
   forceSpeed: 20
   torqueSpeed: 0.08
---- !u!114 &4728444109327280
+--- !u!114 &4576582570714586573
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,33 +172,6 @@ MonoBehaviour:
     Position: 0.01
     Rotation: 0.01
     Scale: 0.01
---- !u!54 &1430949405378050387
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9052035557582326789}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
 --- !u!65 &7567198224142488695
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -220,6 +193,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5454003248816151744
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9052035557582326789}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &6837964653898000984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +237,6 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 5196494689378124545}
-  - {fileID: 8307663480229050781}
-  - {fileID: 4728444109327280}
+  - {fileID: 1615623838775340168}
+  - {fileID: 9197224986629812079}
+  - {fileID: 4576582570714586573}

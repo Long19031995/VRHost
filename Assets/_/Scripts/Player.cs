@@ -15,6 +15,7 @@ public struct InputData : INetworkInput
     public NetworkBool RightHandGrip;
 }
 
+[DefaultExecutionOrder(-1)]
 public class Player : NetworkBehaviour
 {
     [Networked] private InputData inputDataNetwork { get; set; }

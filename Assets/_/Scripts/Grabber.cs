@@ -1,7 +1,6 @@
 using Fusion;
 using UnityEngine;
 
-[DefaultExecutionOrder(0)]
 [RequireComponent(typeof(Follower))]
 public class Grabber : NetworkBehaviour
 {
@@ -14,7 +13,6 @@ public class Grabber : NetworkBehaviour
         follower = GetComponent<Follower>();
 
         target = new GameObject("Target").transform;
-        target.SetParent(transform);
 
         follower.Follow(target, FollowerType.Velocity, false);
     }
