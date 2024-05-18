@@ -1,35 +1,24 @@
 using Fusion;
-using Fusion.Addons.Physics;
 using UnityEngine;
 
+[DefaultExecutionOrder(1)]
+[RequireComponent(typeof(Follower))]
 public class Grabble : NetworkBehaviour
 {
-    [SerializeField] private NetworkRigidbody3D rbNet;
-    [SerializeField] private float forceSpeed = 20;
-    [SerializeField] private float torqueSpeed = 0.08f;
+    private Follower follower;
 
-    private Vector3 positionTarget;
-    private Quaternion rotationTarget;
-
-    public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
+    public override void Spawned()
     {
-        positionTarget = position;
-        rotationTarget = rotation;
+        follower = GetComponent<Follower>();
     }
 
-    public override void FixedUpdateNetwork()
+    public void Follow(Transform target, FollowerType type)
     {
-        if (rbNet)
-        {
-            var rb = rbNet.Rigidbody;
+        follower.Follow(target, type);
+    }
 
-            var direction = positionTarget - rb.position;
-            var force = (direction / Runner.DeltaTime - rb.velocity) * forceSpeed;
-            rb.AddForce(force);
-
-            var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
-            var torque = (directionAngular / Runner.DeltaTime - rb.angularVelocity) * torqueSpeed;
-            rb.AddTorque(torque);
-        }
+    public void UnFollow()
+    {
+        follower.UnFollow();
     }
 }

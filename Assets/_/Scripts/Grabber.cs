@@ -1,29 +1,43 @@
 using Fusion;
-using Fusion.Addons.Physics;
 using UnityEngine;
 
+[DefaultExecutionOrder(0)]
+[RequireComponent(typeof(Follower))]
 public class Grabber : NetworkBehaviour
 {
-    [SerializeField] private NetworkRigidbody3D rbNet;
-    [SerializeField] private float speed = 0.5f;
+    private Follower follower;
+    private Grabble grabble;
+    private Transform target;
 
-    private Vector3 positionTarget;
-    private Quaternion rotationTarget;
-
-    public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
+    public override void Spawned()
     {
-        positionTarget = position;
-        rotationTarget = rotation;
+        follower = GetComponent<Follower>();
+
+        target = new GameObject("Target").transform;
+        target.SetParent(transform);
+
+        follower.Follow(target, FollowerType.Velocity, false);
     }
 
-    public override void FixedUpdateNetwork()
+    public void SetTarget(Vector3 position, Quaternion rotation)
     {
-        var rb = rbNet.Rigidbody;
+        target.SetPositionAndRotation(position, rotation);
+    }
 
-        var direction = positionTarget - rb.position;
-        rb.velocity = direction / Runner.DeltaTime * speed;
+    public void Grab(Grabble grabble)
+    {
+        follower.Follow(grabble.transform, FollowerType.Instant);
+        grabble.Follow(target, FollowerType.Force);
+        this.grabble = grabble;
+    }
 
-        var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
-        rb.angularVelocity = directionAngular / Runner.DeltaTime * speed;
+    public void UnGrab()
+    {
+        if (grabble)
+        {
+            follower.Follow(target, FollowerType.Velocity, false);
+            grabble.UnFollow();
+            grabble = null;
+        }
     }
 }

@@ -20,8 +20,8 @@ public class Player : NetworkBehaviour
     [Networked] private InputData inputDataNetwork { get; set; }
 
     public Transform Head;
-    public Grabber LeftHand;
-    public Grabber RightHand;
+    public Hand LeftHand;
+    public Hand RightHand;
 
     public override void Spawned()
     {
@@ -56,8 +56,14 @@ public class Player : NetworkBehaviour
         }
 
         Head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
-        RightHand.SetPositionAndRotation(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
-        LeftHand.SetPositionAndRotation(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
+        RightHand.Grabber.SetTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
+        LeftHand.Grabber.SetTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
+
+        if (inputDataNetwork.RightHandGrip) RightHand.Grab();
+        else RightHand.UnGrab();
+
+        if (inputDataNetwork.LeftHandGrip) LeftHand.Grab();
+        else LeftHand.UnGrab();
     }
 
     public override void Render()
