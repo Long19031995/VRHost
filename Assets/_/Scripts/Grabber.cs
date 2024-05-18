@@ -22,19 +22,24 @@ public class Grabber : NetworkBehaviour
         target.SetPositionAndRotation(position, rotation);
     }
 
-    public void Grab(Grabble grabble)
+    public void Grab(Grabble newGrabble)
     {
-        follower.Follow(grabble.transform, FollowerType.Instant);
-        grabble.Follow(target, FollowerType.Force);
-        this.grabble = grabble;
+        if (!grabble)
+        {
+            grabble = newGrabble;
+
+            follower.Follow(grabble.transform, FollowerType.Instant);
+            grabble.Follow(target, FollowerType.Velocity);
+        }
     }
 
     public void UnGrab()
     {
         if (grabble)
         {
-            follower.Follow(target, FollowerType.Velocity, false);
             grabble.UnFollow();
+            follower.Follow(target, FollowerType.Velocity, false);
+
             grabble = null;
         }
     }
