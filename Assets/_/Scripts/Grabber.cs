@@ -10,10 +10,12 @@ public class Grabber : NetworkBehaviour
 
     public override void Spawned()
     {
-        follower = GetComponent<Follower>();
+        Runner.SetIsSimulated(Object, true);
+        if (!Object.HasInputAuthority) Object.RenderTimeframe = RenderTimeframe.Remote;
 
         target = new GameObject("Target").transform;
 
+        follower = GetComponent<Follower>();
         follower.Follow(target, FollowerType.Velocity, false);
     }
 

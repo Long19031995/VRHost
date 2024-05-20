@@ -17,19 +17,6 @@ public class Follower : NetworkBehaviour
     private Vector3 positionOffset;
     private Quaternion rotationOffset;
 
-    public override void Spawned()
-    {
-        Runner.SetIsSimulated(Object, true);
-
-        ResetRenderTimeframe();
-    }
-
-    private void ResetRenderTimeframe()
-    {
-        if (Object.HasInputAuthority) Object.RenderTimeframe = RenderTimeframe.Local;
-        else Object.RenderTimeframe = RenderTimeframe.Remote;
-    }
-
     public void Follow(Transform target, FollowerType type = FollowerType.Instant, bool hasOffset = true)
     {
         this.target = target;
@@ -37,15 +24,11 @@ public class Follower : NetworkBehaviour
 
         positionOffset = hasOffset ? target.InverseTransformPoint(transform.position) : Vector3.zero;
         rotationOffset = hasOffset ? Quaternion.Inverse(transform.rotation) * target.rotation : Quaternion.identity;
-
-        Object.RenderTimeframe = RenderTimeframe.Local;
     }
 
     public void UnFollow()
     {
         target = null;
-
-        ResetRenderTimeframe();
     }
 
     public override void FixedUpdateNetwork()
