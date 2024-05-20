@@ -5,107 +5,82 @@ using UnityEngine;
 public enum FollowerType
 {
     Instant,
-    Velocity,
-    Force
+    Velocity
 }
 
 public class Follower : NetworkBehaviour
 {
     [SerializeField] private FollowerType type;
     [SerializeField] private NetworkRigidbody3D rbNet;
-    [SerializeField] private float speed = 0.5f;
-    [SerializeField] private float forceSpeed = 20f;
-    [SerializeField] private float torqueSpeed = 0.08f;
 
     private Transform target;
-    private bool hasOffset;
     private Vector3 positionOffset;
     private Quaternion rotationOffset;
+
+    public override void Spawned()
+    {
+        Runner.SetIsSimulated(Object, true);
+
+        ResetRenderTimeframe();
+    }
+
+    private void ResetRenderTimeframe()
+    {
+        if (Object.HasInputAuthority) Object.RenderTimeframe = RenderTimeframe.Local;
+        else Object.RenderTimeframe = RenderTimeframe.Remote;
+    }
 
     public void Follow(Transform target, FollowerType type = FollowerType.Instant, bool hasOffset = true)
     {
         this.target = target;
         this.type = type;
-        this.hasOffset = hasOffset;
 
-        if (hasOffset)
-        {
-            positionOffset = target.InverseTransformPoint(transform.position);
-            rotationOffset = target.rotation * Quaternion.Inverse(transform.rotation);
-        }
+        positionOffset = hasOffset ? target.InverseTransformPoint(transform.position) : Vector3.zero;
+        rotationOffset = hasOffset ? Quaternion.Inverse(transform.rotation) * target.rotation : Quaternion.identity;
+
+        Object.RenderTimeframe = RenderTimeframe.Local;
     }
 
     public void UnFollow()
     {
         target = null;
+
+        ResetRenderTimeframe();
     }
 
     public override void FixedUpdateNetwork()
     {
         if (target)
         {
-            if (type == FollowerType.Velocity)
-            {
-                FollowVelocity();
-            }
-
-            if (type == FollowerType.Force)
-            {
-                FollowForce();
-            }
+            if (type == FollowerType.Instant) FollowInstant();
+            else FollowVelocity();
         }
     }
 
     public override void Render()
     {
-        if (target)
-        {
-            if (type == FollowerType.Instant)
-            {
-                FollowInstant();
-            }
-        }
-    }
-
-    private (Vector3, Quaternion) GetPositionAndRotationTarget()
-    {
-        var positionTarget = hasOffset ? target.TransformPoint(positionOffset) : target.position;
-        var rotationTarget = hasOffset ? target.rotation * Quaternion.Inverse(rotationOffset) : target.rotation;
-
-        return (positionTarget, rotationTarget);
+        if (target && type == FollowerType.Instant) FollowInstant();
     }
 
     private void FollowInstant()
     {
-        var (positionTarget, rotationTarget) = GetPositionAndRotationTarget();
+        var positionTarget = target.TransformPoint(positionOffset);
+        var rotationTarget = target.rotation * Quaternion.Inverse(rotationOffset);
+
         transform.SetPositionAndRotation(positionTarget, rotationTarget);
     }
 
     private void FollowVelocity()
     {
-        var (positionTarget, rotationTarget) = GetPositionAndRotationTarget();
+        var positionTarget = target.TransformPoint(positionOffset);
+        var rotationTarget = target.rotation * Quaternion.Inverse(rotationOffset);
 
-        var rb = rbNet.Rigidbody;
+        var direction = (positionTarget - transform.position) / 2;
+        rbNet.Rigidbody.velocity = direction / Runner.DeltaTime;
 
-        var direction = positionTarget - rb.position;
-        rb.velocity = direction / Runner.DeltaTime * speed;
-
-        var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
-        rb.angularVelocity = directionAngular / Runner.DeltaTime * speed;
-    }
-
-    private void FollowForce()
-    {
-        var (positionTarget, rotationTarget) = GetPositionAndRotationTarget();
-
-        var rb = rbNet.Rigidbody;
-
-        var direction = positionTarget - rb.position;
-        var force = (direction / Runner.DeltaTime - rb.velocity) * forceSpeed;
-        rb.AddForce(force);
-
-        var directionAngular = Extension.GetDirectionAngular(rb.rotation, rotationTarget);
-        var torque = (directionAngular / Runner.DeltaTime - rb.angularVelocity) * torqueSpeed;
-        rb.AddTorque(torque);
+        (rotationTarget * Quaternion.Inverse(transform.rotation)).ToAngleAxis(out var angle, out var axis);
+        if (angle > 180f) angle -= 360f;
+        var directionAngular = angle * Mathf.Deg2Rad * axis;
+        rbNet.Rigidbody.angularVelocity = directionAngular / Runner.DeltaTime;
     }
 }

@@ -15,7 +15,6 @@ public struct InputData : INetworkInput
     public NetworkBool RightHandGrip;
 }
 
-[DefaultExecutionOrder(-1)]
 public class Player : NetworkBehaviour
 {
     [Networked] private InputData inputDataNetwork { get; set; }
@@ -57,8 +56,8 @@ public class Player : NetworkBehaviour
         }
 
         Head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
-        RightHand.Grabber.SetTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
         LeftHand.Grabber.SetTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
+        RightHand.Grabber.SetTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
 
         if (inputDataNetwork.RightHandGrip) RightHand.Grab();
         else RightHand.UnGrab();
