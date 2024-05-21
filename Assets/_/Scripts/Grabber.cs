@@ -11,7 +11,6 @@ public class Grabber : NetworkBehaviour
     public override void Spawned()
     {
         Runner.SetIsSimulated(Object, true);
-        if (!Object.HasInputAuthority) Object.RenderTimeframe = RenderTimeframe.Remote;
 
         target = new GameObject("Target").transform;
         target.SetParent(transform);
@@ -33,6 +32,8 @@ public class Grabber : NetworkBehaviour
 
             follower.Follow(grabble.transform, FollowerType.Instant);
             grabble.Follow(target, FollowerType.Velocity);
+
+            if (HasStateAuthority) grabble.Object.AssignInputAuthority(Object.InputAuthority);
         }
     }
 
@@ -45,5 +46,10 @@ public class Grabber : NetworkBehaviour
 
             grabble = null;
         }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        Object.RenderTimeframe = HasInputAuthority ? RenderTimeframe.Local : RenderTimeframe.Remote;
     }
 }
