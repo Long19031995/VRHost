@@ -14,6 +14,7 @@ public class Grabber : NetworkBehaviour
         if (!Object.HasInputAuthority) Object.RenderTimeframe = RenderTimeframe.Remote;
 
         target = new GameObject("Target").transform;
+        target.SetParent(transform);
 
         follower = GetComponent<Follower>();
         follower.Follow(target, FollowerType.Velocity, false);

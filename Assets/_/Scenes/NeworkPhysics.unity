@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RunnerPrefab: {fileID: 626158870}
   StartMode: 1
-  AutoStartAs: 3
+  AutoStartAs: 6
   AutoHideGUI: 1
   AutoClients: 1
   ClientStartDelay: 0.1
