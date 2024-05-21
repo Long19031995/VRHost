@@ -147,8 +147,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   rbNet: {fileID: 4576582570714586573}
-  forceSpeed: 20
-  torqueSpeed: 0.08
 --- !u!114 &4576582570714586573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SyncScale: 0
   SyncParent: 1
-  _interpolationTarget: {fileID: 0}
+  _interpolationTarget: {fileID: 2977562366805242304}
   UsePreciseRotation: 0
   UseRenderSleepThresholds: 1
   RenderThresholds:
