@@ -59,14 +59,11 @@ public class Player : NetworkBehaviour
         LeftHand.Grabber.SetTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
         RightHand.Grabber.SetTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
 
-        if (Runner.IsForward)
-        {
-            if (inputDataNetwork.RightHandGrip) RightHand.Grab();
-            else RightHand.UnGrab();
+        if (inputDataNetwork.RightHandGrip) RightHand.Grab();
+        else RightHand.UnGrab();
 
-            if (inputDataNetwork.LeftHandGrip) LeftHand.Grab();
-            else LeftHand.UnGrab();
-        }
+        if (inputDataNetwork.LeftHandGrip) LeftHand.Grab();
+        else LeftHand.UnGrab();
     }
 
     public override void Render()

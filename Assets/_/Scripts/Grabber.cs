@@ -26,7 +26,7 @@ public class Grabber : NetworkBehaviour
 
     public void Grab(Grabble newGrabble)
     {
-        if (!grabble)
+        if (!grabble && Runner.IsForward)
         {
             grabble = newGrabble;
 
@@ -39,7 +39,7 @@ public class Grabber : NetworkBehaviour
 
     public void UnGrab()
     {
-        if (grabble)
+        if (grabble && Runner.IsForward)
         {
             grabble.UnFollow();
             follower.Follow(target, FollowerType.Velocity, false);
