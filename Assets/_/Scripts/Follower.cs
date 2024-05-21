@@ -14,16 +14,18 @@ public class Follower : NetworkBehaviour
     [SerializeField] private NetworkRigidbody3D rbNet;
 
     private Transform target;
-    private Vector3 positionOffset;
-    private Quaternion rotationOffset;
+    private Vector3 posOffset;
+    private Quaternion rotOffset;
+
+    private Rigidbody rb => rbNet.Rigidbody;
 
     public void Follow(Transform target, FollowerType type = FollowerType.Instant, bool hasOffset = true)
     {
         this.target = target;
         this.type = type;
 
-        positionOffset = hasOffset ? target.InverseTransformPoint(transform.position) : Vector3.zero;
-        rotationOffset = hasOffset ? Quaternion.Inverse(transform.rotation) * target.rotation : Quaternion.identity;
+        posOffset = hasOffset ? target.InverseTransformPoint(transform.position) : Vector3.zero;
+        rotOffset = hasOffset ? Quaternion.Inverse(transform.rotation) * target.rotation : Quaternion.identity;
     }
 
     public void UnFollow()
@@ -47,23 +49,23 @@ public class Follower : NetworkBehaviour
 
     private void FollowInstant()
     {
-        var positionTarget = target.TransformPoint(positionOffset);
-        var rotationTarget = target.rotation * Quaternion.Inverse(rotationOffset);
+        var positionTarget = target.TransformPoint(posOffset);
+        var rotationTarget = target.rotation * Quaternion.Inverse(rotOffset);
 
         transform.SetPositionAndRotation(positionTarget, rotationTarget);
     }
 
     private void FollowVelocity()
     {
-        var positionTarget = target.TransformPoint(positionOffset);
-        var rotationTarget = target.rotation * Quaternion.Inverse(rotationOffset);
+        var positionTarget = target.TransformPoint(posOffset);
+        var rotationTarget = target.rotation * Quaternion.Inverse(rotOffset);
 
         var direction = (positionTarget - transform.position) / 2;
-        rbNet.Rigidbody.velocity = direction / Runner.DeltaTime;
+        rb.velocity = direction / Runner.DeltaTime;
 
         (rotationTarget * Quaternion.Inverse(transform.rotation)).ToAngleAxis(out var angle, out var axis);
         if (angle > 180f) angle -= 360f;
         var directionAngular = angle * Mathf.Deg2Rad * axis;
-        rbNet.Rigidbody.angularVelocity = directionAngular / Runner.DeltaTime;
+        rb.angularVelocity = directionAngular / Runner.DeltaTime;
     }
 }
