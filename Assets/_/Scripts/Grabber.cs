@@ -26,7 +26,7 @@ public class Grabber : NetworkBehaviour
 
     public void Grab(Grabble newGrabble)
     {
-        if (!grabble && Runner.IsForward)
+        if (!newGrabble.HasTarget && !grabble && Runner.IsForward)
         {
             grabble = newGrabble;
 

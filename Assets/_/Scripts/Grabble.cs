@@ -5,6 +5,9 @@ using UnityEngine;
 public class Grabble : NetworkBehaviour
 {
     private Follower follower;
+    private Transform target;
+
+    public bool HasTarget => target != null;
 
     public override void Spawned()
     {
@@ -13,13 +16,15 @@ public class Grabble : NetworkBehaviour
         follower = GetComponent<Follower>();
     }
 
-    public void Follow(Transform target, FollowerType type)
+    public void Follow(Transform newTarget, FollowerType type)
     {
-        follower.Follow(target, type);
+        target = newTarget;
+        follower.Follow(newTarget, type);
     }
 
     public void UnFollow()
     {
+        target = null;
         follower.UnFollow();
     }
 
