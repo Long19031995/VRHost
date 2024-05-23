@@ -33,12 +33,24 @@ public class Player : NetworkBehaviour
         }
     }
 
+    public Grabble FindGrabble(Vector3 point)
+    {
+        var colliders = new Collider[1];
+        if (Physics.OverlapSphereNonAlloc(point, 10, colliders, 1 << LayerMask.NameToLayer("Grabble")) > 0)
+        {
+            var grabble = colliders[0].GetComponentInChildren<Grabble>();
+            return grabble;
+        }
+
+        return null;
+    }
+
     private void OnInput(NetworkRunner runner, NetworkInput input)
     {
         GrabInfo grabInfo = default;
 
-        if (XROriginHelper.Current.LeftHandGrip) LeftGrabber.TryGrab(out grabInfo);
-        if (XROriginHelper.Current.RightHandGrip) RightGrabber.TryGrab(out grabInfo);
+        if (XROriginHelper.Current.LeftHandGrip) grabInfo = LeftGrabber.Grab(FindGrabble(LeftGrabber.transform.position));
+        if (XROriginHelper.Current.RightHandGrip) grabInfo = RightGrabber.Grab(FindGrabble(RightGrabber.transform.position));
 
         input.Set(new InputData()
         {

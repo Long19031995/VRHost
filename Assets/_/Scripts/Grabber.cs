@@ -9,6 +9,7 @@ public class Grabber : NetworkBehaviour
     [Networked] private GrabInfo grabInfo { get; set; }
 
     private Transform target;
+    public Transform Target => target;
 
     public override void Spawned()
     {
@@ -23,25 +24,27 @@ public class Grabber : NetworkBehaviour
         target.SetPositionAndRotation(posTarget, rotTarget);
     }
 
-    public bool TryGrab(out GrabInfo newGrabInfo)
+    public GrabInfo Grab(Grabble grabble)
     {
+        GrabInfo newGrabInfo;
+
         if (grabInfo.IsNull)
         {
-            if (Extension.TryFindGrabble(transform.position, out var grabble))
+            if (grabble != null)
             {
+                var (posOffset, rotOffset) = Extension.GetPosRotOffset(grabble.transform, transform);
+
                 newGrabInfo = new GrabInfo()
                 {
                     GrabberId = Id,
                     GrabbleId = grabble.Id,
-                    PositionOffset = transform.InverseTransformPoint(grabble.transform.position),
-                    RotationOffset = Quaternion.Inverse(grabble.transform.rotation) * transform.rotation
+                    PositionOffset = posOffset,
+                    RotationOffset = rotOffset
                 };
-                return true;
             }
             else
             {
                 newGrabInfo = default;
-                return false;
             }
         }
         else
@@ -49,7 +52,7 @@ public class Grabber : NetworkBehaviour
             newGrabInfo = grabInfo;
         }
 
-        return false;
+        return newGrabInfo;
     }
 
     public override void FixedUpdateNetwork()
@@ -75,6 +78,21 @@ public class Grabber : NetworkBehaviour
                     }
                 }
             }
+        }
+        else if (grabInfo.GrabbleId != NetworkBehaviourId.None)
+        {
+            if (Runner.TryFindBehaviour(grabInfo.GrabbleId, out Grabble grabble))
+            {
+                if (grabble.Object.InputAuthority == Object.InputAuthority)
+                {
+                    if (HasStateAuthority)
+                    {
+                        grabble.Object.RemoveInputAuthority();
+                    }
+                }
+            }
+
+            grabInfo = default;
         }
     }
 }

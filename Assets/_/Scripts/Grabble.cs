@@ -59,8 +59,7 @@ public class Grabble : NetworkBehaviour
         {
             if (Runner.TryFindBehaviour(grabInfo.GrabberId, out Grabber grabber))
             {
-                rbNet.Rigidbody.velocity = Extension.GetVelocity(transform.position, grabber.transform.TransformPoint(grabInfo.PositionOffset), Runner.DeltaTime);
-                rbNet.Rigidbody.angularVelocity = Extension.GetAngularVelocity(transform.rotation, grabber.transform.rotation * Quaternion.Inverse(grabInfo.RotationOffset), Runner.DeltaTime);
+                rbNet.Rigidbody.SetVelocity(transform, grabber.Target.transform, grabInfo.PositionOffset, grabInfo.RotationOffset, Runner.DeltaTime);
             }
         }
     }

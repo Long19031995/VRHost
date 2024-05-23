@@ -2,6 +2,23 @@ using UnityEngine;
 
 public static class Extension
 {
+    public static (Vector3, Quaternion) GetPosRotOffset(Transform current, Transform target)
+    {
+        var posOffset = target.InverseTransformPoint(current.position);
+        var rotOffset = Quaternion.Inverse(current.rotation) * target.rotation;
+
+        return (posOffset, rotOffset);
+    }
+
+    public static void SetVelocity(this Rigidbody rb, Transform current, Transform target, Vector3 posOffset, Quaternion rotOffset, float deltaTime)
+    {
+        var pos = target.TransformPoint(posOffset);
+        var rot = target.rotation * Quaternion.Inverse(rotOffset);
+
+        rb.velocity = GetVelocity(current.position, pos, deltaTime);
+        rb.angularVelocity = GetAngularVelocity(current.rotation, rot, deltaTime);
+    }
+
     public static void SetVelocity(this Rigidbody rb, Transform current, Transform target, float deltaTime)
     {
         rb.velocity = GetVelocity(current.position, target.position, deltaTime);
@@ -17,20 +34,8 @@ public static class Extension
     public static Vector3 GetAngularVelocity(Quaternion current, Quaternion target, float deltaTime)
     {
         (target * Quaternion.Inverse(current)).ToAngleAxis(out var angle, out var axis);
+        if (angle > 180) angle -= 360;
         var directionAngular = angle * Mathf.Deg2Rad * axis;
         return directionAngular / deltaTime;
-    }
-
-    public static bool TryFindGrabble(Vector3 point, out Grabble grabble)
-    {
-        var colliders = new Collider[1];
-        if (Physics.OverlapSphereNonAlloc(point, 10, colliders, 1 << LayerMask.NameToLayer("Grabble")) > 0)
-        {
-            grabble = colliders[0].GetComponentInChildren<Grabble>();
-            return grabble != null;
-        }
-
-        grabble = null;
-        return false;
     }
 }
