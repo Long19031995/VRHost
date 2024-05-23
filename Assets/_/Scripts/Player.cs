@@ -8,11 +8,11 @@ public struct InputData : INetworkInput
 
     public Vector3 LeftHandPosition;
     public Quaternion LeftHandRotation;
-    public NetworkBool LeftHandGrip;
 
     public Vector3 RightHandPosition;
     public Quaternion RightHandRotation;
-    public NetworkBool RightHandGrip;
+
+    public GrabInfo GrabInfo;
 }
 
 public class Player : NetworkBehaviour
@@ -20,11 +20,13 @@ public class Player : NetworkBehaviour
     [Networked] private InputData inputDataNetwork { get; set; }
 
     public Transform Head;
-    public Hand LeftHand;
-    public Hand RightHand;
+    public Grabber LeftGrabber;
+    public Grabber RightGrabber;
 
     public override void Spawned()
     {
+        Runner.SetIsSimulated(Object, true);
+
         if (HasInputAuthority)
         {
             Runner.GetComponent<NetworkEvents>().OnInput.AddListener(OnInput);
@@ -33,6 +35,11 @@ public class Player : NetworkBehaviour
 
     private void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        GrabInfo grabInfo = default;
+
+        if (XROriginHelper.Current.LeftHandGrip) LeftGrabber.TryGrab(out grabInfo);
+        if (XROriginHelper.Current.RightHandGrip) RightGrabber.TryGrab(out grabInfo);
+
         input.Set(new InputData()
         {
             HeadPosition = XROriginHelper.Current.Head.position,
@@ -40,11 +47,11 @@ public class Player : NetworkBehaviour
 
             LeftHandPosition = XROriginHelper.Current.LeftHand.position,
             LeftHandRotation = XROriginHelper.Current.LeftHand.rotation,
-            LeftHandGrip = XROriginHelper.Current.LeftHandGrip,
 
             RightHandPosition = XROriginHelper.Current.RightHand.position,
             RightHandRotation = XROriginHelper.Current.RightHand.rotation,
-            RightHandGrip = XROriginHelper.Current.RightHandGrip,
+
+            GrabInfo = grabInfo,
         });
     }
 
@@ -56,14 +63,9 @@ public class Player : NetworkBehaviour
         }
 
         Head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
-        LeftHand.Grabber.SetTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
-        RightHand.Grabber.SetTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
+        LeftGrabber.SetPosRotTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
+        RightGrabber.SetPosRotTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
 
-        if (inputDataNetwork.RightHandGrip) RightHand.Grab();
-        else RightHand.UnGrab();
-
-        if (inputDataNetwork.LeftHandGrip) LeftHand.Grab();
-        else LeftHand.UnGrab();
     }
 
     public override void Render()

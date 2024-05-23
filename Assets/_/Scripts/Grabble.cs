@@ -1,35 +1,67 @@
 using Fusion;
+using Fusion.Addons.Physics;
 using UnityEngine;
 
-[RequireComponent(typeof(Follower))]
+public struct GrabInfo : INetworkStruct
+{
+    public NetworkBehaviourId GrabberId;
+    public NetworkBehaviourId GrabbleId;
+    public Vector3 PositionOffset;
+    public Quaternion RotationOffset;
+
+    public readonly bool IsNull => GrabberId == NetworkBehaviourId.None && GrabbleId == NetworkBehaviourId.None;
+}
+
 public class Grabble : NetworkBehaviour
 {
-    private Follower follower;
-    private Transform target;
+    [SerializeField] private NetworkRigidbody3D rbNet;
 
-    public bool HasTarget => target != null;
+    [Networked] private GrabInfo grabInfo { get; set; }
+
+    private Tick tickGrab = int.MaxValue;
 
     public override void Spawned()
     {
         Runner.SetIsSimulated(Object, true);
-
-        follower = GetComponent<Follower>();
     }
 
-    public void Follow(Transform newTarget, FollowerType type)
+    public bool TrySetGrabInfo(GrabInfo newGrabInfo)
     {
-        target = newTarget;
-        follower.Follow(newTarget, type);
-    }
+        if (grabInfo.IsNull)
+        {
+            grabInfo = newGrabInfo;
+            tickGrab = Runner.Tick;
+            return true;
+        }
 
-    public void UnFollow()
-    {
-        target = null;
-        follower.UnFollow();
+        return false;
     }
 
     public override void FixedUpdateNetwork()
     {
         Object.RenderTimeframe = HasInputAuthority ? RenderTimeframe.Local : RenderTimeframe.Remote;
+
+        if (GetInput(out InputData inputData))
+        {
+            Follow(inputData.GrabInfo);
+
+            tickGrab = int.MaxValue;
+        }
+        else if (Runner.Tick >= tickGrab && Runner.Tick - tickGrab < 100)
+        {
+            Follow(grabInfo);
+        }
+    }
+
+    private void Follow(GrabInfo grabInfo)
+    {
+        if (grabInfo.GrabbleId == Id)
+        {
+            if (Runner.TryFindBehaviour(grabInfo.GrabberId, out Grabber grabber))
+            {
+                rbNet.Rigidbody.velocity = Extension.GetVelocity(transform.position, grabber.transform.TransformPoint(grabInfo.PositionOffset), Runner.DeltaTime);
+                rbNet.Rigidbody.angularVelocity = Extension.GetAngularVelocity(transform.rotation, grabber.transform.rotation * Quaternion.Inverse(grabInfo.RotationOffset), Runner.DeltaTime);
+            }
+        }
     }
 }

@@ -7,8 +7,7 @@ using UnityEngine;
 public class RunnerConnection : MonoBehaviour
 {
     [SerializeField] private XROriginHelper xrOriginHelper;
-    [SerializeField] private NetworkObject grabberPrefab;
-    [SerializeField] private NetworkObject grabblePrefab;
+    [SerializeField] private NetworkObject playerPrefab;
 
     private Dictionary<PlayerRef, NetworkObject> playerObjects = new Dictionary<PlayerRef, NetworkObject>();
 
@@ -22,14 +21,10 @@ public class RunnerConnection : MonoBehaviour
 
     private void OnSceneLoadDone(NetworkRunner runner)
     {
-        if (runner.IsServer)
-        {
-            runner.Spawn(grabblePrefab);
-        }
-
         if (runner.IsPlayer)
         {
-            var position = new Vector3(Random.Range(0, 0), 0, Random.Range(0, 0));
+            var random = 0;
+            var position = new Vector3(Random.Range(-random, random), 0, Random.Range(random, random));
             var rotation = Quaternion.identity;
             Instantiate(xrOriginHelper, position, rotation);
         }
@@ -39,7 +34,7 @@ public class RunnerConnection : MonoBehaviour
     {
         if (runner.IsServer)
         {
-            var obj = runner.Spawn(grabberPrefab, inputAuthority: playerRef);
+            var obj = runner.Spawn(playerPrefab, inputAuthority: playerRef);
             playerObjects.Add(playerRef, obj);
         }
     }

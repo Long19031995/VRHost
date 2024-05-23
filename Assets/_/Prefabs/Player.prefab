@@ -9,9 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4574114645148621297}
-  - component: {fileID: 281905826743557243}
   - component: {fileID: 6879422161872696442}
-  - component: {fileID: 160786567392998995}
   - component: {fileID: 5621341831690750015}
   - component: {fileID: 3481230666220761857}
   - component: {fileID: 8014480240553948152}
@@ -39,19 +37,6 @@ Transform:
   - {fileID: 4268890873499757507}
   m_Father: {fileID: 4399847900834505036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &281905826743557243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587087222106164135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 684bb0520384222479cb6bf249ffbf9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Grabber: {fileID: 6879422161872696442}
 --- !u!114 &6879422161872696442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,19 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 885593e46da81924b88f26e8c1ae749e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &160786567392998995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587087222106164135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ea07ac418a527b46b73b0f0f91aab12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
   rbNet: {fileID: 3481230666220761857}
 --- !u!54 &5621341831690750015
 Rigidbody:
@@ -144,9 +116,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 281905826743557243}
   - {fileID: 6879422161872696442}
-  - {fileID: 160786567392998995}
   - {fileID: 3481230666220761857}
 --- !u!1 &857643350320589898
 GameObject:
@@ -408,8 +378,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Head: {fileID: 3351240260065038675}
-  LeftHand: {fileID: 699789030530313275}
-  RightHand: {fileID: 281905826743557243}
+  LeftGrabber: {fileID: 3491056886057241641}
+  RightGrabber: {fileID: 6879422161872696442}
 --- !u!114 &-7514425849079967715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,9 +409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6777750145571170986}
-  - component: {fileID: 699789030530313275}
   - component: {fileID: 3491056886057241641}
-  - component: {fileID: 2653443730970812944}
   - component: {fileID: 2000235631550559059}
   - component: {fileID: 8352007980950697395}
   - component: {fileID: 584625539736655727}
@@ -469,19 +437,6 @@ Transform:
   - {fileID: 7854272394745667489}
   m_Father: {fileID: 4399847900834505036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &699789030530313275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8751717059403750948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 684bb0520384222479cb6bf249ffbf9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Grabber: {fileID: 3491056886057241641}
 --- !u!114 &3491056886057241641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,19 +449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 885593e46da81924b88f26e8c1ae749e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2653443730970812944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8751717059403750948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ea07ac418a527b46b73b0f0f91aab12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
   rbNet: {fileID: 8352007980950697395}
 --- !u!54 &2000235631550559059
 Rigidbody:
@@ -574,9 +516,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 699789030530313275}
   - {fileID: 3491056886057241641}
-  - {fileID: 2653443730970812944}
   - {fileID: 8352007980950697395}
 --- !u!1001 &4652714071392310230
 PrefabInstance:
