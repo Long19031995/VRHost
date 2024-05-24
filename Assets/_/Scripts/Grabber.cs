@@ -5,94 +5,70 @@ using UnityEngine;
 public class Grabber : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
+    [SerializeField] private GrabberSide side;
+
+    public Transform Target { get; private set; }
 
     [Networked] private GrabInfo grabInfo { get; set; }
-
-    private Transform target;
-    public Transform Target => target;
+    private GrabDataCache dataCache;
+    private Grabble grabble;
 
     public override void Spawned()
     {
         Runner.SetIsSimulated(Object, true);
 
-        target = new GameObject("Target").transform;
-        target.SetParent(transform);
+        Target = new GameObject("Target").transform;
+        Target.SetParent(transform);
+
+        dataCache = new GrabDataCache(Runner);
     }
 
     public void SetPosRotTarget(Vector3 posTarget, Quaternion rotTarget)
     {
-        target.SetPositionAndRotation(posTarget, rotTarget);
+        Target.SetPositionAndRotation(posTarget, rotTarget);
     }
 
     public GrabInfo Grab(Grabble grabble)
     {
-        GrabInfo newGrabInfo;
+        return grabInfo.IsDefault ? GetGrabInfo(grabble) : grabInfo;
+    }
 
-        if (grabInfo.IsNull)
+    private GrabInfo GetGrabInfo(Grabble grabble)
+    {
+        if (grabble == null) return default;
+        else if (!grabble.GetGrabInfo().IsDefault) return default;
+
+        var (posOffset, rotOffset) = Extension.GetPosRotOffset(grabble.transform, transform);
+        return new GrabInfo()
         {
-            if (grabble != null)
-            {
-                var (posOffset, rotOffset) = Extension.GetPosRotOffset(grabble.transform, transform);
-
-                newGrabInfo = new GrabInfo()
-                {
-                    GrabberId = Id,
-                    GrabbleId = grabble.Id,
-                    PositionOffset = posOffset,
-                    RotationOffset = rotOffset
-                };
-            }
-            else
-            {
-                newGrabInfo = default;
-            }
-        }
-        else
-        {
-            newGrabInfo = grabInfo;
-        }
-
-        return newGrabInfo;
+            GrabberSide = side,
+            GrabberId = Id,
+            GrabbleId = grabble.Id,
+            PositionOffset = posOffset,
+            RotationOffset = rotOffset
+        };
     }
 
     public override void FixedUpdateNetwork()
     {
         Object.RenderTimeframe = HasInputAuthority ? RenderTimeframe.Local : RenderTimeframe.Remote;
 
-        rbNet.Rigidbody.SetVelocity(transform, target, Runner.DeltaTime);
+        rbNet.Rigidbody.SetVelocity(transform, Target, Runner.DeltaTime);
 
         if (GetInput(out InputData inputData))
         {
-            grabInfo = inputData.GrabInfo;
+            grabInfo = side == GrabberSide.Left ? inputData.LeftGrabInfo : inputData.RightGrabInfo;
         }
 
-        if (grabInfo.GrabberId == Id)
+        if (grabInfo.GrabberId == Id && dataCache.TryGet(grabInfo.GrabbleId, out Grabble newGrabble) && newGrabble != null)
         {
-            if (Runner.TryFindBehaviour(grabInfo.GrabbleId, out Grabble grabble))
-            {
-                if (grabble.TrySetGrabInfo(grabInfo))
-                {
-                    if (HasStateAuthority)
-                    {
-                        grabble.Object.AssignInputAuthority(Object.InputAuthority);
-                    }
-                }
-            }
+            grabble = newGrabble;
+            grabble.SetGrabInfo(grabInfo, HasInputAuthority);
         }
-        else if (grabInfo.GrabbleId != NetworkBehaviourId.None)
+        else if (grabInfo.IsDefault && grabble != null)
         {
-            if (Runner.TryFindBehaviour(grabInfo.GrabbleId, out Grabble grabble))
-            {
-                if (grabble.Object.InputAuthority == Object.InputAuthority)
-                {
-                    if (HasStateAuthority)
-                    {
-                        grabble.Object.RemoveInputAuthority();
-                    }
-                }
-            }
-
-            grabInfo = default;
+            grabble.SetGrabInfo(default, HasInputAuthority);
+            grabble = null;
         }
     }
 }

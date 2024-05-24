@@ -8,11 +8,11 @@ public struct InputData : INetworkInput
 
     public Vector3 LeftHandPosition;
     public Quaternion LeftHandRotation;
+    public GrabInfo LeftGrabInfo;
 
     public Vector3 RightHandPosition;
     public Quaternion RightHandRotation;
-
-    public GrabInfo GrabInfo;
+    public GrabInfo RightGrabInfo;
 }
 
 public class Player : NetworkBehaviour
@@ -47,11 +47,6 @@ public class Player : NetworkBehaviour
 
     private void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        GrabInfo grabInfo = default;
-
-        if (XROriginHelper.Current.LeftHandGrip) grabInfo = LeftGrabber.Grab(FindGrabble(LeftGrabber.transform.position));
-        if (XROriginHelper.Current.RightHandGrip) grabInfo = RightGrabber.Grab(FindGrabble(RightGrabber.transform.position));
-
         input.Set(new InputData()
         {
             HeadPosition = XROriginHelper.Current.Head.position,
@@ -59,11 +54,11 @@ public class Player : NetworkBehaviour
 
             LeftHandPosition = XROriginHelper.Current.LeftHand.position,
             LeftHandRotation = XROriginHelper.Current.LeftHand.rotation,
+            LeftGrabInfo = XROriginHelper.Current.LeftHandGrip ? LeftGrabber.Grab(FindGrabble(LeftGrabber.transform.position)) : default,
 
             RightHandPosition = XROriginHelper.Current.RightHand.position,
             RightHandRotation = XROriginHelper.Current.RightHand.rotation,
-
-            GrabInfo = grabInfo,
+            RightGrabInfo = XROriginHelper.Current.RightHandGrip ? RightGrabber.Grab(FindGrabble(RightGrabber.transform.position)) : default,
         });
     }
 
@@ -77,7 +72,6 @@ public class Player : NetworkBehaviour
         Head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
         LeftGrabber.SetPosRotTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
         RightGrabber.SetPosRotTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
-
     }
 
     public override void Render()

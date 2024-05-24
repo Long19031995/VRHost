@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rbNet: {fileID: 3481230666220761857}
+  side: 1
 --- !u!54 &5621341831690750015
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -450,6 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rbNet: {fileID: 8352007980950697395}
+  side: 0
 --- !u!54 &2000235631550559059
 Rigidbody:
   m_ObjectHideFlags: 0
