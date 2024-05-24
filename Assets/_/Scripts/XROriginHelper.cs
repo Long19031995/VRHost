@@ -16,6 +16,13 @@ public class XROriginHelper : MonoBehaviour
     public bool LeftHandGrip => LeftHandController.selectAction.action.ReadValue<float>() == 1;
     public bool RightHandGrip => RightHandController.selectAction.action.ReadValue<float>() == 1;
 
+    private void Awake()
+    {
+        UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
+        UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.StartSubsystems();
+    }
+
+#if !UNITY_EDITOR
     private bool isFocused;
 
     private void Update()
@@ -36,4 +43,5 @@ public class XROriginHelper : MonoBehaviour
             }
         }
     }
+#endif
 }
