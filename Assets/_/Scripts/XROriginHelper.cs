@@ -22,6 +22,12 @@ public class XROriginHelper : MonoBehaviour
         UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.StartSubsystems();
     }
 
+    private void OnDestroy()
+    {
+        UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.StopSubsystems();
+        UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+    }
+
 #if !UNITY_EDITOR
     private bool isFocused;
 
