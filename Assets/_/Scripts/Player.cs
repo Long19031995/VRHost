@@ -36,7 +36,7 @@ public class Player : NetworkBehaviour
     public Grabble FindGrabble(Vector3 point)
     {
         var colliders = new Collider[1];
-        if (Physics.OverlapSphereNonAlloc(point, 10, colliders, 1 << LayerMask.NameToLayer("Grabble")) > 0)
+        if (Physics.OverlapSphereNonAlloc(point, 0.1f, colliders, 1 << LayerMask.NameToLayer("Grabble")) > 0)
         {
             var grabble = colliders[0].GetComponentInChildren<Grabble>();
             return grabble;

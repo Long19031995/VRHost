@@ -2,7 +2,7 @@ using Fusion;
 using Fusion.Addons.Physics;
 using UnityEngine;
 
-public class Grabber : NetworkBehaviour
+public class Grabber : NetworkBehaviour, IInputAuthorityLost
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
     [SerializeField] private GrabberSide side;
@@ -15,12 +15,18 @@ public class Grabber : NetworkBehaviour
 
     public override void Spawned()
     {
-        Runner.SetIsSimulated(Object, true);
+        InputAuthorityLost();
 
         Target = new GameObject("Target").transform;
         Target.SetParent(transform);
 
         dataCache = new GrabDataCache(Runner);
+    }
+
+    public void InputAuthorityLost()
+    {
+        Runner.SetIsSimulated(Object, true);
+        Object.RenderTimeframe = HasInputAuthority ? RenderTimeframe.Local : RenderTimeframe.Remote;
     }
 
     public void SetPosRotTarget(Vector3 posTarget, Quaternion rotTarget)
@@ -51,8 +57,6 @@ public class Grabber : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        Object.RenderTimeframe = HasInputAuthority ? RenderTimeframe.Local : RenderTimeframe.Remote;
-
         rbNet.Rigidbody.SetVelocity(transform, Target, Runner.DeltaTime);
 
         if (GetInput(out InputData inputData))
