@@ -1,4 +1,5 @@
 using Fusion;
+using Fusion.Addons.KCC;
 using UnityEngine;
 
 public struct InputData : INetworkInput
@@ -13,10 +14,15 @@ public struct InputData : INetworkInput
     public Vector3 RightHandPosition;
     public Quaternion RightHandRotation;
     public GrabInfo RightGrabInfo;
+
+    public Vector2 MoveDirection;
+    public float RotateDirection;
 }
 
 public class Player : NetworkBehaviour
 {
+    [SerializeField] private KCC kcc;
+
     [Networked] private InputData inputDataNetwork { get; set; }
 
     public Transform Head;
@@ -31,6 +37,8 @@ public class Player : NetworkBehaviour
         {
             Runner.GetComponent<NetworkEvents>().OnInput.AddListener(OnInput);
         }
+
+        kcc.SetManualUpdate(true);
     }
 
     public Grabble FindGrabble(Vector3 point)
@@ -59,6 +67,9 @@ public class Player : NetworkBehaviour
             RightHandPosition = XRHelper.Current.RightHand.position,
             RightHandRotation = XRHelper.Current.RightHand.rotation,
             RightGrabInfo = XRHelper.Current.RightHandGrip ? RightGrabber.Grab(FindGrabble(RightGrabber.transform.position)) : default,
+
+            MoveDirection = XRHelper.Current.MoveDirection,
+            RotateDirection = XRHelper.Current.RotateDirection,
         });
     }
 
@@ -67,11 +78,16 @@ public class Player : NetworkBehaviour
         if (GetInput(out InputData inputData))
         {
             inputDataNetwork = inputData;
+
+            kcc.AddLookRotation(new Vector2(0, inputDataNetwork.RotateDirection) * Runner.DeltaTime * 100);
+            kcc.SetInputDirection(Head.rotation * new Vector3(inputDataNetwork.MoveDirection.x, 0, inputDataNetwork.MoveDirection.y) * Runner.DeltaTime * 5);
         }
 
         Head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
         LeftGrabber.SetPosRotTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
         RightGrabber.SetPosRotTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
+
+        kcc.ManualFixedUpdate();
     }
 
     public override void Render()
@@ -80,5 +96,7 @@ public class Player : NetworkBehaviour
         {
             Head.SetPositionAndRotation(XRHelper.Current.Head.position, XRHelper.Current.Head.rotation);
         }
+
+        XRHelper.Current.transform.SetPositionAndRotation(transform.position, transform.rotation);
     }
 }

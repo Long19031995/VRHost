@@ -16,6 +16,9 @@ public class XRHelper : MonoBehaviour
     public bool LeftHandGrip => LeftHandController.selectAction.action.ReadValue<float>() == 1;
     public bool RightHandGrip => RightHandController.selectAction.action.ReadValue<float>() == 1;
 
+    public Vector2 MoveDirection => new Vector2(LeftHandController.rotateAnchorAction.action.ReadValue<Vector2>().x, LeftHandController.translateAnchorAction.action.ReadValue<Vector2>().y);
+    public float RotateDirection => RightHandController.rotateAnchorAction.action.ReadValue<Vector2>().x;
+
     private void Awake()
     {
         UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
