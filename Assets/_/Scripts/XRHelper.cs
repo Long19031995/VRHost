@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XROriginHelper : MonoBehaviour
+public class XRHelper : MonoBehaviour
 {
-    private static XROriginHelper current;
-    public static XROriginHelper Current => current ??= FindObjectOfType<XROriginHelper>();
+    private static XRHelper current;
+    public static XRHelper Current => current ??= FindObjectOfType<XRHelper>();
 
     public Transform Head;
     public Transform LeftHand;

@@ -49,16 +49,16 @@ public class Player : NetworkBehaviour
     {
         input.Set(new InputData()
         {
-            HeadPosition = XROriginHelper.Current.Head.position,
-            HeadRotation = XROriginHelper.Current.Head.rotation,
+            HeadPosition = XRHelper.Current.Head.position,
+            HeadRotation = XRHelper.Current.Head.rotation,
 
-            LeftHandPosition = XROriginHelper.Current.LeftHand.position,
-            LeftHandRotation = XROriginHelper.Current.LeftHand.rotation,
-            LeftGrabInfo = XROriginHelper.Current.LeftHandGrip ? LeftGrabber.Grab(FindGrabble(LeftGrabber.transform.position)) : default,
+            LeftHandPosition = XRHelper.Current.LeftHand.position,
+            LeftHandRotation = XRHelper.Current.LeftHand.rotation,
+            LeftGrabInfo = XRHelper.Current.LeftHandGrip ? LeftGrabber.Grab(FindGrabble(LeftGrabber.transform.position)) : default,
 
-            RightHandPosition = XROriginHelper.Current.RightHand.position,
-            RightHandRotation = XROriginHelper.Current.RightHand.rotation,
-            RightGrabInfo = XROriginHelper.Current.RightHandGrip ? RightGrabber.Grab(FindGrabble(RightGrabber.transform.position)) : default,
+            RightHandPosition = XRHelper.Current.RightHand.position,
+            RightHandRotation = XRHelper.Current.RightHand.rotation,
+            RightGrabInfo = XRHelper.Current.RightHandGrip ? RightGrabber.Grab(FindGrabble(RightGrabber.transform.position)) : default,
         });
     }
 
@@ -78,7 +78,7 @@ public class Player : NetworkBehaviour
     {
         if (HasInputAuthority)
         {
-            Head.SetPositionAndRotation(XROriginHelper.Current.Head.position, XROriginHelper.Current.Head.rotation);
+            Head.SetPositionAndRotation(XRHelper.Current.Head.position, XRHelper.Current.Head.rotation);
         }
     }
 }

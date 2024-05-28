@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkEvents))]
 public class RunnerConnection : MonoBehaviour
 {
-    [SerializeField] private XROriginHelper xrOriginHelper;
+    [SerializeField] private XRHelper xrHelper;
     [SerializeField] private NetworkObject playerPrefab;
 
     private Dictionary<PlayerRef, NetworkObject> playerObjects = new Dictionary<PlayerRef, NetworkObject>();
@@ -26,7 +26,7 @@ public class RunnerConnection : MonoBehaviour
             var random = 0;
             var position = new Vector3(Random.Range(-random, random), 0, Random.Range(random, random));
             var rotation = Quaternion.identity;
-            Instantiate(xrOriginHelper, position, rotation);
+            Instantiate(xrHelper, position, rotation);
         }
     }
 
@@ -34,8 +34,8 @@ public class RunnerConnection : MonoBehaviour
     {
         if (runner.IsServer)
         {
-            var obj = runner.Spawn(playerPrefab, inputAuthority: playerRef);
-            playerObjects.Add(playerRef, obj);
+            var player = runner.Spawn(playerPrefab, inputAuthority: playerRef);
+            playerObjects.Add(playerRef, player);
         }
     }
 
