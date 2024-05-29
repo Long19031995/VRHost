@@ -36,13 +36,11 @@ public class RunnerConnection : MonoBehaviour
     {
         if (runner.IsServer)
         {
-            var player = runner.Spawn(playerPrefab, inputAuthority: playerRef);
-            playerObjects.Add(playerRef, player);
-
             var playerKCC = runner.Spawn(playerKCCPrefab, inputAuthority: playerRef);
             playerKCCObjects.Add(playerRef, playerKCC);
 
-            player.GetComponent<Player>().PlayerKCC = playerKCC.GetComponent<PlayerKCC>();
+            var player = runner.Spawn(playerPrefab, inputAuthority: playerRef);
+            playerObjects.Add(playerRef, player);
         }
     }
 

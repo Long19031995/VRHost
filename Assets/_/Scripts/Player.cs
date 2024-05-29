@@ -21,13 +21,12 @@ public struct InputData : INetworkInput
 [DefaultExecutionOrder(1)]
 public class Player : NetworkBehaviour
 {
-    public PlayerKCC PlayerKCC;
-
     [Networked] private InputData inputDataNetwork { get; set; }
 
     public Transform Head;
     public Grabber LeftGrabber;
     public Grabber RightGrabber;
+    private PlayerKCC playerKCC;
 
     public override void Spawned()
     {
@@ -36,6 +35,15 @@ public class Player : NetworkBehaviour
         if (HasInputAuthority)
         {
             Runner.GetComponent<NetworkEvents>().OnInput.AddListener(OnInput);
+
+            var playerKCCs = FindObjectsOfType<PlayerKCC>();
+            foreach (var playerKCC in playerKCCs)
+            {
+                if (playerKCC.Object.InputAuthority == Object.InputAuthority)
+                {
+                    this.playerKCC = playerKCC;
+                }
+            }
         }
     }
 
@@ -85,11 +93,9 @@ public class Player : NetworkBehaviour
 
     public override void Render()
     {
-        XRHelper.Current.transform.SetPositionAndRotation(PlayerKCC.transform.position, PlayerKCC.transform.rotation);
-
         if (HasInputAuthority)
         {
-            Head.SetPositionAndRotation(XRHelper.Current.Head.position, XRHelper.Current.Head.rotation);
+            XRHelper.Current.transform.SetPositionAndRotation(playerKCC.transform.position, playerKCC.transform.rotation);
         }
     }
 }
