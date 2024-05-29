@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Management;
 
@@ -47,6 +48,41 @@ public class XRHelper : MonoBehaviour
         {
             XRGeneralSettings.Instance.Manager.StopSubsystems();
             XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+        }
+    }
+
+    private void OnGUI()
+    {
+        var trackedPoseDrive = GetComponentInChildren<TrackedPoseDriver>();
+        if (trackedPoseDrive.enabled)
+        {
+            if (GUILayout.Button("Disable Tracked Pose Drive"))
+            {
+                trackedPoseDrive.enabled = false;
+                LeftHandController.enabled = false;
+                RightHandController.enabled = false;
+                Camera.main.stereoTargetEye = StereoTargetEyeMask.None;
+                Camera.main.fieldOfView = 60;
+
+                trackedPoseDrive.transform.position = new Vector3(0, 1.5f, 0);
+                trackedPoseDrive.transform.rotation = Quaternion.identity;
+
+                LeftHandController.transform.position = new Vector3(-0.2f, 1.4f, 0.5f);
+                LeftHandController.transform.rotation = Quaternion.identity;
+
+                RightHandController.transform.position = new Vector3(0.2f, 1.4f, 0.5f);
+                RightHandController.transform.rotation = Quaternion.identity;
+            }
+        }
+        else
+        {
+            if (GUILayout.Button("Enable Tracked Pose Drive"))
+            {
+                trackedPoseDrive.enabled = true;
+                LeftHandController.enabled = true;
+                RightHandController.enabled = true;
+                Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
+            }
         }
     }
 
