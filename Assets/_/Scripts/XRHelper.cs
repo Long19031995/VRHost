@@ -22,6 +22,22 @@ public class XRHelper : MonoBehaviour
     public Vector2 MoveDirection => new Vector2(LeftHandController.rotateAnchorAction.action.ReadValue<Vector2>().x, LeftHandController.translateAnchorAction.action.ReadValue<Vector2>().y);
     public float RotateDirection => RightHandController.rotateAnchorAction.action.ReadValue<Vector2>().x;
 
+    public (Vector3, Quaternion) GetOffsetFromTarget(Transform target)
+    {
+        var posOffset = transform.InverseTransformPoint(target.position);
+        var rotOffset = Quaternion.Inverse(transform.rotation) * target.rotation;
+
+        return (posOffset, rotOffset);
+    }
+
+    public (Vector3, Quaternion) GetTargetFromOffset(Vector3 posOffset, Quaternion rotOffset)
+    {
+        var posTarget = transform.TransformPoint(posOffset);
+        var rotTarget = transform.rotation * rotOffset;
+
+        return (posTarget, rotTarget);
+    }
+
     private void Awake()
     {
         StartCoroutine(StartXR());
