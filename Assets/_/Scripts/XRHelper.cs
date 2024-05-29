@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Management;
 
 public class XRHelper : MonoBehaviour
 {
@@ -21,14 +23,31 @@ public class XRHelper : MonoBehaviour
 
     private void Awake()
     {
-        UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
-        UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.StartSubsystems();
+        StartCoroutine(StartXR());
     }
 
     private void OnDestroy()
     {
-        UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.StopSubsystems();
-        UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+        StopXR();
+    }
+
+    IEnumerator StartXR()
+    {
+        yield return XRGeneralSettings.Instance.Manager.InitializeLoader();
+        if (XRGeneralSettings.Instance.Manager.activeLoader != null)
+        {
+            XRGeneralSettings.Instance.Manager.StartSubsystems();
+            yield return null;
+        }
+    }
+
+    void StopXR()
+    {
+        if (XRGeneralSettings.Instance.Manager.isInitializationComplete)
+        {
+            XRGeneralSettings.Instance.Manager.StopSubsystems();
+            XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+        }
     }
 
 #if !UNITY_EDITOR
@@ -42,13 +61,11 @@ public class XRHelper : MonoBehaviour
 
             if (isFocused)
             {
-                UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
-                UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.StartSubsystems();
+                StartCoroutine(StartXR());
             }
             else
             {
-                UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.StopSubsystems();
-                UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+                StopXR();
             }
         }
     }
