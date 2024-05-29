@@ -1,5 +1,4 @@
 using Fusion;
-using Fusion.Addons.KCC;
 using UnityEngine;
 
 public struct InputData : INetworkInput
@@ -19,9 +18,10 @@ public struct InputData : INetworkInput
     public float RotateDirection;
 }
 
+[DefaultExecutionOrder(1)]
 public class Player : NetworkBehaviour
 {
-    [SerializeField] private KCC kcc;
+    public PlayerKCC PlayerKCC;
 
     [Networked] private InputData inputDataNetwork { get; set; }
 
@@ -37,8 +37,6 @@ public class Player : NetworkBehaviour
         {
             Runner.GetComponent<NetworkEvents>().OnInput.AddListener(OnInput);
         }
-
-        kcc.SetManualUpdate(true);
     }
 
     public Grabble FindGrabble(Vector3 point)
@@ -78,25 +76,20 @@ public class Player : NetworkBehaviour
         if (GetInput(out InputData inputData))
         {
             inputDataNetwork = inputData;
-
-            kcc.AddLookRotation(new Vector2(0, inputDataNetwork.RotateDirection) * Runner.DeltaTime * 100);
-            kcc.SetInputDirection(Head.rotation * new Vector3(inputDataNetwork.MoveDirection.x, 0, inputDataNetwork.MoveDirection.y) * Runner.DeltaTime * 5);
         }
 
         Head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
         LeftGrabber.SetPosRotTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
         RightGrabber.SetPosRotTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
-
-        kcc.ManualFixedUpdate();
     }
 
     public override void Render()
     {
+        XRHelper.Current.transform.SetPositionAndRotation(PlayerKCC.transform.position, PlayerKCC.transform.rotation);
+
         if (HasInputAuthority)
         {
             Head.SetPositionAndRotation(XRHelper.Current.Head.position, XRHelper.Current.Head.rotation);
         }
-
-        XRHelper.Current.transform.SetPositionAndRotation(transform.position, transform.rotation);
     }
 }

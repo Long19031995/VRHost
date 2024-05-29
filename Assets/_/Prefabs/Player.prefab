@@ -218,7 +218,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -341,8 +341,6 @@ GameObject:
   - component: {fileID: 4399847900834505036}
   - component: {fileID: 5402659565668580407}
   - component: {fileID: -7514425849079967715}
-  - component: {fileID: 3621649238217274666}
-  - component: {fileID: 5947981588843524500}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -380,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39c93a327cab46479661b2c6ddacd26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kcc: {fileID: 5947981588843524500}
+  PlayerKCC: {fileID: 0}
   Head: {fileID: 3351240260065038675}
   LeftGrabber: {fileID: 3491056886057241641}
   RightGrabber: {fileID: 6879422161872696442}
@@ -404,73 +402,6 @@ MonoBehaviour:
   - {fileID: 8014480240553948152}
   NetworkedBehaviours:
   - {fileID: 5402659565668580407}
-  - {fileID: 5947981588843524500}
---- !u!54 &3621649238217274666
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8248327700884685661}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &5947981588843524500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8248327700884685661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f7684f04e649e84fb2ee1bc9fbee42d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _settings:
-    Shape: 1
-    IsTrigger: 0
-    Radius: 0.1
-    Height: 1.8
-    Extent: 0.035
-    ColliderLayer: 0
-    CollisionLayerMask:
-      serializedVersion: 2
-      m_Bits: 1
-    Features: -1
-    InputAuthorityBehavior: 0
-    StateAuthorityBehavior: 0
-    ProxyInterpolationMode: 0
-    AllowClientTeleports: 0
-    Processors:
-    - {fileID: 4219866145273439913, guid: 1ab62523487a65745ab7ee9663ad9025, type: 3}
-    TeleportThreshold: 1
-    MaxPenetrationSteps: 8
-    CCDRadiusMultiplier: 0.75
-    AntiJitterDistance: {x: 0.025, y: 0.01}
-    PredictionCorrectionSpeed: 30
-    NetworkedInteractions: 8
-    CompressNetworkPosition: 0
-    ForceSingleOverlapQuery: 0
-    ForcePredictedLookRotation: 0
-    SuppressConvexMeshColliders: 0
 --- !u!1 &8751717059403750948
 GameObject:
   m_ObjectHideFlags: 0

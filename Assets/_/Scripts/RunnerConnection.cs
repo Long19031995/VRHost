@@ -8,8 +8,10 @@ public class RunnerConnection : MonoBehaviour
 {
     [SerializeField] private XRHelper xrHelper;
     [SerializeField] private NetworkObject playerPrefab;
+    [SerializeField] private NetworkObject playerKCCPrefab;
 
     private Dictionary<PlayerRef, NetworkObject> playerObjects = new Dictionary<PlayerRef, NetworkObject>();
+    private Dictionary<PlayerRef, NetworkObject> playerKCCObjects = new Dictionary<PlayerRef, NetworkObject>();
 
     private void Awake()
     {
@@ -36,6 +38,11 @@ public class RunnerConnection : MonoBehaviour
         {
             var player = runner.Spawn(playerPrefab, inputAuthority: playerRef);
             playerObjects.Add(playerRef, player);
+
+            var playerKCC = runner.Spawn(playerKCCPrefab, inputAuthority: playerRef);
+            playerKCCObjects.Add(playerRef, playerKCC);
+
+            player.GetComponent<Player>().PlayerKCC = playerKCC.GetComponent<PlayerKCC>();
         }
     }
 
@@ -43,9 +50,14 @@ public class RunnerConnection : MonoBehaviour
     {
         if (runner.IsServer)
         {
-            if (playerObjects.TryGetValue(playerRef, out var obj))
+            if (playerObjects.TryGetValue(playerRef, out var player))
             {
-                runner.Despawn(obj);
+                runner.Despawn(player);
+            }
+
+            if (playerKCCObjects.TryGetValue(playerRef, out var playerKCC))
+            {
+                runner.Despawn(playerKCC);
             }
         }
     }

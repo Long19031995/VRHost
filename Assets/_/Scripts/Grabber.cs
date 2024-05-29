@@ -2,6 +2,7 @@ using Fusion;
 using Fusion.Addons.Physics;
 using UnityEngine;
 
+[DefaultExecutionOrder(2)]
 public class Grabber : NetworkBehaviour, IInputAuthorityLost
 {
     [SerializeField] private NetworkRigidbody3D rbNet;

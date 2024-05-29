@@ -434,6 +434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xrHelper: {fileID: 8122606034538457378, guid: e92091ecf2cc82746aae9aee084bd9f2, type: 3}
   playerPrefab: {fileID: -7514425849079967715, guid: 4cb2f03b0a97ffa4181be6581b17bc95, type: 3}
+  playerKCCPrefab: {fileID: 2221300064039044628, guid: 5dda4322fefc3f54ea3d30b2bcf5628d, type: 3}
 --- !u!114 &626158873
 MonoBehaviour:
   m_ObjectHideFlags: 0
