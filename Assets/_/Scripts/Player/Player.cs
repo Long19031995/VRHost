@@ -26,7 +26,6 @@ public class Player : NetworkBehaviour
     public Transform Head;
     public Grabber LeftGrabber;
     public Grabber RightGrabber;
-    private PlayerKCC playerKCC;
 
     public override void Spawned()
     {
@@ -35,15 +34,6 @@ public class Player : NetworkBehaviour
         if (HasInputAuthority)
         {
             Runner.GetComponent<NetworkEvents>().OnInput.AddListener(OnInput);
-
-            var playerKCCs = FindObjectsOfType<PlayerKCC>();
-            foreach (var playerKCC in playerKCCs)
-            {
-                if (playerKCC.Object.InputAuthority == Object.InputAuthority)
-                {
-                    this.playerKCC = playerKCC;
-                }
-            }
         }
     }
 
@@ -63,19 +53,19 @@ public class Player : NetworkBehaviour
     {
         input.Set(new InputData()
         {
-            HeadPosition = XRHelper.Current.Head.position,
-            HeadRotation = XRHelper.Current.Head.rotation,
+            HeadPosition = InputHandler.Current.Head.position,
+            HeadRotation = InputHandler.Current.Head.rotation,
 
-            LeftHandPosition = XRHelper.Current.LeftHand.position,
-            LeftHandRotation = XRHelper.Current.LeftHand.rotation,
-            LeftGrabInfo = XRHelper.Current.LeftHandGrip ? LeftGrabber.Grab(FindGrabble(LeftGrabber.transform.position)) : default,
+            LeftHandPosition = InputHandler.Current.LeftHand.position,
+            LeftHandRotation = InputHandler.Current.LeftHand.rotation,
+            LeftGrabInfo = InputHandler.Current.LeftHandGrip ? LeftGrabber.Grab(FindGrabble(LeftGrabber.transform.position)) : default,
 
-            RightHandPosition = XRHelper.Current.RightHand.position,
-            RightHandRotation = XRHelper.Current.RightHand.rotation,
-            RightGrabInfo = XRHelper.Current.RightHandGrip ? RightGrabber.Grab(FindGrabble(RightGrabber.transform.position)) : default,
+            RightHandPosition = InputHandler.Current.RightHand.position,
+            RightHandRotation = InputHandler.Current.RightHand.rotation,
+            RightGrabInfo = InputHandler.Current.RightHandGrip ? RightGrabber.Grab(FindGrabble(RightGrabber.transform.position)) : default,
 
-            MoveDirection = XRHelper.Current.MoveDirection,
-            RotateDirection = XRHelper.Current.RotateDirection,
+            MoveDirection = InputHandler.Current.MoveDirection,
+            RotateDirection = InputHandler.Current.RotateDirection,
         });
     }
 
@@ -89,13 +79,5 @@ public class Player : NetworkBehaviour
         Head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
         LeftGrabber.SetPosRotTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
         RightGrabber.SetPosRotTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
-    }
-
-    public override void Render()
-    {
-        if (HasInputAuthority)
-        {
-            XRHelper.Current.transform.SetPositionAndRotation(playerKCC.transform.position, playerKCC.transform.rotation);
-        }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkEvents))]
 public class RunnerConnection : MonoBehaviour
 {
-    [SerializeField] private XRHelper xrHelper;
+    [SerializeField] private InputHandler inputHandler;
     [SerializeField] private NetworkObject playerPrefab;
     [SerializeField] private NetworkObject playerKCCPrefab;
 
@@ -28,7 +28,7 @@ public class RunnerConnection : MonoBehaviour
             var random = 0;
             var position = new Vector3(Random.Range(-random, random), 0, Random.Range(random, random));
             var rotation = Quaternion.identity;
-            Instantiate(xrHelper, position, rotation);
+            Instantiate(inputHandler, position, rotation);
         }
     }
 
