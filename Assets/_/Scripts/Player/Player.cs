@@ -53,15 +53,15 @@ public class Player : NetworkBehaviour
     {
         input.Set(new InputData()
         {
-            HeadPosition = InputHandler.Current.Head.position,
-            HeadRotation = InputHandler.Current.Head.rotation,
+            HeadPosition = InputHandler.Current.HeadTarget.position,
+            HeadRotation = InputHandler.Current.HeadTarget.rotation,
 
-            LeftHandPosition = InputHandler.Current.LeftHand.position,
-            LeftHandRotation = InputHandler.Current.LeftHand.rotation,
+            LeftHandPosition = InputHandler.Current.LeftHandTarget.position,
+            LeftHandRotation = InputHandler.Current.LeftHandTarget.rotation,
             LeftGrabInfo = InputHandler.Current.LeftHandGrip ? LeftGrabber.Grab(FindGrabble(LeftGrabber.transform.position)) : default,
 
-            RightHandPosition = InputHandler.Current.RightHand.position,
-            RightHandRotation = InputHandler.Current.RightHand.rotation,
+            RightHandPosition = InputHandler.Current.RightHandTarget.position,
+            RightHandRotation = InputHandler.Current.RightHandTarget.rotation,
             RightGrabInfo = InputHandler.Current.RightHandGrip ? RightGrabber.Grab(FindGrabble(RightGrabber.transform.position)) : default,
 
             MoveDirection = InputHandler.Current.MoveDirection,

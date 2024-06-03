@@ -56,10 +56,13 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
         };
     }
 
+    public void FixedUpdate()
+    {
+        rbNet.Rigidbody.SetVelocity(transform, Target, Time.fixedDeltaTime);
+    }
+
     public override void FixedUpdateNetwork()
     {
-        rbNet.Rigidbody.SetVelocity(transform, Target, Runner.DeltaTime);
-
         if (GetInput(out InputData inputData))
         {
             grabInfo = side == GrabberSide.Left ? inputData.LeftGrabInfo : inputData.RightGrabInfo;

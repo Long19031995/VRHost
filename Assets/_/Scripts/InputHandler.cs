@@ -8,6 +8,7 @@ public enum InputPlatform
     VR
 }
 
+[DefaultExecutionOrder(-1)]
 public class InputHandler : MonoBehaviour
 {
     private static InputHandler current;
@@ -15,19 +16,22 @@ public class InputHandler : MonoBehaviour
 
     public InputPlatform Platform;
     public Transform Head;
+    public Transform HeadTarget;
     public Transform LeftHand;
+    public Transform LeftHandTarget;
     public Transform RightHand;
+    public Transform RightHandTarget;
 
     public InputActions InputActions;
 
-    public Vector3 HeadPosition => InputActions.XRIHead.Position.ReadValue<Vector3>();
-    public Quaternion HeadRotation => InputActions.XRIHead.Rotation.ReadValue<Quaternion>();
+    public Vector3 HeadLocalPosition => InputActions.XRIHead.Position.ReadValue<Vector3>();
+    public Quaternion HeadLocalRotation => InputActions.XRIHead.Rotation.ReadValue<Quaternion>();
 
-    public Vector3 LeftHandPosition => InputActions.XRILeftHand.Position.ReadValue<Vector3>();
-    public Quaternion LeftHandRotation => InputActions.XRILeftHand.Rotation.ReadValue<Quaternion>();
+    public Vector3 LeftHandLocalPosition => InputActions.XRILeftHand.Position.ReadValue<Vector3>();
+    public Quaternion LeftHandLocalRotation => InputActions.XRILeftHand.Rotation.ReadValue<Quaternion>();
 
-    public Vector3 RightHandPosition => InputActions.XRIRightHand.Position.ReadValue<Vector3>();
-    public Quaternion RightHandRotation => InputActions.XRIRightHand.Rotation.ReadValue<Quaternion>();
+    public Vector3 RightHandLocalPosition => InputActions.XRIRightHand.Position.ReadValue<Vector3>();
+    public Quaternion RightHandLocalRotation => InputActions.XRIRightHand.Rotation.ReadValue<Quaternion>();
 
     public bool LeftHandGrip => InputActions.XRILeftHandInteraction.Select.ReadValue<float>() == 1;
     public bool RightHandGrip => InputActions.XRIRightHandInteraction.Select.ReadValue<float>() == 1;
@@ -88,9 +92,9 @@ public class InputHandler : MonoBehaviour
     {
         if (Platform == InputPlatform.VR)
         {
-            if (Head) Head.SetPositionAndRotation(HeadPosition, HeadRotation);
-            if (LeftHand) LeftHand.SetPositionAndRotation(LeftHandPosition, LeftHandRotation);
-            if (RightHand) RightHand.SetPositionAndRotation(RightHandPosition, RightHandRotation);
+            if (Head) Head.SetLocalPositionAndRotation(HeadLocalPosition, HeadLocalRotation);
+            if (LeftHand) LeftHand.SetLocalPositionAndRotation(LeftHandLocalPosition, LeftHandLocalRotation);
+            if (RightHand) RightHand.SetLocalPositionAndRotation(RightHandLocalPosition, RightHandLocalRotation);
         }
     }
 
@@ -107,9 +111,9 @@ public class InputHandler : MonoBehaviour
     {
         Platform = InputPlatform.PC;
 
-        Head.SetPositionAndRotation(new Vector3(0, 1.6f, 0), Quaternion.identity);
-        LeftHand.SetPositionAndRotation(new Vector3(-0.2f, 1.5f, 0.5f), Quaternion.identity);
-        RightHand.SetPositionAndRotation(new Vector3(0.2f, 1.5f, 0.5f), Quaternion.identity);
+        Head.SetLocalPositionAndRotation(new Vector3(0, 1.6f, 0), Quaternion.identity);
+        LeftHand.SetLocalPositionAndRotation(new Vector3(-0.2f, 1.5f, 0.5f), Quaternion.identity);
+        RightHand.SetLocalPositionAndRotation(new Vector3(0.2f, 1.5f, 0.5f), Quaternion.identity);
 
         Camera.main.stereoTargetEye = StereoTargetEyeMask.None;
         Camera.main.fieldOfView = 60;

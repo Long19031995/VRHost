@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  moveRotate: 100
+  rotateSpeed: 100
 --- !u!114 &2102148863633770967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
     Shape: 1
     IsTrigger: 0
     Radius: 0.1
-    Height: 1.8
+    Height: 1.7
     Extent: 0.035
     ColliderLayer: 0
     CollisionLayerMask:

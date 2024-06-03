@@ -15,6 +15,6 @@ public class Hand : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.SetVelocity(transform, target, Time.deltaTime);
+        rb.SetVelocity(transform, target, Time.fixedDeltaTime);
     }
 }

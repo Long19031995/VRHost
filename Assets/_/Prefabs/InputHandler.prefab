@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1853263125202390110}
   - component: {fileID: 8723620405857396596}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: HeadTarget
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,8 +173,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Platform: 0
   Head: {fileID: 528440764725030338}
+  HeadTarget: {fileID: 8284612409526227959}
   LeftHand: {fileID: 6460611535045324464}
+  LeftHandTarget: {fileID: 509300833121421140}
   RightHand: {fileID: 6456897315766682726}
+  RightHandTarget: {fileID: 2633496910564306687}
 --- !u!1 &3840578731713909226
 GameObject:
   m_ObjectHideFlags: 0

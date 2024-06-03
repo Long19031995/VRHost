@@ -27,7 +27,7 @@ public static class Extension
 
     public static Vector3 GetVelocity(Vector3 current, Vector3 target, float deltaTime)
     {
-        var direction = (target - current) / 2;
+        var direction = target - current;
         return direction / deltaTime;
     }
 
