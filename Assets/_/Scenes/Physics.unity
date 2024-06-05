@@ -781,7 +781,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.55
+  m_Height: 1.5
   m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -819,8 +819,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   rotateSpeed: 100
-  leftHandFollower: {fileID: 731036120}
-  rightHandFollower: {fileID: 1856432487}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

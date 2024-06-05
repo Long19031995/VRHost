@@ -29,6 +29,10 @@ public class InputHandlerInteraction : MonoBehaviour
     public float RotateValue { get; private set; }
 
     private string handSide => type == InputHandlerInteractionType.LeftHand ? "LeftHand" : "RightHand";
+    private string upKey => type == InputHandlerInteractionType.LeftHand ? "w" : "w";
+    private string downKey => type == InputHandlerInteractionType.LeftHand ? "s" : "s";
+    private string leftKey => type == InputHandlerInteractionType.LeftHand ? "a" : "q";
+    private string rightKey => type == InputHandlerInteractionType.LeftHand ? "d" : "e";
 
     private void OnValidate()
     {
@@ -57,7 +61,7 @@ public class InputHandlerInteraction : MonoBehaviour
     {
         var moveAction = new InputAction("Move", type: InputActionType.Value, processors: "scaleVector2(x=0,y=1)", expectedControlType: "Vector2");
         moveAction.AddBinding($"<XRController>{{{handSide}}}/{{Primary2DAxis}}");
-        moveAction.AddCompositeBinding("2DVector").With("Up", "<Keyboard>/w").With("Down", "<Keyboard>/s").With("Left", "<Keyboard>/a").With("Right", "<Keyboard>/d");
+        moveAction.AddCompositeBinding("2DVector").With("Up", $"<Keyboard>/{upKey}").With("Down", $"<Keyboard>/{downKey}").With("Left", $"<Keyboard>/{leftKey}").With("Right", $"<Keyboard>/{rightKey}");
         return moveAction;
     }
 
@@ -65,7 +69,7 @@ public class InputHandlerInteraction : MonoBehaviour
     {
         var rotateAction = new InputAction("Rotate", type: InputActionType.Value, processors: "scaleVector2(x=1,y=0)", expectedControlType: "Vector2");
         rotateAction.AddBinding($"<XRController>{{{handSide}}}/{{Primary2DAxis}}");
-        rotateAction.AddCompositeBinding("2DVector").With("Up", "<Keyboard>/w").With("Down", "<Keyboard>/s").With("Left", "<Keyboard>/a").With("Right", "<Keyboard>/d");
+        rotateAction.AddCompositeBinding("2DVector").With("Up", $"<Keyboard>/{upKey}").With("Down", $"<Keyboard>/{downKey}").With("Left", $"<Keyboard>/{leftKey}").With("Right", $"<Keyboard>/{rightKey}");
         return rotateAction;
     }
 
