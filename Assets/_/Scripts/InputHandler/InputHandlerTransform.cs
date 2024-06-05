@@ -68,12 +68,12 @@ public class InputHandlerTransform : MonoBehaviour
 
     private void OnPositionPerformed(InputAction.CallbackContext context)
     {
-        transform.position = context.ReadValue<Vector3>();
+        transform.localPosition = context.ReadValue<Vector3>();
     }
 
     private void OnRotationPerformed(InputAction.CallbackContext context)
     {
-        transform.rotation = context.ReadValue<Quaternion>();
+        transform.localRotation = context.ReadValue<Quaternion>();
     }
 
     private void OnDisable()

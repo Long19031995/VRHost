@@ -36,6 +36,7 @@ public static class Extension
         (target * Quaternion.Inverse(current)).ToAngleAxis(out var angle, out var axis);
         if (angle > 180) angle -= 360;
         var directionAngular = angle * Mathf.Deg2Rad * axis;
+        if (float.IsInfinity(axis.x) || float.IsInfinity(axis.y) || float.IsInfinity(axis.z)) directionAngular = Vector3.zero;
         return directionAngular / deltaTime;
     }
 }

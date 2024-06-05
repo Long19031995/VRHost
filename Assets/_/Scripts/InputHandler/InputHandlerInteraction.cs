@@ -28,6 +28,8 @@ public class InputHandlerInteraction : MonoBehaviour
     public float MoveValue { get; private set; }
     public float RotateValue { get; private set; }
 
+    private string handSide => type == InputHandlerInteractionType.LeftHand ? "LeftHand" : "RightHand";
+
     private void OnValidate()
     {
         if (Type != type)
@@ -39,34 +41,44 @@ public class InputHandlerInteraction : MonoBehaviour
 
     private void Reset()
     {
-        var bindingGripValue = "";
-        var bindingMoveValue = "";
-        var bindingRotateValue = "";
+        property.Grip = new InputActionProperty(GetGripAction());
+        property.Move = new InputActionProperty(GetMoveAction());
+        property.Rotate = new InputActionProperty(GetRotateAction());
+    }
 
-        switch (type)
-        {
-            case InputHandlerInteractionType.LeftHand:
-                bindingGripValue = "<XRController>{LeftHand}/{Grip}";
-                bindingMoveValue = "<XRController>{LeftHand}/{Primary2DAxis}";
-                bindingRotateValue = "<XRController>{LeftHand}/{Primary2DAxis}";
-                break;
-            case InputHandlerInteractionType.RightHand:
-                bindingGripValue = "<XRController>{RightHand}/{Grip}";
-                bindingMoveValue = "<XRController>{RightHand}/{Primary2DAxis}";
-                bindingRotateValue = "<XRController>{RightHand}/{Primary2DAxis}";
-                break;
-        }
+    private InputAction GetGripAction()
+    {
+        var gripAction = new InputAction("Grip", type: InputActionType.Value, expectedControlType: "Axis");
+        gripAction.AddBinding($"<XRController>{{{handSide}}}/{{Grip}}");
+        return gripAction;
+    }
 
-        property.Grip = new InputActionProperty(new InputAction("Grip", binding: bindingGripValue, expectedControlType: "Axis"));
-        property.Move = new InputActionProperty(new InputAction("Move", binding: bindingMoveValue, processors: "scaleVector2(x=0,y=1)", expectedControlType: "Vector2"));
-        property.Rotate = new InputActionProperty(new InputAction("Rotate", binding: bindingRotateValue, processors: "scaleVector2(x=1,y=0)", expectedControlType: "Vector2"));
+    private InputAction GetMoveAction()
+    {
+        var moveAction = new InputAction("Move", type: InputActionType.Value, processors: "scaleVector2(x=0,y=1)", expectedControlType: "Vector2");
+        moveAction.AddBinding($"<XRController>{{{handSide}}}/{{Primary2DAxis}}");
+        moveAction.AddCompositeBinding("2DVector").With("Up", "<Keyboard>/w").With("Down", "<Keyboard>/s").With("Left", "<Keyboard>/a").With("Right", "<Keyboard>/d");
+        return moveAction;
+    }
+
+    private InputAction GetRotateAction()
+    {
+        var rotateAction = new InputAction("Rotate", type: InputActionType.Value, processors: "scaleVector2(x=1,y=0)", expectedControlType: "Vector2");
+        rotateAction.AddBinding($"<XRController>{{{handSide}}}/{{Primary2DAxis}}");
+        rotateAction.AddCompositeBinding("2DVector").With("Up", "<Keyboard>/w").With("Down", "<Keyboard>/s").With("Left", "<Keyboard>/a").With("Right", "<Keyboard>/d");
+        return rotateAction;
     }
 
     private void OnEnable()
     {
         property.Grip.action.performed += OnGripPerformed;
+        property.Grip.action.canceled += OnGripCanceled;
+
         property.Move.action.performed += OnMovePerformed;
+        property.Move.action.canceled += OnMoveCanceled;
+
         property.Rotate.action.performed += OnRotatePerformed;
+        property.Rotate.action.canceled += OnRotateCanceled;
 
         property.Grip.action.Enable();
         property.Move.action.Enable();
@@ -78,14 +90,29 @@ public class InputHandlerInteraction : MonoBehaviour
         GripValue = context.ReadValue<float>();
     }
 
+    private void OnGripCanceled(InputAction.CallbackContext context)
+    {
+        GripValue = 0;
+    }
+
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         MoveValue = context.ReadValue<Vector2>().y;
     }
 
+    private void OnMoveCanceled(InputAction.CallbackContext context)
+    {
+        MoveValue = 0;
+    }
+
     private void OnRotatePerformed(InputAction.CallbackContext context)
     {
         RotateValue = context.ReadValue<Vector2>().x;
+    }
+
+    private void OnRotateCanceled(InputAction.CallbackContext context)
+    {
+        RotateValue = 0;
     }
 
     private void OnDisable()
@@ -95,7 +122,12 @@ public class InputHandlerInteraction : MonoBehaviour
         property.Rotate.action.Disable();
 
         property.Grip.action.performed -= OnGripPerformed;
+        property.Grip.action.canceled -= OnGripCanceled;
+
         property.Move.action.performed -= OnMovePerformed;
-        property.Rotate.action.performed -= OnMovePerformed;
+        property.Move.action.canceled -= OnMoveCanceled;
+
+        property.Rotate.action.performed -= OnRotatePerformed;
+        property.Rotate.action.canceled -= OnRotateCanceled;
     }
 }

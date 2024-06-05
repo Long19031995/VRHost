@@ -9,6 +9,7 @@ public class PlayerCC : MonoBehaviour
     [SerializeField] private float rotateSpeed;
 
     private CharacterController cc;
+    private InputHandler input => InputHandler.Current;
 
     private void Awake()
     {
@@ -17,16 +18,16 @@ public class PlayerCC : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var moveDirection = (InputHandler.Current.HeadTarget.rotation * transform.rotation * new Vector3(InputHandler.Current.MoveDirection.x, 0, InputHandler.Current.MoveDirection.y) * Time.fixedDeltaTime).OnlyXZ();
-        moveDirection = moveDirection.magnitude > 0 ? moveDirection.normalized : Vector3.zero;
-        cc.Move(moveDirection * moveSpeed);
+        var rotateDirection = input.RotateDirection * Vector3.up;
+        transform.Rotate(rotateSpeed * Time.fixedDeltaTime * rotateDirection);
 
-        transform.Rotate(InputHandler.Current.RotateDirection * Vector3.up * Time.fixedDeltaTime * rotateSpeed);
+        var moveDirection = input.HeadTarget.rotation * new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);
+        moveDirection = moveDirection.magnitude > 0 ? moveDirection.OnlyXZ().normalized : Vector3.zero;
+        cc.Move(moveSpeed * Time.fixedDeltaTime * moveDirection);
     }
 
     private void Update()
     {
-        InputHandler.Current.transform.position = Vector3.MoveTowards(InputHandler.Current.transform.position, transform.position, Time.deltaTime * moveSpeed);
-        InputHandler.Current.transform.rotation = Quaternion.RotateTowards(InputHandler.Current.transform.rotation, transform.rotation, Time.deltaTime * rotateSpeed);
+        input.transform.SetPositionAndRotation(transform.position, transform.rotation);
     }
 }

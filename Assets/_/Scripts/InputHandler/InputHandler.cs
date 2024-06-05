@@ -92,9 +92,8 @@ public class InputHandler : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    [Header("Editor")]
-    [SerializeField] private Transform xrControllerLeft;
-    [SerializeField] private Transform xrControllerRight;
+    private Transform xrControllerLeft;
+    private Transform xrControllerRight;
     private bool isShowXRController;
 
     private void OnGUI()
@@ -117,6 +116,7 @@ public class InputHandler : MonoBehaviour
             {
                 xrControllerLeft.gameObject.SetActive(false);
                 xrControllerRight.gameObject.SetActive(false);
+                isShowXRController = false;
             }
         }
         else
@@ -125,6 +125,7 @@ public class InputHandler : MonoBehaviour
             {
                 xrControllerLeft.gameObject.SetActive(true);
                 xrControllerRight.gameObject.SetActive(true);
+                isShowXRController = true;
             }
         }
 

@@ -244,43 +244,67 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1009094808183121139, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Position.m_Action.m_Id
-      value: c3a91fdc-9537-4521-8562-6be9ad31c1d9
+      value: 1d457e36-f0c1-4b1d-a196-d374846ebeb3
       objectReference: {fileID: 0}
     - target: {fileID: 1009094808183121139, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Rotation.m_Action.m_Id
-      value: 6f2abd4a-bb22-422e-8eb1-a503a98c76fd
+      value: 00896ad4-a59e-4988-bc20-ae63be1e0461
       objectReference: {fileID: 0}
     - target: {fileID: 1009094808183121139, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Position.m_Action.m_SingletonActionBindings.Array.data[0].m_Id
-      value: 43f819d9-4397-46f0-afac-5793ab8be812
+      value: 646c7fbe-9338-4010-898d-044e21b89930
       objectReference: {fileID: 0}
     - target: {fileID: 1009094808183121139, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Rotation.m_Action.m_SingletonActionBindings.Array.data[0].m_Id
-      value: 45724159-9056-435d-bebd-486824c69ee3
+      value: 33da4d4d-3762-4af5-a0b3-f508d79ede5f
       objectReference: {fileID: 0}
     - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Grip.m_Action.m_Id
-      value: d191f11b-e851-4cbc-ae35-a3d62804a02a
+      value: 863528d7-e50a-46b3-9cfd-205ffba3ca53
       objectReference: {fileID: 0}
     - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Move.m_Action.m_Id
-      value: e4730c51-d8ec-447f-9d22-953aed419cf2
+      value: 3612867f-6390-49d5-bb7e-45d75fca4f74
       objectReference: {fileID: 0}
     - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Rotate.m_Action.m_Id
-      value: c148a988-3220-45d2-886e-97f772313f8b
+      value: b148fba0-c09b-4910-8f7c-49a263a84f12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
+      propertyPath: property.Move.m_Action.m_Processors
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
+      propertyPath: property.Rotate.m_Action.m_Processors
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
+      propertyPath: property.Move.m_Action.m_SingletonActionBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
+      propertyPath: property.Rotate.m_Action.m_SingletonActionBindings.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Grip.m_Action.m_SingletonActionBindings.Array.data[0].m_Id
-      value: 6fe918a4-45fc-440f-b424-17ebec7c7a75
+      value: 34dc2087-af5b-4289-bbd2-7038c45f0e01
       objectReference: {fileID: 0}
     - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Move.m_Action.m_SingletonActionBindings.Array.data[0].m_Id
-      value: 443575cf-31b5-4a64-8684-09a7cf613bda
+      value: 953d4af4-4a9c-403d-a542-67ecb9bdd760
       objectReference: {fileID: 0}
     - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Rotate.m_Action.m_SingletonActionBindings.Array.data[0].m_Id
-      value: fd3f8cc0-a83b-4d69-ac7f-ccb0c8182922
+      value: be7967ba-6afe-418b-a7c0-68c19627a897
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
+      propertyPath: property.Move.m_Action.m_SingletonActionBindings.Array.data[0].m_Processors
+      value: scaleVector2(x=0,y=1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697487213979732647, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
+      propertyPath: property.Rotate.m_Action.m_SingletonActionBindings.Array.data[0].m_Processors
+      value: scaleVector2(x=1,y=0)
       objectReference: {fileID: 0}
     - target: {fileID: 3021725633064689980, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: m_Name
@@ -328,19 +352,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5878644958523596894, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Position.m_Action.m_Id
-      value: 8c93c7ed-ede7-407c-b711-8de1e8c886b4
+      value: 0798c7e5-73da-40a8-bdf9-9bbcca648f31
       objectReference: {fileID: 0}
     - target: {fileID: 5878644958523596894, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Rotation.m_Action.m_Id
-      value: 01455420-e0d1-4289-b087-b79226fad3ac
+      value: e48271e4-2b1b-467a-91d6-4f7fd06a0c7b
       objectReference: {fileID: 0}
     - target: {fileID: 5878644958523596894, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Position.m_Action.m_SingletonActionBindings.Array.data[0].m_Id
-      value: 6740837c-6520-4ea3-a96b-2875f8aaa3de
+      value: 8a9daa32-de41-4aca-9d8c-101c4521affc
       objectReference: {fileID: 0}
     - target: {fileID: 5878644958523596894, guid: 25c2e3c93a9bda94ea421f6740e78f75, type: 3}
       propertyPath: property.Rotation.m_Action.m_SingletonActionBindings.Array.data[0].m_Id
-      value: c4e69a87-3884-4934-b32c-d82c2f0dce03
+      value: fe32fc0a-f08d-4d26-b759-995cbe659939
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -375,7 +399,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.5188679, g: 0.44729376, b: 0.2520915, a: 1}
+  m_Color: {r: 0.6, g: 0.6, b: 0.6, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -757,7 +781,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.6
+  m_Height: 1.55
   m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -795,6 +819,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   rotateSpeed: 100
+  leftHandFollower: {fileID: 731036120}
+  rightHandFollower: {fileID: 1856432487}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
