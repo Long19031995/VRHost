@@ -17,7 +17,9 @@ public class PlayerCC : MonoBehaviour
 
     private void FixedUpdate()
     {
-        cc.Move((InputHandler.Current.HeadTarget.rotation * transform.rotation * new Vector3(InputHandler.Current.MoveDirection.x, 0, InputHandler.Current.MoveDirection.y) * Time.fixedDeltaTime).OnlyXZ().normalized * moveSpeed);
+        var moveDirection = (InputHandler.Current.HeadTarget.rotation * transform.rotation * new Vector3(InputHandler.Current.MoveDirection.x, 0, InputHandler.Current.MoveDirection.y) * Time.fixedDeltaTime).OnlyXZ();
+        moveDirection = moveDirection.magnitude > 0 ? moveDirection.normalized : Vector3.zero;
+        cc.Move(moveDirection * moveSpeed);
 
         transform.Rotate(InputHandler.Current.RotateDirection * Vector3.up * Time.fixedDeltaTime * rotateSpeed);
     }
