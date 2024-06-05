@@ -15,34 +15,24 @@ public class InputHandler : MonoBehaviour
     public static InputHandler Current => current ??= FindObjectOfType<InputHandler>();
 
     public InputPlatform Platform;
-    public Transform Head;
+
+    [Header("Target")]
     public Transform HeadTarget;
-    public Transform LeftHand;
     public Transform LeftHandTarget;
-    public Transform RightHand;
     public Transform RightHandTarget;
 
-    public InputActions InputActions;
+    [Header("Input")]
+    [SerializeField] private InputHandlerInteraction LeftHandInput;
+    [SerializeField] private InputHandlerInteraction RightHandInput;
 
-    public Vector3 HeadLocalPosition => InputActions.XRIHead.Position.ReadValue<Vector3>();
-    public Quaternion HeadLocalRotation => InputActions.XRIHead.Rotation.ReadValue<Quaternion>();
+    public bool LeftHandGrip => LeftHandInput.GripValue == 1;
+    public bool RightHandGrip => RightHandInput.GripValue == 1;
 
-    public Vector3 LeftHandLocalPosition => InputActions.XRILeftHand.Position.ReadValue<Vector3>();
-    public Quaternion LeftHandLocalRotation => InputActions.XRILeftHand.Rotation.ReadValue<Quaternion>();
-
-    public Vector3 RightHandLocalPosition => InputActions.XRIRightHand.Position.ReadValue<Vector3>();
-    public Quaternion RightHandLocalRotation => InputActions.XRIRightHand.Rotation.ReadValue<Quaternion>();
-
-    public bool LeftHandGrip => InputActions.XRILeftHandInteraction.Select.ReadValue<float>() == 1;
-    public bool RightHandGrip => InputActions.XRIRightHandInteraction.Select.ReadValue<float>() == 1;
-
-    public Vector2 MoveDirection => new Vector2(InputActions.XRILeftHandInteraction.RotateAnchor.ReadValue<Vector2>().x, InputActions.XRILeftHandInteraction.TranslateAnchor.ReadValue<Vector2>().y);
-    public float RotateDirection => InputActions.XRIRightHandInteraction.RotateAnchor.ReadValue<Vector2>().x;
+    public Vector2 MoveDirection => new Vector2(LeftHandInput.RotateValue, LeftHandInput.MoveValue);
+    public float RotateDirection => RightHandInput.RotateValue;
 
     private void Awake()
     {
-        InputActions = new InputActions();
-
         switch (Platform)
         {
             case InputPlatform.PC:
@@ -54,18 +44,26 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void SwitchToVR()
     {
-        InputActions.Enable();
+        Platform = InputPlatform.VR;
+
+        Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
+
+        StartCoroutine(StartXR());
     }
 
-    private void OnDisable()
+    private void SwitchToPC()
     {
-        InputActions.Disable();
-    }
+        Platform = InputPlatform.PC;
 
-    private void OnDestroy()
-    {
+        Camera.main.stereoTargetEye = StereoTargetEyeMask.None;
+        Camera.main.fieldOfView = 60;
+
+        HeadTarget.parent.SetLocalPositionAndRotation(new Vector3(0, 1.6f, 0), Quaternion.identity);
+        LeftHandTarget.parent.SetLocalPositionAndRotation(new Vector3(-0.2f, 1.5f, 0.5f), Quaternion.identity);
+        RightHandTarget.parent.SetLocalPositionAndRotation(new Vector3(0.2f, 1.5f, 0.5f), Quaternion.identity);
+
         StopXR();
     }
 
@@ -88,42 +86,48 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        if (Platform == InputPlatform.VR)
-        {
-            if (Head) Head.SetLocalPositionAndRotation(HeadLocalPosition, HeadLocalRotation);
-            if (LeftHand) LeftHand.SetLocalPositionAndRotation(LeftHandLocalPosition, LeftHandLocalRotation);
-            if (RightHand) RightHand.SetLocalPositionAndRotation(RightHandLocalPosition, RightHandLocalRotation);
-        }
-    }
-
-    private void SwitchToVR()
-    {
-        Platform = InputPlatform.VR;
-
-        Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
-
-        StartCoroutine(StartXR());
-    }
-
-    private void SwitchToPC()
-    {
-        Platform = InputPlatform.PC;
-
-        Head.SetLocalPositionAndRotation(new Vector3(0, 1.6f, 0), Quaternion.identity);
-        LeftHand.SetLocalPositionAndRotation(new Vector3(-0.2f, 1.5f, 0.5f), Quaternion.identity);
-        RightHand.SetLocalPositionAndRotation(new Vector3(0.2f, 1.5f, 0.5f), Quaternion.identity);
-
-        Camera.main.stereoTargetEye = StereoTargetEyeMask.None;
-        Camera.main.fieldOfView = 60;
-
         StopXR();
     }
 
 #if UNITY_EDITOR
+    [Header("Editor")]
+    [SerializeField] private Transform xrControllerLeft;
+    [SerializeField] private Transform xrControllerRight;
+    private bool isShowXRController;
+
     private void OnGUI()
     {
+        if (xrControllerLeft == null)
+        {
+            xrControllerLeft = Instantiate(Resources.Load<GameObject>("XRControllerLeft"), LeftHandInput.transform).transform;
+            xrControllerLeft.gameObject.SetActive(false);
+        }
+
+        if (xrControllerRight == null)
+        {
+            xrControllerRight = Instantiate(Resources.Load<GameObject>("XRControllerRight"), RightHandInput.transform).transform;
+            xrControllerRight.gameObject.SetActive(false);
+        }
+
+        if (isShowXRController)
+        {
+            if (GUILayout.Button("Hide Controller"))
+            {
+                xrControllerLeft.gameObject.SetActive(false);
+                xrControllerRight.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            if (GUILayout.Button("Show Controller"))
+            {
+                xrControllerLeft.gameObject.SetActive(true);
+                xrControllerRight.gameObject.SetActive(true);
+            }
+        }
+
         if (Platform == InputPlatform.PC)
         {
             if (GUILayout.Button("Switch to VR"))
