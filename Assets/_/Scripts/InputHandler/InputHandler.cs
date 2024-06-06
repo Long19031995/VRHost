@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Management;
 
 public enum InputPlatform
@@ -95,6 +96,7 @@ public class InputHandler : MonoBehaviour
     private Transform xrControllerLeft;
     private Transform xrControllerRight;
     private bool isShowXRController;
+    private int count;
 
     private void OnGUI()
     {
@@ -114,18 +116,14 @@ public class InputHandler : MonoBehaviour
         {
             if (GUILayout.Button("Hide Controller"))
             {
-                xrControllerLeft.gameObject.SetActive(false);
-                xrControllerRight.gameObject.SetActive(false);
-                isShowXRController = false;
+                HideController();
             }
         }
         else
         {
             if (GUILayout.Button("Show Controller"))
             {
-                xrControllerLeft.gameObject.SetActive(true);
-                xrControllerRight.gameObject.SetActive(true);
-                isShowXRController = true;
+                ShowController();
             }
         }
 
@@ -143,6 +141,32 @@ public class InputHandler : MonoBehaviour
                 SwitchToPC();
             }
         }
+
+        if (Keyboard.current.f1Key.wasReleasedThisFrame && count++ % 2 == 0)
+        {
+            if (isShowXRController) HideController();
+            else ShowController();
+        }
+
+        if (Keyboard.current.f2Key.wasReleasedThisFrame && count++ % 2 == 0)
+        {
+            if (Platform == InputPlatform.PC) SwitchToVR();
+            else SwitchToPC();
+        }
+    }
+
+    private void HideController()
+    {
+        xrControllerLeft.gameObject.SetActive(false);
+        xrControllerRight.gameObject.SetActive(false);
+        isShowXRController = false;
+    }
+
+    private void ShowController()
+    {
+        xrControllerLeft.gameObject.SetActive(true);
+        xrControllerRight.gameObject.SetActive(true);
+        isShowXRController = true;
     }
 #endif
 

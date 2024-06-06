@@ -54,12 +54,12 @@ MonoBehaviour:
         m_Name: Position
         m_Type: 0
         m_ExpectedControlType: Vector3
-        m_Id: 5d1c3180-ee71-404f-86bb-85810334499f
+        m_Id: c5afde0f-e5cd-4bc0-b509-6113cd4ab32f
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 5802d5dc-5190-422a-bc4a-230b5a05155b
+          m_Id: 728d798d-a754-4209-8e2c-cb8e9b3a730c
           m_Path: <XRController>{LeftHand}/devicePosition
           m_Interactions: 
           m_Processors: 
@@ -74,12 +74,12 @@ MonoBehaviour:
         m_Name: Rotation
         m_Type: 0
         m_ExpectedControlType: Quaternion
-        m_Id: 03fb6262-b8a5-4206-889f-db6a456de93a
+        m_Id: 35ea82a6-13d5-46fe-a986-79f4b34f35b9
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 8eb17313-b058-4fa2-89da-2b5b1571b41e
+          m_Id: 9f65611f-2b45-4440-b6db-06ed1e89ca1e
           m_Path: <XRController>{LeftHand}/deviceRotation
           m_Interactions: 
           m_Processors: 
@@ -252,6 +252,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8131396590981265647}
   - component: {fileID: 122180686777488133}
+  - component: {fileID: 1650690083687971615}
+  - component: {fileID: 4045093827576405882}
   m_Layer: 0
   m_Name: Head
   m_TagString: MainCamera
@@ -273,7 +275,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6063705123917331220}
-  - {fileID: 3345474116527739502}
   m_Father: {fileID: 4932914259716956667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &122180686777488133
@@ -330,6 +331,65 @@ MonoBehaviour:
           m_Flags: 0
         m_Flags: 0
       m_Reference: {fileID: 0}
+--- !u!20 &1650690083687971615
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270215139495721494}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.01
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!81 &4045093827576405882
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270215139495721494}
+  m_Enabled: 1
 --- !u!1 &3021725633064689980
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,98 +536,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8131396590981265647}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5140041893157624949
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3345474116527739502}
-  - component: {fileID: 1124269623712049718}
-  - component: {fileID: 7144484396848977308}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3345474116527739502
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5140041893157624949}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8131396590981265647}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &1124269623712049718
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5140041893157624949}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.01
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!81 &7144484396848977308
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5140041893157624949}
-  m_Enabled: 1
 --- !u!1 &7378479669901211893
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,12 +590,12 @@ MonoBehaviour:
         m_Name: Position
         m_Type: 0
         m_ExpectedControlType: Vector3
-        m_Id: 672c08a9-a3fc-4c2b-b070-9ab47ff2fd9b
+        m_Id: fd6f1aca-3a8d-43a0-a609-9e3939277473
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: b106e7be-e2d5-47ef-b688-9e02c3385e4b
+          m_Id: 3b04d801-7ce6-4acd-88ec-cc8cb41f1ce1
           m_Path: <XRController>{RightHand}/devicePosition
           m_Interactions: 
           m_Processors: 
@@ -642,12 +610,12 @@ MonoBehaviour:
         m_Name: Rotation
         m_Type: 0
         m_ExpectedControlType: Quaternion
-        m_Id: 6b275c95-bcb4-4d85-b26c-2014594c6fd5
+        m_Id: 86615e1e-6df9-49fc-bc8a-536857a6ac3b
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 43061808-7ea3-4321-96b3-41eb09a0bc63
+          m_Id: 291b9f8c-ec73-4d23-a059-ffdc6b7694a4
           m_Path: <XRController>{RightHand}/deviceRotation
           m_Interactions: 
           m_Processors: 
@@ -676,12 +644,12 @@ MonoBehaviour:
         m_Name: Grip
         m_Type: 0
         m_ExpectedControlType: Axis
-        m_Id: aa89609b-5293-4561-a047-1eb577a4c8c2
+        m_Id: d5ad3d03-42c3-48e4-9357-ebfc8cf42c0f
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 1e99e3e0-5e5f-44f2-9e82-bfc204d46814
+          m_Id: 36a43809-40d3-4ae6-8845-10d463ecf3c6
           m_Path: <XRController>{RightHand}/{Grip}
           m_Interactions: 
           m_Processors: 
@@ -696,12 +664,12 @@ MonoBehaviour:
         m_Name: Move
         m_Type: 0
         m_ExpectedControlType: Vector2
-        m_Id: a2380f0a-3901-40aa-8109-8701f47c3a24
+        m_Id: fc0b0b5c-b721-44f6-9d42-ff70bc74aa5c
         m_Processors: scaleVector2(x=0,y=1)
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 20a6aefa-b74b-42c4-b118-8f40c537f78a
+          m_Id: 07202fce-3b6d-4ac6-87aa-c55faf6cd78f
           m_Path: <XRController>{RightHand}/{Primary2DAxis}
           m_Interactions: 
           m_Processors: 
@@ -709,7 +677,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 0
         - m_Name: 2DVector
-          m_Id: e13f48f6-249b-4d73-8538-eea585414fc7
+          m_Id: 5bc38b15-6571-45bd-88b9-7118d5688073
           m_Path: 2DVector
           m_Interactions: 
           m_Processors: 
@@ -717,7 +685,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 4
         - m_Name: Up
-          m_Id: b68c1698-9386-4ece-b410-beb45c3648e5
+          m_Id: e9b1e926-3121-4a0e-ab10-c29c2ab626be
           m_Path: <Keyboard>/w
           m_Interactions: 
           m_Processors: 
@@ -725,7 +693,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 8
         - m_Name: Down
-          m_Id: c2c2fc2d-f011-4da0-9cef-6ab14ba33af2
+          m_Id: 15de933d-7d52-4744-addb-3d771f765263
           m_Path: <Keyboard>/s
           m_Interactions: 
           m_Processors: 
@@ -733,7 +701,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 8
         - m_Name: Left
-          m_Id: 9d7b7d9b-8015-4728-97b0-cea65e1c6c30
+          m_Id: a0b0a625-54bb-4d49-9657-487e1387090f
           m_Path: <Keyboard>/q
           m_Interactions: 
           m_Processors: 
@@ -741,7 +709,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 8
         - m_Name: Right
-          m_Id: f79996be-a5df-4e75-800c-c2dda99ee604
+          m_Id: f330327e-4f32-49ea-a466-93d11c383844
           m_Path: <Keyboard>/e
           m_Interactions: 
           m_Processors: 
@@ -756,12 +724,12 @@ MonoBehaviour:
         m_Name: Rotate
         m_Type: 0
         m_ExpectedControlType: Vector2
-        m_Id: d1e2edb3-7db1-48e1-a47f-8854a596747b
+        m_Id: 764871b5-5c46-4dd5-845f-cdc993260081
         m_Processors: scaleVector2(x=1,y=0)
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 75f5d1b4-5879-4140-bc48-a5c489b760d5
+          m_Id: 1cd423d4-85db-4c18-83a5-cf562eb2a99b
           m_Path: <XRController>{RightHand}/{Primary2DAxis}
           m_Interactions: 
           m_Processors: 
@@ -769,7 +737,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 0
         - m_Name: 2DVector
-          m_Id: 4604361f-9319-4fd9-acd5-cbfc6941083e
+          m_Id: 33ae32ae-4052-4aec-a9a0-21de2c140a7d
           m_Path: 2DVector
           m_Interactions: 
           m_Processors: 
@@ -777,7 +745,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 4
         - m_Name: Up
-          m_Id: 8712489b-9665-485c-a12a-be0050b5379d
+          m_Id: 6da29f28-df14-470a-8596-93ae9b1c47e3
           m_Path: <Keyboard>/w
           m_Interactions: 
           m_Processors: 
@@ -785,7 +753,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 8
         - m_Name: Down
-          m_Id: 7b09077f-41c5-4535-957d-297d52a345b4
+          m_Id: 9b908390-a6e1-4991-a609-764b3613e74f
           m_Path: <Keyboard>/s
           m_Interactions: 
           m_Processors: 
@@ -793,7 +761,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 8
         - m_Name: Left
-          m_Id: f4e905a5-d25a-4483-bf49-b7ad41535c5d
+          m_Id: 9f9d7e76-75be-4d57-b1e6-7f28a795433c
           m_Path: <Keyboard>/q
           m_Interactions: 
           m_Processors: 
@@ -801,7 +769,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 8
         - m_Name: Right
-          m_Id: ff2b180e-e6df-4d24-aff4-ef44f616861f
+          m_Id: 0254fe0d-744e-4137-8c9b-33801aa9b76e
           m_Path: <Keyboard>/e
           m_Interactions: 
           m_Processors: 
