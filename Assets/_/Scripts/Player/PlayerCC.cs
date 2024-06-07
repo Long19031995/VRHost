@@ -18,15 +18,12 @@ public class PlayerCC : MonoBehaviour
 
     private void FixedUpdate()
     {
+        input.transform.SetPositionAndRotation(transform.position, transform.rotation);
+
         var rotateDirection = input.RotateDirection * transform.up;
         transform.Rotate(rotateSpeed * Time.fixedDeltaTime * rotateDirection);
 
         var moveDirection = input.HeadTarget.rotation * new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);
         cc.Move(moveSpeed * Time.fixedDeltaTime * moveDirection.OnlyXZ().normalized);
-    }
-
-    private void Update()
-    {
-        input.transform.SetPositionAndRotation(transform.position, transform.rotation);
     }
 }

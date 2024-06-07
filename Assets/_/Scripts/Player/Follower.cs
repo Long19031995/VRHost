@@ -17,7 +17,10 @@ public class Follower : MonoBehaviour
 
     private void OnValidate()
     {
-        StartCoroutine(OnValidateCoroutine());
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(OnValidateCoroutine());
+        }
     }
 
     private IEnumerator OnValidateCoroutine()

@@ -15,26 +15,28 @@ public class InputHandler : MonoBehaviour
     private static InputHandler current;
     public static InputHandler Current => current ??= FindObjectOfType<InputHandler>();
 
-    public InputPlatform Platform;
+    [SerializeField] private InputPlatform platform;
 
     [Header("Target")]
-    public Transform HeadTarget;
-    public Transform LeftHandTarget;
-    public Transform RightHandTarget;
+    [SerializeField] private Transform headTarget;
+    [SerializeField] private Transform leftHandTarget;
+    [SerializeField] private Transform rightHandTarget;
 
     [Header("Input")]
-    [SerializeField] private InputHandlerInteraction LeftHandInput;
-    [SerializeField] private InputHandlerInteraction RightHandInput;
+    [SerializeField] private InputHandlerInteraction leftHandInput;
+    [SerializeField] private InputHandlerInteraction rightHandInput;
 
-    public bool LeftHandGrip => LeftHandInput.GripValue == 1;
-    public bool RightHandGrip => RightHandInput.GripValue == 1;
-
-    public Vector2 MoveDirection => new Vector2(LeftHandInput.RotateValue, LeftHandInput.MoveValue);
-    public float RotateDirection => RightHandInput.RotateValue;
+    public Transform HeadTarget => headTarget;
+    public Transform LeftHandTarget => leftHandTarget;
+    public Transform RightHandTarget => rightHandTarget;
+    public bool LeftHandGrip => leftHandInput.GripValue == 1;
+    public bool RightHandGrip => rightHandInput.GripValue == 1;
+    public Vector2 MoveDirection => new Vector2(leftHandInput.RotateValue, leftHandInput.MoveValue);
+    public float RotateDirection => rightHandInput.RotateValue;
 
     private void Awake()
     {
-        switch (Platform)
+        switch (platform)
         {
             case InputPlatform.PC:
                 SwitchToPC();
@@ -47,7 +49,7 @@ public class InputHandler : MonoBehaviour
 
     private void SwitchToVR()
     {
-        Platform = InputPlatform.VR;
+        platform = InputPlatform.VR;
 
         Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
 
@@ -56,7 +58,7 @@ public class InputHandler : MonoBehaviour
 
     private void SwitchToPC()
     {
-        Platform = InputPlatform.PC;
+        platform = InputPlatform.PC;
 
         Camera.main.stereoTargetEye = StereoTargetEyeMask.None;
         Camera.main.fieldOfView = 60;
@@ -102,13 +104,13 @@ public class InputHandler : MonoBehaviour
     {
         if (xrControllerLeft == null)
         {
-            xrControllerLeft = Instantiate(Resources.Load<GameObject>("XRControllerLeft"), LeftHandInput.transform).transform;
+            xrControllerLeft = Instantiate(Resources.Load<GameObject>("XRControllerLeft"), leftHandInput.transform).transform;
             xrControllerLeft.gameObject.SetActive(false);
         }
 
         if (xrControllerRight == null)
         {
-            xrControllerRight = Instantiate(Resources.Load<GameObject>("XRControllerRight"), RightHandInput.transform).transform;
+            xrControllerRight = Instantiate(Resources.Load<GameObject>("XRControllerRight"), rightHandInput.transform).transform;
             xrControllerRight.gameObject.SetActive(false);
         }
 
@@ -127,7 +129,7 @@ public class InputHandler : MonoBehaviour
             }
         }
 
-        if (Platform == InputPlatform.PC)
+        if (platform == InputPlatform.PC)
         {
             if (GUILayout.Button("Switch to VR"))
             {
@@ -150,7 +152,7 @@ public class InputHandler : MonoBehaviour
 
         if (Keyboard.current.f2Key.wasReleasedThisFrame && count++ % 2 == 0)
         {
-            if (Platform == InputPlatform.PC) SwitchToVR();
+            if (platform == InputPlatform.PC) SwitchToVR();
             else SwitchToPC();
         }
     }
