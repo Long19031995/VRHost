@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 1650715909}
   - component: {fileID: 1650715908}
   m_Layer: 0
-  m_Name: DynamicTimestep
+  m_Name: DynamicFixedDeltaTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -37,6 +37,7 @@ public class Follower : MonoBehaviour
         {
             if (!gameObject.TryGetComponent(out Rigidbody rb))
             {
+                yield return new WaitForEndOfFrame();
                 gameObject.AddComponent<Rigidbody>();
             }
         }
