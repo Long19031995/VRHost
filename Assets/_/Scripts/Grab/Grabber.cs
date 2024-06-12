@@ -2,7 +2,7 @@ using Fusion;
 using Fusion.Addons.Physics;
 using UnityEngine;
 
-[DefaultExecutionOrder(2)]
+[DefaultExecutionOrder(1)]
 public class Grabber : NetworkBehaviour, IInputAuthorityLost
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
@@ -56,13 +56,10 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
         };
     }
 
-    public void FixedUpdate()
-    {
-        rbNet.Rigidbody.SetVelocity(transform, Target, Time.fixedDeltaTime);
-    }
-
     public override void FixedUpdateNetwork()
     {
+        rbNet.Rigidbody.SetVelocity(transform, Target, Time.fixedDeltaTime);
+
         if (GetInput(out InputData inputData))
         {
             grabInfo = side == GrabberSide.Left ? inputData.LeftGrabInfo : inputData.RightGrabInfo;
