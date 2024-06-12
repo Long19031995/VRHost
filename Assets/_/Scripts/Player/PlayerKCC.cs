@@ -99,7 +99,7 @@ public class PlayerKCC : NetworkBehaviour
 
         if (HasInputAuthority)
         {
-            InputHandler.Current.transform.position = transform.position;
+            InputHandler.Current.transform.SetPositionAndRotation(transform.position, transform.rotation);
         }
     }
 }
