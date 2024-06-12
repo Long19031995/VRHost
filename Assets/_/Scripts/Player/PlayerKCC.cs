@@ -36,8 +36,6 @@ public class PlayerKCC : NetworkBehaviour
     {
         Runner.SetIsSimulated(Object, true);
 
-        kcc.SetManualUpdate(true);
-
         if (HasInputAuthority)
         {
             Runner.GetComponent<NetworkEvents>().OnInput.AddListener(OnInput);
@@ -89,17 +87,5 @@ public class PlayerKCC : NetworkBehaviour
         head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
         leftGrabber.SetPosRotTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
         rightGrabber.SetPosRotTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
-
-        kcc.ManualFixedUpdate();
-    }
-
-    public override void Render()
-    {
-        kcc.ManualRenderUpdate();
-
-        if (HasInputAuthority)
-        {
-            InputHandler.Current.transform.SetPositionAndRotation(transform.position, transform.rotation);
-        }
     }
 }
