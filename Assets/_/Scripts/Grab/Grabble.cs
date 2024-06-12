@@ -33,6 +33,7 @@ public class Grabble : NetworkBehaviour
         if (!grabInfo.IsDefault && dataCache.TryGet(grabInfo.GrabberId, out Grabber grabber) && grabber != null)
         {
             rbNet.Rigidbody.SetVelocity(transform, grabber.Target.transform, grabInfo.PositionOffset, grabInfo.RotationOffset, Runner.DeltaTime);
+            rbNet.Rigidbody.velocity /= 2;
         }
     }
 }

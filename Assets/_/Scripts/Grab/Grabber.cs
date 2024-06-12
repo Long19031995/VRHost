@@ -59,6 +59,7 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
     public override void FixedUpdateNetwork()
     {
         rbNet.Rigidbody.SetVelocity(transform, Target, Time.fixedDeltaTime);
+        rbNet.Rigidbody.velocity /= 2;
 
         if (GetInput(out InputData inputData))
         {
