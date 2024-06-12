@@ -54,12 +54,12 @@ MonoBehaviour:
         m_Name: Position
         m_Type: 0
         m_ExpectedControlType: Vector3
-        m_Id: ad827edb-2b86-41ce-8b04-181a84af4f75
+        m_Id: 4927762a-d859-4138-bf12-6d37afff0468
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 1660c811-b92c-4100-86e8-3d2eb4ad2331
+          m_Id: 3cdc5d3f-8076-4229-8267-fd67ab775534
           m_Path: <XRController>{LeftHand}/devicePosition
           m_Interactions: 
           m_Processors: 
@@ -74,12 +74,12 @@ MonoBehaviour:
         m_Name: Rotation
         m_Type: 0
         m_ExpectedControlType: Quaternion
-        m_Id: 879cbb4e-91ee-4a72-84cd-15856cec2607
+        m_Id: 00fe04c2-3994-4af5-b920-38c8ce7b0312
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 0dcb66c3-50e2-4840-8031-155972bd2d95
+          m_Id: ae7cc6ab-d7b7-421c-9643-b1730ab7f3c3
           m_Path: <XRController>{LeftHand}/deviceRotation
           m_Interactions: 
           m_Processors: 
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35684aaa9627ffd42aabf276b4ef96a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platform: 0
+  platform: 1
   headTarget: {fileID: 6063705123917331220}
   leftHandTarget: {fileID: 8985142858508117353}
   rightHandTarget: {fileID: 1354660369798233058}
@@ -590,12 +590,12 @@ MonoBehaviour:
         m_Name: Position
         m_Type: 0
         m_ExpectedControlType: Vector3
-        m_Id: d28204c6-407a-4b55-a70d-edbe2c987998
+        m_Id: b2292afa-fd0b-4beb-b80a-be9578577251
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 1cc59993-b5a3-4818-90b4-2f04e203592f
+          m_Id: cef123ef-fce3-4c8c-9f46-798a7906bd08
           m_Path: <XRController>{RightHand}/devicePosition
           m_Interactions: 
           m_Processors: 
@@ -610,12 +610,12 @@ MonoBehaviour:
         m_Name: Rotation
         m_Type: 0
         m_ExpectedControlType: Quaternion
-        m_Id: 0eefa391-6332-4f87-b961-377127eb66aa
+        m_Id: c2fba9b4-9b7b-42c7-b5cc-cbd018c5c49e
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 7ea7bbf5-f619-413f-8128-a1bd4d6a0456
+          m_Id: fd7babec-9910-4e81-ba8b-ad55295b6fa3
           m_Path: <XRController>{RightHand}/deviceRotation
           m_Interactions: 
           m_Processors: 
@@ -644,12 +644,12 @@ MonoBehaviour:
         m_Name: Grip
         m_Type: 0
         m_ExpectedControlType: Axis
-        m_Id: a4f1b7bb-4d22-4dc7-b1bc-736be7905c43
+        m_Id: d9a5899a-f38b-409a-9fbb-6cf37c01dac7
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 3a2982a9-24d4-4421-992a-03ce61b58b1d
+          m_Id: 35c2d7c1-7149-449f-b517-f3f26eb0fa42
           m_Path: <XRController>{RightHand}/{Grip}
           m_Interactions: 
           m_Processors: 
@@ -664,12 +664,12 @@ MonoBehaviour:
         m_Name: Move
         m_Type: 0
         m_ExpectedControlType: Vector2
-        m_Id: fe365f89-4040-4d52-b988-7c808ac460e8
+        m_Id: 4b21b67b-3e4c-4b91-9014-a6d5ceb6bf1d
         m_Processors: scaleVector2(x=0,y=1)
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 2cc3b01a-cfa4-48dc-bcf1-a02c4d923e28
+          m_Id: df4d150d-4b9a-4b2e-806d-af7c680e0dec
           m_Path: <XRController>{RightHand}/{Primary2DAxis}
           m_Interactions: 
           m_Processors: 
@@ -677,7 +677,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 0
         - m_Name: 2DVector
-          m_Id: a5e8ce71-a8fc-4813-8a5a-6e796e1c5525
+          m_Id: bc22f042-042e-4975-99d1-1eba3bd7b0d3
           m_Path: 2DVector
           m_Interactions: 
           m_Processors: 
@@ -685,7 +685,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 4
         - m_Name: Up
-          m_Id: 70a011aa-9014-461e-9fe0-8f945fa7a4e3
+          m_Id: 1b32bf56-70b2-4390-9bfd-67cb076bf508
           m_Path: <Keyboard>/w
           m_Interactions: 
           m_Processors: 
@@ -693,7 +693,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 8
         - m_Name: Down
-          m_Id: d392ad30-9651-40a5-a3a4-ca630ad19d34
+          m_Id: c3e35667-6d06-43f6-9d18-1558b838ceb9
           m_Path: <Keyboard>/s
           m_Interactions: 
           m_Processors: 
@@ -701,7 +701,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 8
         - m_Name: Left
-          m_Id: 97f595a1-16cc-4586-9c04-9be7baff65cc
+          m_Id: 8dd484d9-57f0-46d8-8c89-bdc5bc2cbf17
           m_Path: <Keyboard>/q
           m_Interactions: 
           m_Processors: 
@@ -709,7 +709,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 8
         - m_Name: Right
-          m_Id: 77305e8d-5b74-43cc-aa20-6024361a307f
+          m_Id: 453b947c-6287-41b7-9313-9267f8a0d5b6
           m_Path: <Keyboard>/e
           m_Interactions: 
           m_Processors: 
@@ -724,12 +724,12 @@ MonoBehaviour:
         m_Name: Rotate
         m_Type: 0
         m_ExpectedControlType: Vector2
-        m_Id: 27184976-f13c-4713-bc78-f5c72a231403
+        m_Id: 25ba3b1f-560e-49c9-9fed-47c63dd9ddb9
         m_Processors: scaleVector2(x=1,y=0)
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 9a6f31a0-5fad-4ebc-a35f-37991370ecbe
+          m_Id: 67ae8d17-a49f-42fe-9dd4-bd8b0e7a71b3
           m_Path: <XRController>{RightHand}/{Primary2DAxis}
           m_Interactions: 
           m_Processors: 
@@ -737,7 +737,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 0
         - m_Name: 2DVector
-          m_Id: b733d496-a4b4-4e11-9160-dd2489f2f76c
+          m_Id: d571f3fb-b0c2-4603-b445-20dae6c6c1ce
           m_Path: 2DVector
           m_Interactions: 
           m_Processors: 
@@ -745,7 +745,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 4
         - m_Name: Up
-          m_Id: 0201fffa-733e-4b58-b86b-2d67f2d0aac8
+          m_Id: 4b32180e-621d-474b-84f2-c5156de0d959
           m_Path: <Keyboard>/w
           m_Interactions: 
           m_Processors: 
@@ -753,7 +753,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 8
         - m_Name: Down
-          m_Id: 450ba557-871d-40af-9916-885c5076c3e4
+          m_Id: 179af888-9d31-46f1-ac0e-900bc6e391d6
           m_Path: <Keyboard>/s
           m_Interactions: 
           m_Processors: 
@@ -761,7 +761,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 8
         - m_Name: Left
-          m_Id: d38d6b73-371b-4831-8723-dae10e6aa74f
+          m_Id: e5c772cd-58c8-4af1-85b9-539b0dec25bb
           m_Path: <Keyboard>/q
           m_Interactions: 
           m_Processors: 
@@ -769,7 +769,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 8
         - m_Name: Right
-          m_Id: e55bf4b6-ff9c-447e-ac54-360efa5ad26f
+          m_Id: f9066410-93a1-49a9-a1cc-7fdeb9ecd064
           m_Path: <Keyboard>/e
           m_Interactions: 
           m_Processors: 
