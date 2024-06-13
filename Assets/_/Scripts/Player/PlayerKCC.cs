@@ -80,7 +80,7 @@ public class PlayerKCC : NetworkBehaviour
         {
             inputDataNetwork = inputData;
 
-            kcc.SetInputDirection(kcc.Data.TransformRotation * new Vector3(inputData.MoveDirection.x, 0, inputData.MoveDirection.y) * Runner.DeltaTime * moveSpeed);
+            kcc.SetInputDirection(inputData.HeadRotation * new Vector3(inputData.MoveDirection.x, 0, inputData.MoveDirection.y) * Runner.DeltaTime * moveSpeed);
             kcc.AddLookRotation(new Vector2(0, inputData.RotateDirection) * Runner.DeltaTime * rotateSpeed);
         }
 
