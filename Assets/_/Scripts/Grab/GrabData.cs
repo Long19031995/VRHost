@@ -39,14 +39,14 @@ public class GrabDataCache
             return true;
         }
 
-        if (runner.TryFindBehaviour(id, out NetworkBehaviour behaviour) && behaviour != null)
+        if (runner.TryFindBehaviour(id, out NetworkBehaviour behaviour))
         {
             datasCached[id] = behaviour;
             t = behaviour as T;
             return true;
         }
 
-        t = default;
+        t = null;
         return false;
     }
 }

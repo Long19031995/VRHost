@@ -8,14 +8,12 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
     [SerializeField] private NetworkRigidbody3D rbNet;
     [SerializeField] private GrabberSide side;
     [SerializeField] private Transform visual;
-    [SerializeField] private float speed = 25;
 
     public Transform Target { get; private set; }
 
     [Networked] private GrabInfo grabInfo { get; set; }
     private GrabDataCache dataCache;
     private Grabble grabble;
-    private Vector3 posOld;
 
     public override void Spawned()
     {
@@ -69,21 +67,38 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
             grabInfo = side == GrabberSide.Left ? inputData.LeftGrabInfo : inputData.RightGrabInfo;
         }
 
-        if (grabInfo.GrabberId == Id && dataCache.TryGet(grabInfo.GrabbleId, out Grabble newGrabble) && newGrabble != null)
+        if (grabInfo.GrabberId == Id && dataCache.TryGet(grabInfo.GrabbleId, out Grabble newGrabble))
         {
             grabble = newGrabble;
             grabble.SetGrabInfo(grabInfo, HasInputAuthority);
         }
-        else if (grabInfo.IsDefault && grabble != null)
+        else if (grabInfo.IsDefault)
         {
-            grabble.SetGrabInfo(default, HasInputAuthority);
+            grabble?.SetGrabInfo(default, HasInputAuthority);
             grabble = null;
         }
     }
 
     public override void Render()
     {
-        visual.position = Vector3.Lerp(posOld, transform.position, Time.deltaTime * speed);
-        posOld = visual.position;
+        visual.position = grabble || hasCollision ? transform.position : posReal;
+    }
+
+    private Vector3 posReal;
+    private bool hasCollision;
+
+    public void SetPosReal(Vector3 posReal)
+    {
+        this.posReal = posReal;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        hasCollision = true;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        hasCollision = false;
     }
 }

@@ -88,4 +88,10 @@ public class PlayerKCC : NetworkBehaviour
         leftGrabber.SetPosRotTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
         rightGrabber.SetPosRotTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
     }
+
+    public override void Render()
+    {
+        leftGrabber.SetPosReal(InputHandler.Current.LeftHandTarget.position);
+        rightGrabber.SetPosReal(InputHandler.Current.RightHandTarget.position);
+    }
 }
