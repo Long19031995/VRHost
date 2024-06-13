@@ -380,7 +380,7 @@ MonoBehaviour:
   _settings:
     Shape: 1
     IsTrigger: 0
-    Radius: 0.1
+    Radius: 0
     Height: 1.8
     Extent: 0.035
     ColliderLayer: 0
@@ -505,7 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kcc: {fileID: 3112620684699434513}
-  moveSpeed: 5
+  moveSpeed: 3
   rotateSpeed: 100
   head: {fileID: 3351240260065038675}
   leftGrabber: {fileID: 3491056886057241641}
