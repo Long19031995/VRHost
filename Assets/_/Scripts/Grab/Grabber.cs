@@ -7,12 +7,15 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
     [SerializeField] private GrabberSide side;
+    [SerializeField] private Transform visual;
+    [SerializeField] private float speed = 25;
 
     public Transform Target { get; private set; }
 
     [Networked] private GrabInfo grabInfo { get; set; }
     private GrabDataCache dataCache;
     private Grabble grabble;
+    private Vector3 posOld;
 
     public override void Spawned()
     {
@@ -76,5 +79,11 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
             grabble.SetGrabInfo(default, HasInputAuthority);
             grabble = null;
         }
+    }
+
+    public override void Render()
+    {
+        visual.position = Vector3.Lerp(posOld, transform.position, Time.deltaTime * speed);
+        posOld = visual.position;
     }
 }
