@@ -81,7 +81,10 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
 
     public override void Render()
     {
-        visual.position = grabble || hasCollision ? transform.position : posReal;
+        if (HasInputAuthority)
+        {
+            visual.position = grabble || hasCollision ? transform.position : posReal;
+        }
     }
 
     private Vector3 posReal;

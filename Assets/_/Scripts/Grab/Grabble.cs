@@ -24,8 +24,6 @@ public class Grabble : NetworkBehaviour
     {
         grabInfo = newGrabInfo;
         Object.RenderTimeframe = hasInput ? RenderTimeframe.Local : RenderTimeframe.Remote;
-
-        if (grabInfo.IsDefault) grabber = null;
     }
 
     public GrabInfo GetGrabInfo()
@@ -44,6 +42,10 @@ public class Grabble : NetworkBehaviour
             }
 
             grabber = newGrabber;
+        }
+        else
+        {
+            grabber = null;
         }
 
         if (grabber != null)

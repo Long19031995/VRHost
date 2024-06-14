@@ -91,7 +91,10 @@ public class PlayerKCC : NetworkBehaviour
 
     public override void Render()
     {
-        leftGrabber.SetPosReal(InputHandler.Current.LeftHandTarget.position);
-        rightGrabber.SetPosReal(InputHandler.Current.RightHandTarget.position);
+        if (HasInputAuthority)
+        {
+            leftGrabber.SetPosReal(InputHandler.Current.LeftHandTarget.position);
+            rightGrabber.SetPosReal(InputHandler.Current.RightHandTarget.position);
+        }
     }
 }
