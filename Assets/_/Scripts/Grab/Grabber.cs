@@ -12,8 +12,11 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
     public Transform Target { get; private set; }
 
     [Networked] private GrabInfo grabInfo { get; set; }
+
     private GrabDataCache dataCache;
     private Grabble grabble;
+    private Vector3 positionReal;
+    private bool hasCollision;
 
     public override void Spawned()
     {
@@ -31,30 +34,34 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
         Object.RenderTimeframe = HasInputAuthority ? RenderTimeframe.Local : RenderTimeframe.Remote;
     }
 
-    public void SetPosRotTarget(Vector3 posTarget, Quaternion rotTarget)
+    public void SetPositionAndRotationTarget(Vector3 positionTarget, Quaternion rotationTarget)
     {
-        Target.SetPositionAndRotation(posTarget, rotTarget);
+        Target.SetPositionAndRotation(positionTarget, rotationTarget);
+    }
+
+    public void SetPositionReal(Vector3 positionReal)
+    {
+        this.positionReal = positionReal;
     }
 
     public GrabInfo Grab(Grabble grabble)
     {
-        return grabInfo.IsDefault ? GetGrabInfo(grabble) : grabInfo;
-    }
-
-    private GrabInfo GetGrabInfo(Grabble grabble)
-    {
-        if (grabble == null) return default;
-        else if (!grabble.GetGrabInfo().IsDefault) return default;
-
-        var (posOffset, rotOffset) = Extension.GetPosRotOffset(grabble.transform, transform);
-        return new GrabInfo()
+        if (grabInfo.IsDefault)
         {
-            GrabberSide = side,
-            GrabberId = Id,
-            GrabbleId = grabble.Id,
-            PositionOffset = posOffset,
-            RotationOffset = rotOffset
-        };
+            if (grabble == null || !grabble.GrabInfo.IsDefault) return default;
+
+            var offset = Extension.GetPoseOffset(grabble.transform, transform);
+            return new GrabInfo()
+            {
+                GrabberSide = side,
+                GrabberId = Id,
+                GrabbleId = grabble.Id,
+                PositionOffset = offset.Position,
+                RotationOffset = offset.Rotation
+            };
+        }
+
+        return grabInfo;
     }
 
     public override void FixedUpdateNetwork()
@@ -83,16 +90,8 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
     {
         if (HasInputAuthority)
         {
-            visual.position = grabble || hasCollision ? transform.position : posReal;
+            visual.position = grabble || hasCollision ? transform.position : positionReal;
         }
-    }
-
-    private Vector3 posReal;
-    private bool hasCollision;
-
-    public void SetPosReal(Vector3 posReal)
-    {
-        this.posReal = posReal;
     }
 
     private void OnCollisionStay(Collision collision)

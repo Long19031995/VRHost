@@ -7,11 +7,12 @@ public class Grabble : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
 
+    public GrabInfo GrabInfo => grabInfo;
+
     [Networked] private GrabInfo grabInfo { get; set; }
     private GrabDataCache dataCache;
     private Grabber grabber;
-    private Vector3 posOffset;
-    private Quaternion rotOffset;
+    private Pose offset;
 
     public override void Spawned()
     {
@@ -26,31 +27,20 @@ public class Grabble : NetworkBehaviour
         Object.RenderTimeframe = hasInput ? RenderTimeframe.Local : RenderTimeframe.Remote;
     }
 
-    public GrabInfo GetGrabInfo()
-    {
-        return grabInfo;
-    }
-
     public override void FixedUpdateNetwork()
     {
-        if (dataCache.TryGet(grabInfo.GrabberId, out Grabber newGrabber))
+        if (dataCache.TryGet(grabInfo.GrabberId, out Grabber newGrabber) && newGrabber != grabber)
         {
-            if (newGrabber != grabber)
-            {
-                posOffset = transform.InverseTransformPoint(newGrabber.transform.position);
-                rotOffset = Quaternion.Inverse(newGrabber.transform.rotation) * transform.rotation;
-            }
-
-            grabber = newGrabber;
+            offset = Extension.GetPoseOffset(newGrabber.transform, transform);
         }
-        else
-        {
-            grabber = null;
-        }
+        grabber = newGrabber;
 
         if (grabber != null)
         {
-            rbNet.Rigidbody.SetVelocity(transform, grabber.Target.transform, grabInfo.PositionOffset, grabInfo.RotationOffset, Runner.DeltaTime);
+            var poseTarget = Extension.GetPoseTarget(grabber.Target, grabInfo.PositionOffset, grabInfo.RotationOffset);
+            var poseCurrent = new Pose(transform.position, transform.rotation);
+
+            rbNet.Rigidbody.SetVelocity(poseCurrent, poseTarget, Runner.DeltaTime);
             rbNet.Rigidbody.velocity /= 2;
         }
     }
@@ -59,8 +49,8 @@ public class Grabble : NetworkBehaviour
     {
         if (grabber != null)
         {
-            grabber.transform.position = transform.TransformPoint(posOffset);
-            grabber.transform.rotation = transform.rotation * Quaternion.Inverse(rotOffset);
+            var target = Extension.GetPoseTarget(transform, offset.Position, offset.Rotation);
+            grabber.transform.SetPositionAndRotation(target.Position, target.Rotation);
         }
     }
 }

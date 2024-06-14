@@ -85,16 +85,16 @@ public class PlayerKCC : NetworkBehaviour
         }
 
         head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
-        leftGrabber.SetPosRotTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
-        rightGrabber.SetPosRotTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
+        leftGrabber.SetPositionAndRotationTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
+        rightGrabber.SetPositionAndRotationTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
     }
 
     public override void Render()
     {
         if (HasInputAuthority)
         {
-            leftGrabber.SetPosReal(InputHandler.Current.LeftHandTarget.position);
-            rightGrabber.SetPosReal(InputHandler.Current.RightHandTarget.position);
+            leftGrabber.SetPositionReal(InputHandler.Current.LeftHandTarget.position);
+            rightGrabber.SetPositionReal(InputHandler.Current.RightHandTarget.position);
         }
     }
 }

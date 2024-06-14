@@ -1,22 +1,39 @@
 using UnityEngine;
 
+public struct Pose
+{
+    public Vector3 Position;
+    public Quaternion Rotation;
+
+    public Pose(Vector3 position, Quaternion rotation)
+    {
+        Position = position;
+        Rotation = rotation;
+    }
+}
+
 public static class Extension
 {
-    public static (Vector3, Quaternion) GetPosRotOffset(Transform current, Transform target)
+    public static Pose GetPoseOffset(Transform current, Transform target)
     {
-        var posOffset = target.InverseTransformPoint(current.position);
-        var rotOffset = Quaternion.Inverse(current.rotation) * target.rotation;
+        var positionOffset = target.InverseTransformPoint(current.position);
+        var rotationOffset = Quaternion.Inverse(current.rotation) * target.rotation;
 
-        return (posOffset, rotOffset);
+        return new Pose(positionOffset, rotationOffset);
     }
 
-    public static void SetVelocity(this Rigidbody rb, Transform current, Transform target, Vector3 posOffset, Quaternion rotOffset, float deltaTime)
+    public static Pose GetPoseTarget(Transform current, Vector3 positionOffset, Quaternion rotationOffset)
     {
-        var pos = target.TransformPoint(posOffset);
-        var rot = target.rotation * Quaternion.Inverse(rotOffset);
+        var positionTarget = current.TransformPoint(positionOffset);
+        var rotationTarget = current.rotation * Quaternion.Inverse(rotationOffset);
 
-        rb.velocity = GetVelocity(current.position, pos, deltaTime);
-        rb.angularVelocity = GetAngularVelocity(current.rotation, rot, deltaTime);
+        return new Pose(positionTarget, rotationTarget);
+    }
+
+    public static void SetVelocity(this Rigidbody rb, Pose current, Pose target, float deltaTime)
+    {
+        rb.velocity = GetVelocity(current.Position, target.Position, deltaTime);
+        rb.angularVelocity = GetAngularVelocity(current.Rotation, target.Rotation, deltaTime);
     }
 
     public static void SetVelocity(this Rigidbody rb, Transform current, Transform target, float deltaTime)
