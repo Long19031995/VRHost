@@ -90,7 +90,18 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
     {
         if (HasInputAuthority)
         {
-            visual.position = grabble || hasCollision ? transform.position : positionReal;
+            if (grabble != null)
+            {
+                visual.position = transform.position;
+            }
+            else if (hasCollision)
+            {
+                visual.position = Vector3.Lerp(visual.position, transform.position, Time.deltaTime * 15);
+            }
+            else
+            {
+                visual.position = positionReal;
+            }
         }
     }
 

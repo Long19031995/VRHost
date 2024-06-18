@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public struct Pose
+public struct PoseHand
 {
     public Vector3 Position;
     public Quaternion Rotation;
 
-    public Pose(Vector3 position, Quaternion rotation)
+    public PoseHand(Vector3 position, Quaternion rotation)
     {
         Position = position;
         Rotation = rotation;
@@ -14,23 +14,23 @@ public struct Pose
 
 public static class Extension
 {
-    public static Pose GetPoseOffset(Transform current, Transform target)
+    public static PoseHand GetPoseOffset(Transform current, Transform target)
     {
         var positionOffset = target.InverseTransformPoint(current.position);
         var rotationOffset = Quaternion.Inverse(current.rotation) * target.rotation;
 
-        return new Pose(positionOffset, rotationOffset);
+        return new PoseHand(positionOffset, rotationOffset);
     }
 
-    public static Pose GetPoseTarget(Transform current, Vector3 positionOffset, Quaternion rotationOffset)
+    public static PoseHand GetPoseTarget(Transform current, Vector3 positionOffset, Quaternion rotationOffset)
     {
         var positionTarget = current.TransformPoint(positionOffset);
         var rotationTarget = current.rotation * Quaternion.Inverse(rotationOffset);
 
-        return new Pose(positionTarget, rotationTarget);
+        return new PoseHand(positionTarget, rotationTarget);
     }
 
-    public static void SetVelocity(this Rigidbody rb, Pose current, Pose target, float deltaTime)
+    public static void SetVelocity(this Rigidbody rb, PoseHand current, PoseHand target, float deltaTime)
     {
         rb.velocity = GetVelocity(current.Position, target.Position, deltaTime);
         rb.angularVelocity = GetAngularVelocity(current.Rotation, target.Rotation, deltaTime);
@@ -55,5 +55,17 @@ public static class Extension
         var directionAngular = angle * Mathf.Deg2Rad * axis;
         if (float.IsInfinity(axis.x) || float.IsInfinity(axis.y) || float.IsInfinity(axis.z)) directionAngular = Vector3.zero;
         return directionAngular / deltaTime;
+    }
+
+    public static void LerpTo(this Transform current, Transform target, float deltaTime)
+    {
+        current.position = Vector3.Lerp(current.position, target.position, deltaTime);
+        current.rotation = Quaternion.Lerp(current.rotation, target.rotation, deltaTime);
+    }
+
+    public static void LerpTo(this Transform current, Vector3 posTarget, Quaternion rotTarget, float deltaTime)
+    {
+        current.position = Vector3.Lerp(current.position, posTarget, deltaTime);
+        current.rotation = Quaternion.Lerp(current.rotation, rotTarget, deltaTime);
     }
 }
