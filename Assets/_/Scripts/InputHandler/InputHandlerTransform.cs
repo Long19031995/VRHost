@@ -14,6 +14,7 @@ public class InputHandlerTransformProperty
 {
     public InputActionProperty Position;
     public InputActionProperty Rotation;
+    public InputActionProperty Velocity;
 }
 
 public class InputHandlerTransform : MonoBehaviour
@@ -36,6 +37,7 @@ public class InputHandlerTransform : MonoBehaviour
     {
         var bindingPosition = "";
         var bindingRotation = "";
+        var bindingVelocity = "";
 
         switch (type)
         {
@@ -55,6 +57,7 @@ public class InputHandlerTransform : MonoBehaviour
 
         property.Position = new InputActionProperty(new InputAction("Position", binding: bindingPosition, expectedControlType: "Vector3"));
         property.Rotation = new InputActionProperty(new InputAction("Rotation", binding: bindingRotation, expectedControlType: "Quaternion"));
+        property.Velocity = new InputActionProperty(new InputAction("Velocity", binding: bindingVelocity, expectedControlType: "Vector3"));
     }
 
     private void OnEnable()

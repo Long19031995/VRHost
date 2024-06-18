@@ -9,10 +9,14 @@ public class Player : NetworkBehaviour
 
     public override void Render()
     {
-        transform.SetPositionAndRotation(kcc.transform.position, kcc.transform.rotation);
+        var positionTarget = kcc.transform.position - kcc.transform.rotation * InputHandler.Current.Head.localPosition.OnlyXZ();
+        var rotationTarget = kcc.transform.rotation;
+
+        transform.SetPositionAndRotation(positionTarget, rotationTarget);
+
         if (HasInputAuthority)
         {
-            InputHandler.Current.transform.SetPositionAndRotation(kcc.transform.position, kcc.transform.rotation);
+            InputHandler.Current.transform.SetPositionAndRotation(positionTarget, rotationTarget);
         }
     }
 }

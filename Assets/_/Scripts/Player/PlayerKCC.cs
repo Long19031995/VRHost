@@ -52,7 +52,7 @@ public class PlayerKCC : NetworkBehaviour
             RightHandRotation = InputHandler.Current.RightHandTarget.rotation,
             RightGrabInfo = InputHandler.Current.RightHandGrip ? rightGrabber.Grab(FindGrabble(rightGrabber.transform.position)) : default,
 
-            MoveDirection = InputHandler.Current.MoveDirection,
+            MoveDirection = InputHandler.Current.MoveDirection + new Vector2(InputHandler.Current.Head.localPosition.x, InputHandler.Current.Head.localPosition.z),
             RotateDirection = new Vector2(0, InputHandler.Current.RotateDirection),
         });
     }
@@ -63,7 +63,7 @@ public class PlayerKCC : NetworkBehaviour
         {
             inputDataNetwork = inputData;
 
-            kcc.SetInputDirection(inputData.HeadRotation * new Vector3(inputData.MoveDirection.x, 0, inputData.MoveDirection.y) * Runner.DeltaTime * moveSpeed);
+            kcc.SetInputDirection(inputData.HeadRotation * new Vector3(inputData.MoveDirection.x, 0, inputData.MoveDirection.y) * Runner.DeltaTime * moveSpeed, false);
             kcc.AddLookRotation(inputData.RotateDirection * Runner.DeltaTime * rotateSpeed);
         }
 

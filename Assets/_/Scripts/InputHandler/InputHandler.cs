@@ -23,9 +23,13 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private Transform rightHandTarget;
 
     [Header("Input")]
+    [SerializeField] private InputHandlerTransform headInput;
     [SerializeField] private InputHandlerInteraction leftHandInput;
     [SerializeField] private InputHandlerInteraction rightHandInput;
 
+    public Transform Head => headInput.transform;
+    public Transform LeftHand => leftHandInput.transform;
+    public Transform RightHand => rightHandInput.transform;
     public Transform HeadTarget => headTarget;
     public Transform LeftHandTarget => leftHandTarget;
     public Transform RightHandTarget => rightHandTarget;
