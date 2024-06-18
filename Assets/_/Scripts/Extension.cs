@@ -56,16 +56,4 @@ public static class Extension
         if (float.IsInfinity(axis.x) || float.IsInfinity(axis.y) || float.IsInfinity(axis.z)) directionAngular = Vector3.zero;
         return directionAngular / deltaTime;
     }
-
-    public static void LerpTo(this Transform current, Transform target, float deltaTime)
-    {
-        current.position = Vector3.Lerp(current.position, target.position, deltaTime);
-        current.rotation = Quaternion.Lerp(current.rotation, target.rotation, deltaTime);
-    }
-
-    public static void LerpTo(this Transform current, Vector3 posTarget, Quaternion rotTarget, float deltaTime)
-    {
-        current.position = Vector3.Lerp(current.position, posTarget, deltaTime);
-        current.rotation = Quaternion.Lerp(current.rotation, rotTarget, deltaTime);
-    }
 }
