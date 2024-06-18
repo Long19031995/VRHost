@@ -1,17 +1,5 @@
 using UnityEngine;
 
-public struct PoseHand
-{
-    public Vector3 Position;
-    public Quaternion Rotation;
-
-    public PoseHand(Vector3 position, Quaternion rotation)
-    {
-        Position = position;
-        Rotation = rotation;
-    }
-}
-
 public static class Extension
 {
     public static PoseHand GetPoseOffset(Transform current, Transform target)

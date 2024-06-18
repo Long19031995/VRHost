@@ -11,7 +11,7 @@ public class Grabble : NetworkBehaviour
     public GrabInfo GrabInfo => grabInfo;
 
     [Networked] private GrabInfo grabInfo { get; set; }
-    private GrabDataCache dataCache;
+    private DataCache dataCache;
     private Grabber grabber;
     private PoseHand offset;
 
@@ -23,7 +23,7 @@ public class Grabble : NetworkBehaviour
     {
         Runner.SetIsSimulated(Object, true);
 
-        dataCache = new GrabDataCache(Runner);
+        dataCache = new DataCache(Runner);
     }
 
     public void SetGrabInfo(GrabInfo newGrabInfo, bool hasInput = true)

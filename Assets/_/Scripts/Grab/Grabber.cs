@@ -13,7 +13,7 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
 
     [Networked] private GrabInfo grabInfo { get; set; }
 
-    private GrabDataCache dataCache;
+    private DataCache dataCache;
     private Grabble grabble;
     private Vector3 positionReal;
     private bool hasCollision;
@@ -25,7 +25,7 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
         Target = new GameObject("Target").transform;
         Target.SetParent(transform);
 
-        dataCache = new GrabDataCache(Runner);
+        dataCache = new DataCache(Runner);
     }
 
     public void InputAuthorityLost()

@@ -2,23 +2,6 @@ using Fusion;
 using Fusion.Addons.KCC;
 using UnityEngine;
 
-public struct InputData : INetworkInput
-{
-    public Vector3 HeadPosition;
-    public Quaternion HeadRotation;
-
-    public Vector3 LeftHandPosition;
-    public Quaternion LeftHandRotation;
-    public GrabInfo LeftGrabInfo;
-
-    public Vector3 RightHandPosition;
-    public Quaternion RightHandRotation;
-    public GrabInfo RightGrabInfo;
-
-    public Vector2 MoveDirection;
-    public float RotateDirection;
-}
-
 [DefaultExecutionOrder(0)]
 public class PlayerKCC : NetworkBehaviour
 {
@@ -70,7 +53,7 @@ public class PlayerKCC : NetworkBehaviour
             RightGrabInfo = InputHandler.Current.RightHandGrip ? rightGrabber.Grab(FindGrabble(rightGrabber.transform.position)) : default,
 
             MoveDirection = InputHandler.Current.MoveDirection,
-            RotateDirection = InputHandler.Current.RotateDirection,
+            RotateDirection = new Vector2(0, InputHandler.Current.RotateDirection),
         });
     }
 
@@ -81,7 +64,7 @@ public class PlayerKCC : NetworkBehaviour
             inputDataNetwork = inputData;
 
             kcc.SetInputDirection(inputData.HeadRotation * new Vector3(inputData.MoveDirection.x, 0, inputData.MoveDirection.y) * Runner.DeltaTime * moveSpeed);
-            kcc.AddLookRotation(new Vector2(0, inputData.RotateDirection) * Runner.DeltaTime * rotateSpeed);
+            kcc.AddLookRotation(inputData.RotateDirection * Runner.DeltaTime * rotateSpeed);
         }
 
         head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
