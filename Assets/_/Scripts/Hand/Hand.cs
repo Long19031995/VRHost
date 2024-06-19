@@ -24,10 +24,9 @@ public class Hand : MonoBehaviour
             foreach (var finger in fingers)
             {
                 var position = Vector3.Lerp(finger.position, root.TransformPoint(poseTarget.posOffsets[i]), Time.deltaTime * 20);
-                finger.position = position;
-
                 var rotation = Quaternion.Lerp(finger.rotation, root.rotation * poseTarget.rotOffsets[i], Time.deltaTime * 20);
-                finger.rotation = rotation;
+                finger.SetPositionAndRotation(position, rotation);
+
                 i++;
             }
         }

@@ -58,16 +58,16 @@ public class Grabble : NetworkBehaviour
     {
         if (grabber != null)
         {
-            interpolate.position = Vector3.Lerp(positionOld, transform.position, Time.deltaTime * 15);
-            interpolate.rotation = Quaternion.Lerp(rotationOld, transform.rotation, Time.deltaTime * 15);
+            var position = Vector3.Lerp(positionOld, transform.position, Time.deltaTime * 15);
+            var rotation = Quaternion.Lerp(rotationOld, transform.rotation, Time.deltaTime * 15);
+            interpolate.SetPositionAndRotation(position, rotation);
 
             var grabberTarget = Extension.GetPoseTarget(interpolate, offset.Position, offset.Rotation);
             grabber.transform.SetPositionAndRotation(grabberTarget.Position, grabberTarget.Rotation);
         }
         else
         {
-            interpolate.position = transform.position;
-            interpolate.rotation = transform.rotation;
+            interpolate.SetPositionAndRotation(transform.position, transform.rotation);
         }
 
         positionOld = interpolate.position;
