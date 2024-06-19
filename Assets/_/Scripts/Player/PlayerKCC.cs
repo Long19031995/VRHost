@@ -8,8 +8,6 @@ public class PlayerKCC : NetworkBehaviour
     [Networked] private InputData inputDataNetwork { get; set; }
 
     [SerializeField] private KCC kcc;
-    [SerializeField] private float moveSpeed = 5;
-    [SerializeField] private float rotateSpeed = 100;
 
     [SerializeField] private Transform head;
     [SerializeField] private Grabber leftGrabber;
@@ -52,7 +50,7 @@ public class PlayerKCC : NetworkBehaviour
             RightHandRotation = InputHandler.Current.RightHandTarget.rotation,
             RightGrabInfo = InputHandler.Current.RightHandGrip ? rightGrabber.Grab(FindGrabble(rightGrabber.transform.position)) : default,
 
-            MoveDirection = InputHandler.Current.MoveDirection + new Vector2(InputHandler.Current.Head.localPosition.x, InputHandler.Current.Head.localPosition.z),
+            MoveDirection = InputHandler.Current.MoveDirection,
             RotateDirection = new Vector2(0, InputHandler.Current.RotateDirection),
         });
     }
@@ -63,8 +61,8 @@ public class PlayerKCC : NetworkBehaviour
         {
             inputDataNetwork = inputData;
 
-            kcc.SetInputDirection(inputData.HeadRotation * new Vector3(inputData.MoveDirection.x, 0, inputData.MoveDirection.y) * Runner.DeltaTime * moveSpeed, false);
-            kcc.AddLookRotation(inputData.RotateDirection * Runner.DeltaTime * rotateSpeed);
+            kcc.SetInputDirection(inputData.HeadRotation * new Vector3(inputData.MoveDirection.x, 0, inputData.MoveDirection.y));
+            kcc.AddLookRotation(inputData.RotateDirection);
         }
 
         head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);

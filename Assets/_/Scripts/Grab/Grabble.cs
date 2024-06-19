@@ -17,7 +17,6 @@ public class Grabble : NetworkBehaviour
 
     private Vector3 positionOld;
     private Quaternion rotationOld;
-    private Vector3 velocity;
 
     public override void Spawned()
     {
@@ -34,6 +33,12 @@ public class Grabble : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (grabInfo.IsDefault)
+        {
+            grabber = null;
+            return;
+        }
+
         if (dataCache.TryGet(grabInfo.GrabberId, out Grabber newGrabber) && newGrabber != grabber)
         {
             offset = Extension.GetPoseOffset(newGrabber.transform, transform);
@@ -46,7 +51,6 @@ public class Grabble : NetworkBehaviour
             var poseCurrent = new PoseHand(transform.position, transform.rotation);
 
             rbNet.Rigidbody.SetVelocity(poseCurrent, poseTarget, Runner.DeltaTime);
-            rbNet.Rigidbody.velocity /= 2;
         }
     }
 
@@ -54,7 +58,7 @@ public class Grabble : NetworkBehaviour
     {
         if (grabber != null)
         {
-            interpolate.position = Vector3.SmoothDamp(positionOld, transform.position, ref velocity, 0.05f);
+            interpolate.position = Vector3.Lerp(positionOld, transform.position, Time.deltaTime * 15);
             interpolate.rotation = Quaternion.Lerp(rotationOld, transform.rotation, Time.deltaTime * 15);
 
             var grabberTarget = Extension.GetPoseTarget(interpolate, offset.Position, offset.Rotation);

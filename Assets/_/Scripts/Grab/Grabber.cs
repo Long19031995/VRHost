@@ -67,7 +67,6 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
     public override void FixedUpdateNetwork()
     {
         rbNet.Rigidbody.SetVelocity(transform, Target, Runner.DeltaTime);
-        rbNet.Rigidbody.velocity /= 2;
 
         if (GetInput(out InputData inputData))
         {
@@ -79,9 +78,9 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
             grabble = newGrabble;
             grabble.SetGrabInfo(grabInfo, HasInputAuthority);
         }
-        else if (grabInfo.IsDefault)
+        else if (grabInfo.IsDefault && grabble != null)
         {
-            grabble?.SetGrabInfo(default, HasInputAuthority);
+            grabble.SetGrabInfo(default, HasInputAuthority);
             grabble = null;
         }
     }
