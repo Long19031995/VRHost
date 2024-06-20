@@ -27,6 +27,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private InputHandlerInteraction leftHandInput;
     [SerializeField] private InputHandlerInteraction rightHandInput;
 
+    public Vector3 HeadVelocity => headInput.Velocity;
     public Transform Head => headInput.transform;
     public Transform LeftHand => leftHandInput.transform;
     public Transform RightHand => rightHandInput.transform;

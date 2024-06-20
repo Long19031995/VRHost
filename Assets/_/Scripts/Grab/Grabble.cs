@@ -51,6 +51,7 @@ public class Grabble : NetworkBehaviour
             var poseCurrent = new PoseHand(transform.position, transform.rotation);
 
             rbNet.Rigidbody.SetVelocity(poseCurrent, poseTarget, Runner.DeltaTime);
+            rbNet.Rigidbody.velocity /= 2;
         }
     }
 

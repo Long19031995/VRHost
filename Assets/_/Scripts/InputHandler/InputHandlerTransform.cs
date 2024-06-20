@@ -24,6 +24,8 @@ public class InputHandlerTransform : MonoBehaviour
 
     public InputHandlerTransformType Type { get; private set; }
 
+    public Vector3 Velocity { get; private set; }
+
     private void OnValidate()
     {
         if (Type != type)
@@ -44,14 +46,17 @@ public class InputHandlerTransform : MonoBehaviour
             case InputHandlerTransformType.Head:
                 bindingPosition = "<XRHMD>/centerEyePosition";
                 bindingRotation = "<XRHMD>/centerEyeRotation";
+                bindingVelocity = "<XRHMD>/{DeviceVelocity}";
                 break;
             case InputHandlerTransformType.LeftHand:
                 bindingPosition = "<XRController>{LeftHand}/devicePosition";
                 bindingRotation = "<XRController>{LeftHand}/deviceRotation";
+                bindingVelocity = "<XRController>{LeftHand}/{DeviceVelocity}";
                 break;
             case InputHandlerTransformType.RightHand:
                 bindingPosition = "<XRController>{RightHand}/devicePosition";
                 bindingRotation = "<XRController>{RightHand}/deviceRotation";
+                bindingVelocity = "<XRController>{RightHand}/{DeviceVelocity}";
                 break;
         }
 
@@ -64,9 +69,11 @@ public class InputHandlerTransform : MonoBehaviour
     {
         property.Position.action.performed += OnPositionPerformed;
         property.Rotation.action.performed += OnRotationPerformed;
+        property.Velocity.action.performed += OnVelocityPerformed;
 
         property.Position.action.Enable();
         property.Rotation.action.Enable();
+        property.Velocity.action.Enable();
     }
 
     private void OnPositionPerformed(InputAction.CallbackContext context)
@@ -79,12 +86,19 @@ public class InputHandlerTransform : MonoBehaviour
         transform.localRotation = context.ReadValue<Quaternion>();
     }
 
+    private void OnVelocityPerformed(InputAction.CallbackContext context)
+    {
+        Velocity = context.ReadValue<Vector3>();
+    }
+
     private void OnDisable()
     {
         property.Position.action.Disable();
         property.Rotation.action.Disable();
+        property.Velocity.action.Disable();
 
         property.Position.action.performed -= OnPositionPerformed;
         property.Rotation.action.performed -= OnRotationPerformed;
+        property.Velocity.action.performed -= OnVelocityPerformed;
     }
 }

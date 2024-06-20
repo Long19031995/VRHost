@@ -214,7 +214,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2084218519280884055}
-  - component: {fileID: 2708429531389491922}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -240,19 +239,6 @@ Transform:
   - {fileID: 4574114645148621297}
   m_Father: {fileID: 4399847900834505036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2708429531389491922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1264698562820377348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 782db0dd5bf4bb644aa79356007255b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  kcc: {fileID: 3112620684699434513}
 --- !u!1 &2266286775203194922
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 264c0f9c9a7bf4a4a927334fa1712bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KinematicSpeed: 1
+  KinematicSpeed: 1.6
   JumpMultiplier: 2
   Gravity: {x: 0, y: -40, z: 0}
   RelativePriority: 0
@@ -452,8 +438,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2245003724352045218}
-  - component: {fileID: 2364880886817856397}
   - component: {fileID: 3112620684699434513}
+  - component: {fileID: 2364880886817856397}
   m_Layer: 0
   m_Name: KCC
   m_TagString: Untagged
@@ -469,7 +455,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7799426327803871645}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -477,33 +463,6 @@ Transform:
   - {fileID: 5962139746328123837}
   m_Father: {fileID: 4399847900834505036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &2364880886817856397
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7799426327803871645}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &3112620684699434513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,7 +491,7 @@ MonoBehaviour:
     ProxyInterpolationMode: 0
     AllowClientTeleports: 0
     Processors:
-    - {fileID: 4219866145273439913, guid: 1ab62523487a65745ab7ee9663ad9025, type: 3}
+    - {fileID: 6497578731778615489}
     TeleportThreshold: 1
     MaxPenetrationSteps: 8
     CCDRadiusMultiplier: 0.75
@@ -543,6 +502,33 @@ MonoBehaviour:
     ForceSingleOverlapQuery: 0
     ForcePredictedLookRotation: 0
     SuppressConvexMeshColliders: 0
+--- !u!54 &2364880886817856397
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7799426327803871645}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8043768636126371595
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,6 +592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4399847900834505036}
   - component: {fileID: 5402659565668580407}
+  - component: {fileID: 8583066497287350880}
   - component: {fileID: -7514425849079967715}
   m_Layer: 0
   m_Name: PlayerKCC
@@ -647,6 +634,20 @@ MonoBehaviour:
   head: {fileID: 3351240260065038675}
   leftGrabber: {fileID: 3491056886057241641}
   rightGrabber: {fileID: 6879422161872696442}
+--- !u!114 &8583066497287350880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8248327700884685661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782db0dd5bf4bb644aa79356007255b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2084218519280884055}
+  kcc: {fileID: 2245003724352045218}
 --- !u!114 &-7514425849079967715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,7 +667,7 @@ MonoBehaviour:
   - {fileID: 6366098201067364303}
   NetworkedBehaviours:
   - {fileID: 5402659565668580407}
-  - {fileID: 2708429531389491922}
+  - {fileID: 8583066497287350880}
   - {fileID: 3491056886057241641}
   - {fileID: 8352007980950697395}
   - {fileID: 6879422161872696442}

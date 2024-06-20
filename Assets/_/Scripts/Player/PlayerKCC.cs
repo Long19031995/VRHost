@@ -60,10 +60,10 @@ public class PlayerKCC : NetworkBehaviour
         if (GetInput(out InputData inputData))
         {
             inputDataNetwork = inputData;
-
-            kcc.SetInputDirection(inputData.HeadRotation * new Vector3(inputData.MoveDirection.x, 0, inputData.MoveDirection.y));
-            kcc.AddLookRotation(inputData.RotateDirection);
         }
+
+        kcc.SetInputDirection(inputDataNetwork.HeadRotation * new Vector3(inputDataNetwork.MoveDirection.x, 0, inputDataNetwork.MoveDirection.y));
+        kcc.AddLookRotation(inputDataNetwork.RotateDirection);
 
         head.SetPositionAndRotation(inputDataNetwork.HeadPosition, inputDataNetwork.HeadRotation);
         leftGrabber.SetPositionAndRotationTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
