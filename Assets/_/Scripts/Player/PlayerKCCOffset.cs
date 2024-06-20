@@ -9,23 +9,24 @@ public class PlayerKCCOffset : NetworkBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private Transform kcc;
 
-    private Vector3 offset;
     private bool isFirstVR;
 
     public override void Render()
     {
+        var positionTarget = kcc.transform.position;
+        var rotationTarget = kcc.transform.rotation;
+        player.SetPositionAndRotation(positionTarget, rotationTarget);
+
         if (HasInputAuthority)
         {
-            var positionTarget = kcc.transform.position - offset;
-            var rotationTarget = kcc.transform.rotation;
-
-            player.SetPositionAndRotation(positionTarget, rotationTarget);
             InputHandler.Current.transform.SetPositionAndRotation(positionTarget, rotationTarget);
 
-            if (XRSettings.isDeviceActive && !isFirstVR && InputHandler.Current.HeadVelocity.sqrMagnitude > 0)
+            if (!isFirstVR && XRSettings.isDeviceActive && InputHandler.Current.HeadVelocity.sqrMagnitude > 0)
             {
+                var positionOffset = kcc.transform.position.OnlyXZ() - InputHandler.Current.HeadTarget.position.OnlyXZ();
+                InputHandler.Current.SetPositionOffset(positionOffset);
+
                 isFirstVR = true;
-                offset = InputHandler.Current.HeadTarget.position.OnlyXZ() - kcc.transform.position.OnlyXZ();
             }
         }
 

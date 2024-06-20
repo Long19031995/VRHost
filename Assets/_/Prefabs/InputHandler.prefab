@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299589202197981840}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.25, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8985142858508117353}
-  m_Father: {fileID: 4932914259716956667}
+  m_Father: {fileID: 2605293882933469130}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &5878644958523596894
 MonoBehaviour:
@@ -54,12 +54,12 @@ MonoBehaviour:
         m_Name: Position
         m_Type: 0
         m_ExpectedControlType: Vector3
-        m_Id: e037f890-9f49-4b7b-ad06-2cb972efd5ca
+        m_Id: 77664027-edd1-4f8c-a736-781c75ba4b24
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 965080a8-9b66-48d4-b0f4-a6b5f06c830e
+          m_Id: fa26df68-3342-43f7-a476-085ccb150bf6
           m_Path: <XRController>{LeftHand}/devicePosition
           m_Interactions: 
           m_Processors: 
@@ -74,12 +74,12 @@ MonoBehaviour:
         m_Name: Rotation
         m_Type: 0
         m_ExpectedControlType: Quaternion
-        m_Id: ab292a03-7803-4618-91bf-5ecb7f30cce2
+        m_Id: a2ff5c80-a342-4f3a-b9cd-a0c0cefabd80
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 53f97f56-deb5-4c32-861e-dcce33c45883
+          m_Id: 77132592-3028-47ba-af58-2b8e59b3e194
           m_Path: <XRController>{LeftHand}/deviceRotation
           m_Interactions: 
           m_Processors: 
@@ -94,12 +94,12 @@ MonoBehaviour:
         m_Name: Velocity
         m_Type: 0
         m_ExpectedControlType: Vector3
-        m_Id: e1f7df7d-1e8a-4f45-a1aa-77610a162916
+        m_Id: 1381778e-a529-4d41-92bf-9dd863b34b9f
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 46a536a7-5355-45dd-beaa-e0e3e02c39ef
+          m_Id: 947bc023-0041-4142-9c52-5a4c71dce41f
           m_Path: <XRController>{LeftHand}/{DeviceVelocity}
           m_Interactions: 
           m_Processors: 
@@ -295,7 +295,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6063705123917331220}
-  m_Father: {fileID: 4932914259716956667}
+  m_Father: {fileID: 2605293882933469130}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &122180686777488133
 MonoBehaviour:
@@ -460,9 +460,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8131396590981265647}
-  - {fileID: 2816616893502913417}
-  - {fileID: 5420569517713385378}
+  - {fileID: 2605293882933469130}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9098647565041334197
@@ -478,12 +476,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: 1
+  offset: {fileID: 2605293882933469130}
   headTarget: {fileID: 6063705123917331220}
   leftHandTarget: {fileID: 8985142858508117353}
   rightHandTarget: {fileID: 1354660369798233058}
   headInput: {fileID: 122180686777488133}
   leftHandInput: {fileID: 9221490880268620821}
   rightHandInput: {fileID: 1697487213979732647}
+--- !u!1 &3262971117000256014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2605293882933469130}
+  m_Layer: 0
+  m_Name: Offset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2605293882933469130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262971117000256014}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8131396590981265647}
+  - {fileID: 2816616893502913417}
+  - {fileID: 5420569517713385378}
+  m_Father: {fileID: 4932914259716956667}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4507281431165033271
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,13 +636,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7378479669901211893}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.25, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1354660369798233058}
-  m_Father: {fileID: 4932914259716956667}
+  m_Father: {fileID: 2605293882933469130}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &1009094808183121139
 MonoBehaviour:
@@ -631,12 +664,12 @@ MonoBehaviour:
         m_Name: Position
         m_Type: 0
         m_ExpectedControlType: Vector3
-        m_Id: d0e2bfc2-637c-4d3f-a361-7a97cf2c198b
+        m_Id: 2e7614c6-01aa-4a3f-800a-8c7dc8c0f388
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 367700f3-010b-40a1-95c5-b79d1d307c64
+          m_Id: 363d1a0e-0a66-44ce-b31a-003de99f935f
           m_Path: <XRController>{RightHand}/devicePosition
           m_Interactions: 
           m_Processors: 
@@ -651,12 +684,12 @@ MonoBehaviour:
         m_Name: Rotation
         m_Type: 0
         m_ExpectedControlType: Quaternion
-        m_Id: eacf992e-d870-42ee-a599-6eec5bdde220
+        m_Id: e0d817fb-133d-4606-a85b-9d6df9f7b1d7
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: dc87e234-90fd-4021-b51f-6dc8b722eb1d
+          m_Id: acce7550-95f2-46de-b4b7-11bf2d2e7380
           m_Path: <XRController>{RightHand}/deviceRotation
           m_Interactions: 
           m_Processors: 
@@ -671,12 +704,12 @@ MonoBehaviour:
         m_Name: Velocity
         m_Type: 0
         m_ExpectedControlType: Vector3
-        m_Id: d53c2f2f-13da-4e68-83b0-afdd9dd75d3c
+        m_Id: daf3f0d8-1586-45be-8024-55803ce972a0
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: a56593ef-f3a8-4402-9af7-6dde3b7cd2f9
+          m_Id: d316e5ac-7bac-4d01-bc86-6c4be2206aa7
           m_Path: <XRController>{RightHand}/{DeviceVelocity}
           m_Interactions: 
           m_Processors: 
@@ -705,12 +738,12 @@ MonoBehaviour:
         m_Name: Grip
         m_Type: 0
         m_ExpectedControlType: Axis
-        m_Id: af71223f-c870-4d3e-bb70-db8bed65b1f5
+        m_Id: 854cbded-5b72-4585-90da-156faf9e9510
         m_Processors: 
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 954b9ec3-1065-4477-96d5-ba280d06fd3f
+          m_Id: f22fed9e-4e8b-4229-b707-2ba48b934072
           m_Path: <XRController>{RightHand}/{Grip}
           m_Interactions: 
           m_Processors: 
@@ -725,12 +758,12 @@ MonoBehaviour:
         m_Name: Move
         m_Type: 0
         m_ExpectedControlType: Vector2
-        m_Id: 7b676bfa-15ea-4839-a28f-82b2d8934255
+        m_Id: 488ca82a-75cf-436e-b76d-41cf46b79531
         m_Processors: scaleVector2(x=0,y=1)
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 0b06be3b-eb5b-4708-93a0-0b3587a638a5
+          m_Id: 6075847a-ea4f-4224-a227-29e827ff119b
           m_Path: <XRController>{RightHand}/{Primary2DAxis}
           m_Interactions: 
           m_Processors: 
@@ -738,7 +771,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 0
         - m_Name: 2DVector
-          m_Id: 5bbeb3d9-c9d0-4aac-bea8-dde49f2768fa
+          m_Id: 4f2b04fe-eeb3-47c6-9a47-9b8fc5530311
           m_Path: 2DVector
           m_Interactions: 
           m_Processors: 
@@ -746,7 +779,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 4
         - m_Name: Up
-          m_Id: 90ca0a49-f995-44e3-bc60-be43aa4a0b9c
+          m_Id: 57cf0986-ee36-4c30-8075-d97681a68191
           m_Path: <Keyboard>/w
           m_Interactions: 
           m_Processors: 
@@ -754,7 +787,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 8
         - m_Name: Down
-          m_Id: fb61c7ad-b821-42cf-8022-b68a7e941abf
+          m_Id: a0e4c613-5101-4f26-8b54-c029ca132457
           m_Path: <Keyboard>/s
           m_Interactions: 
           m_Processors: 
@@ -762,7 +795,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 8
         - m_Name: Left
-          m_Id: 960154f3-0e71-4f27-b95d-77a83d9a6fb0
+          m_Id: 63902dc0-d56d-4a2b-bd99-8c74598e51ea
           m_Path: <Keyboard>/q
           m_Interactions: 
           m_Processors: 
@@ -770,7 +803,7 @@ MonoBehaviour:
           m_Action: Move
           m_Flags: 8
         - m_Name: Right
-          m_Id: b42310e2-1042-486c-aa12-605379795729
+          m_Id: 6ab7ce36-2dd5-4323-9451-8760ca03dd82
           m_Path: <Keyboard>/e
           m_Interactions: 
           m_Processors: 
@@ -785,12 +818,12 @@ MonoBehaviour:
         m_Name: Rotate
         m_Type: 0
         m_ExpectedControlType: Vector2
-        m_Id: 29eb7357-9468-47c6-9c25-38bffad7ec69
+        m_Id: dee1647a-86eb-464b-a669-7f5aeae9e879
         m_Processors: scaleVector2(x=1,y=0)
         m_Interactions: 
         m_SingletonActionBindings:
         - m_Name: 
-          m_Id: 0d870223-88b1-4673-b51d-c0f09de1a167
+          m_Id: 5a4e21e2-6fd1-4cb6-9ab3-9a9a3e5df344
           m_Path: <XRController>{RightHand}/{Primary2DAxis}
           m_Interactions: 
           m_Processors: 
@@ -798,7 +831,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 0
         - m_Name: 2DVector
-          m_Id: 1e26cf18-e231-437b-8ac7-1ab23716156c
+          m_Id: bb2c9f50-7368-4e8d-aa42-dae4c7520106
           m_Path: 2DVector
           m_Interactions: 
           m_Processors: 
@@ -806,7 +839,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 4
         - m_Name: Up
-          m_Id: 1819fc65-f4b6-4a24-9887-0921ef9e78ae
+          m_Id: 8bf6434a-8521-49fb-a117-81233c860c92
           m_Path: <Keyboard>/w
           m_Interactions: 
           m_Processors: 
@@ -814,7 +847,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 8
         - m_Name: Down
-          m_Id: e97a707f-da00-4262-a79c-c960ae030dde
+          m_Id: 01dad2f0-950d-4d9e-b953-8f87e47a31b7
           m_Path: <Keyboard>/s
           m_Interactions: 
           m_Processors: 
@@ -822,7 +855,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 8
         - m_Name: Left
-          m_Id: e8790c3e-3cee-4997-aad2-a803c28a3596
+          m_Id: a140abea-8ce5-477e-8df3-d35a3c92a7b8
           m_Path: <Keyboard>/q
           m_Interactions: 
           m_Processors: 
@@ -830,7 +863,7 @@ MonoBehaviour:
           m_Action: Rotate
           m_Flags: 8
         - m_Name: Right
-          m_Id: bcb65782-fc57-418e-a477-5d99b51082b2
+          m_Id: 827301b5-70af-4222-b724-5f5bd609fb02
           m_Path: <Keyboard>/e
           m_Interactions: 
           m_Processors: 

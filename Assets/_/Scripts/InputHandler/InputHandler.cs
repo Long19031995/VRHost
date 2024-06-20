@@ -16,6 +16,7 @@ public class InputHandler : MonoBehaviour
     public static InputHandler Current => current ??= FindObjectOfType<InputHandler>();
 
     [SerializeField] private InputPlatform platform;
+    [SerializeField] private Transform offset;
 
     [Header("Target")]
     [SerializeField] private Transform headTarget;
@@ -50,6 +51,11 @@ public class InputHandler : MonoBehaviour
                 SwitchToVR();
                 break;
         }
+    }
+
+    public void SetPositionOffset(Vector3 positionOffset)
+    {
+        offset.position = positionOffset;
     }
 
     private void SwitchToVR()
