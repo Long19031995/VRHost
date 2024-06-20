@@ -17,6 +17,7 @@ public class Grabble : NetworkBehaviour
 
     private Vector3 positionOld;
     private Quaternion rotationOld;
+    private bool isPlayerMoving;
 
     public override void Spawned()
     {
@@ -29,6 +30,11 @@ public class Grabble : NetworkBehaviour
     {
         grabInfo = newGrabInfo;
         Object.RenderTimeframe = hasInput ? RenderTimeframe.Local : RenderTimeframe.Remote;
+    }
+
+    public void SetIsPlayerMoving(bool isPlayerMoving)
+    {
+        this.isPlayerMoving = isPlayerMoving;
     }
 
     public override void FixedUpdateNetwork()
@@ -59,9 +65,12 @@ public class Grabble : NetworkBehaviour
     {
         if (grabber != null)
         {
-            var position = Vector3.Lerp(positionOld, transform.position, Time.deltaTime * 15);
-            var rotation = Quaternion.Lerp(rotationOld, transform.rotation, Time.deltaTime * 15);
-            interpolate.SetPositionAndRotation(position, rotation);
+            if (isPlayerMoving)
+            {
+                var position = Vector3.Lerp(positionOld, transform.position, Time.deltaTime * 15);
+                var rotation = Quaternion.Lerp(rotationOld, transform.rotation, Time.deltaTime * 15);
+                interpolate.SetPositionAndRotation(position, rotation);
+            }
 
             var grabberTarget = Extension.GetPoseTarget(interpolate, offset.Position, offset.Rotation);
             grabber.transform.SetPositionAndRotation(grabberTarget.Position, grabberTarget.Rotation);

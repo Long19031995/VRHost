@@ -51,7 +51,7 @@ public class PlayerKCC : NetworkBehaviour
             RightGrabInfo = InputHandler.Current.RightHandGrip ? rightGrabber.Grab(FindGrabble(rightGrabber.transform.position)) : default,
 
             MoveDirection = InputHandler.Current.MoveDirection,
-            RotateDirection = new Vector2(0, InputHandler.Current.RotateDirection),
+            RotateDirection = InputHandler.Current.RotateDirection,
         });
     }
 
@@ -76,6 +76,9 @@ public class PlayerKCC : NetworkBehaviour
         {
             leftGrabber.SetPositionReal(InputHandler.Current.LeftHandTarget.position);
             rightGrabber.SetPositionReal(InputHandler.Current.RightHandTarget.position);
+
+            leftGrabber.SetIsPlayerMoving(!kcc.Data.RealSpeed.IsAlmostZero());
+            rightGrabber.SetIsPlayerMoving(!kcc.Data.RealSpeed.IsAlmostZero());
         }
     }
 }

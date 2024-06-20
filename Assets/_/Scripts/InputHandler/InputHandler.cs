@@ -37,7 +37,7 @@ public class InputHandler : MonoBehaviour
     public bool LeftHandGrip => leftHandInput.GripValue == 1;
     public bool RightHandGrip => rightHandInput.GripValue == 1;
     public Vector2 MoveDirection => new Vector2(leftHandInput.RotateValue, leftHandInput.MoveValue);
-    public float RotateDirection => rightHandInput.RotateValue;
+    public Vector2 RotateDirection => new Vector2(0, rightHandInput.RotateValue);
 
     private void Awake()
     {

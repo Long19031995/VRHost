@@ -17,6 +17,7 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
     private Grabble grabble;
     private Vector3 positionReal;
     private bool hasCollision;
+    private bool isPlayerMoving;
 
     public override void Spawned()
     {
@@ -42,6 +43,11 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
     public void SetPositionReal(Vector3 positionReal)
     {
         this.positionReal = positionReal;
+    }
+
+    public void SetIsPlayerMoving(bool isPlayerMoving)
+    {
+        this.isPlayerMoving = isPlayerMoving;
     }
 
     public GrabInfo Grab(Grabble grabble)
@@ -93,6 +99,7 @@ public class Grabber : NetworkBehaviour, IInputAuthorityLost
             if (grabble != null)
             {
                 visual.position = transform.position;
+                grabble.SetIsPlayerMoving(isPlayerMoving);
             }
             else if (hasCollision)
             {

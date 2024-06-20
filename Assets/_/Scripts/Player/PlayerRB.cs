@@ -20,7 +20,7 @@ public class PlayerRB : MonoBehaviour
         InputHandler.Current.transform.SetPositionAndRotation(transform.position, transform.rotation);
 
         posOffset += new Vector3(input.MoveDirection.x * Time.deltaTime, 0, input.MoveDirection.y * Time.deltaTime);
-        rotOffset *= Quaternion.Euler(0, input.RotateDirection * Time.deltaTime, 0);
+        rotOffset *= Quaternion.Euler(0, input.RotateDirection.y * Time.deltaTime, 0);
     }
 
     private void FixedUpdate()
