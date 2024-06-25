@@ -7,8 +7,11 @@ public class Grabber : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
     [SerializeField] private GrabberSide side;
+    [SerializeField] private Transform visual;
 
+    public Transform Visual => visual;
     public Transform Target => target;
+    public GrabInfo GrabInfo => grabInfo;
 
     [Networked] private GrabInfo grabInfo { get; set; }
 
@@ -34,7 +37,7 @@ public class Grabber : NetworkBehaviour
 
         if (!grabInfo.IsDefault) return grabInfo;
 
-        return grabble.GetGrabInfo(this, side);
+        return grabble.GetGrabInfo(target, Id, side);
     }
 
     public override void FixedUpdateNetwork()
@@ -52,11 +55,11 @@ public class Grabber : NetworkBehaviour
         if (grabInfo.GrabberId == Id && DataCache.TryGet(Runner, grabInfo.GrabbleId, out Grabble newGrabble))
         {
             grabble = newGrabble;
-            grabble.SetGrabInfo(grabInfo, this, HasInputAuthority);
+            grabble.SetGrabber(this, HasInputAuthority);
         }
         else if (grabInfo.IsDefault)
         {
-            grabble?.SetGrabInfo(default, null, HasInputAuthority);
+            grabble?.SetGrabber(null, HasInputAuthority);
             grabble = null;
         }
     }

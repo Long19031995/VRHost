@@ -6,8 +6,9 @@ using UnityEngine;
 public class Grabble : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
+    [SerializeField] private Transform visual;
 
-    [Networked] private GrabInfo grabInfo { get; set; }
+    public Transform Visual => visual;
 
     private Grabber grabber;
 
@@ -16,24 +17,23 @@ public class Grabble : NetworkBehaviour
         Runner.SetIsSimulated(Object, true);
     }
 
-    public GrabInfo GetGrabInfo(Grabber grabber, GrabberSide side)
+    public GrabInfo GetGrabInfo(Transform target, NetworkBehaviourId grabberId, GrabberSide grabberSide)
     {
-        if (!grabInfo.IsDefault) return default;
+        if (grabber != null) return default;
 
-        var offset = Extension.GetPoseOffset(transform, grabber.Target);
+        var offset = Extension.GetPoseOffset(transform, target);
         return new GrabInfo()
         {
-            GrabberSide = side,
-            GrabberId = grabber.Id,
+            GrabberSide = grabberSide,
+            GrabberId = grabberId,
             GrabbleId = Id,
             PositionOffset = offset.Position,
             RotationOffset = offset.Rotation
         };
     }
 
-    public void SetGrabInfo(GrabInfo newGrabInfo, Grabber newGrabber, bool hasInput)
+    public void SetGrabber(Grabber newGrabber, bool hasInput)
     {
-        grabInfo = newGrabInfo;
         grabber = newGrabber;
 
         Object.RenderTimeframe = hasInput ? RenderTimeframe.Local : RenderTimeframe.Remote;
@@ -43,7 +43,7 @@ public class Grabble : NetworkBehaviour
     {
         if (grabber != null)
         {
-            var poseTarget = Extension.GetPoseTarget(grabber.Target, grabInfo.PositionOffset, grabInfo.RotationOffset);
+            var poseTarget = Extension.GetPoseTarget(grabber.Target, grabber.GrabInfo.PositionOffset, grabber.GrabInfo.RotationOffset);
             var poseCurrent = new PoseHand(transform.position, transform.rotation);
 
             rbNet.Rigidbody.SetVelocity(poseCurrent, poseTarget, Runner.DeltaTime);
