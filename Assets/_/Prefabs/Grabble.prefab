@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rbNet: {fileID: 8457135495219666637}
-  interpolate: {fileID: 4151264485509939089}
+  visual: {fileID: 4151264485509939089}
 --- !u!114 &8457135495219666637
 MonoBehaviour:
   m_ObjectHideFlags: 0

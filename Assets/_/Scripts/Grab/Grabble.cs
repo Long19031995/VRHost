@@ -21,7 +21,7 @@ public class Grabble : NetworkBehaviour
     {
         if (grabber != null) return default;
 
-        var offset = Extension.GetPoseOffset(transform, target);
+        var offset = Extension.GetPoseOffset(visual, target);
         return new GrabInfo()
         {
             GrabberSide = grabberSide,
@@ -43,11 +43,16 @@ public class Grabble : NetworkBehaviour
     {
         if (grabber != null)
         {
-            var poseTarget = Extension.GetPoseTarget(grabber.Target, grabber.GrabInfo.PositionOffset, grabber.GrabInfo.RotationOffset);
             var poseCurrent = new PoseHand(transform.position, transform.rotation);
+            var poseTarget = Extension.GetPoseTarget(grabber.Target, grabber.GrabInfo.PositionOffset, grabber.GrabInfo.RotationOffset);
 
             rbNet.Rigidbody.SetVelocity(poseCurrent, poseTarget, Runner.DeltaTime);
             rbNet.Rigidbody.velocity /= 2;
         }
+    }
+
+    public override void Render()
+    {
+        visual.SetPositionAndRotation(transform.position, transform.rotation);
     }
 }

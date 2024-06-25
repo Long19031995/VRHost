@@ -3,14 +3,17 @@ using Fusion.Addons.Physics;
 using UnityEngine;
 
 [DefaultExecutionOrder(1)]
+[RequireComponent(typeof(GrabberRenderHandler))]
 public class Grabber : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
     [SerializeField] private GrabberSide side;
     [SerializeField] private Transform visual;
 
+    public GrabberSide Side => side;
     public Transform Visual => visual;
     public Transform Target => target;
+    public Grabble Grabble => grabble;
     public GrabInfo GrabInfo => grabInfo;
 
     [Networked] private GrabInfo grabInfo { get; set; }
@@ -37,7 +40,7 @@ public class Grabber : NetworkBehaviour
 
         if (!grabInfo.IsDefault) return grabInfo;
 
-        return grabble.GetGrabInfo(target, Id, side);
+        return grabble.GetGrabInfo(visual, Id, side);
     }
 
     public override void FixedUpdateNetwork()

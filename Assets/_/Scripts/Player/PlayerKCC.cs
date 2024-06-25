@@ -44,11 +44,11 @@ public class PlayerKCC : NetworkBehaviour
 
             LeftHandPosition = InputHandler.Current.LeftHandTarget.position,
             LeftHandRotation = InputHandler.Current.LeftHandTarget.rotation,
-            LeftGrabInfo = InputHandler.Current.LeftHandGrip ? leftGrabber.Grab(FindGrabble(leftGrabber.transform.position)) : default,
+            LeftGrabInfo = InputHandler.Current.LeftHandGrip ? leftGrabber.Grab(FindGrabble(leftGrabber.Visual.position)) : default,
 
             RightHandPosition = InputHandler.Current.RightHandTarget.position,
             RightHandRotation = InputHandler.Current.RightHandTarget.rotation,
-            RightGrabInfo = InputHandler.Current.RightHandGrip ? rightGrabber.Grab(FindGrabble(rightGrabber.transform.position)) : default,
+            RightGrabInfo = InputHandler.Current.RightHandGrip ? rightGrabber.Grab(FindGrabble(rightGrabber.Visual.position)) : default,
 
             MoveDirection = InputHandler.Current.MoveDirection,
             RotateDirection = InputHandler.Current.RotateDirection,
