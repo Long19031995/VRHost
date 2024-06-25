@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6785818519530434743}
   - component: {fileID: 403395560608242792}
   - component: {fileID: 4042902795612290128}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Grabble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rbNet: {fileID: 8457135495219666637}
   interpolate: {fileID: 4151264485509939089}
-  grabbleData: {fileID: 11400000, guid: a239421424b86bf46a7c6b1af182d70c, type: 2}
 --- !u!114 &8457135495219666637
 MonoBehaviour:
   m_ObjectHideFlags: 0

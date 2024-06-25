@@ -69,16 +69,4 @@ public class PlayerKCC : NetworkBehaviour
         leftGrabber.SetPositionAndRotationTarget(inputDataNetwork.LeftHandPosition, inputDataNetwork.LeftHandRotation);
         rightGrabber.SetPositionAndRotationTarget(inputDataNetwork.RightHandPosition, inputDataNetwork.RightHandRotation);
     }
-
-    public override void Render()
-    {
-        if (HasInputAuthority)
-        {
-            leftGrabber.SetPositionReal(InputHandler.Current.LeftHandTarget.position);
-            rightGrabber.SetPositionReal(InputHandler.Current.RightHandTarget.position);
-
-            leftGrabber.SetIsPlayerMoving(!kcc.Data.RealSpeed.IsAlmostZero());
-            rightGrabber.SetIsPlayerMoving(!kcc.Data.RealSpeed.IsAlmostZero());
-        }
-    }
 }

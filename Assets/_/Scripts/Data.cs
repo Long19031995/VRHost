@@ -50,17 +50,11 @@ public struct GrabInfo : INetworkStruct
     public readonly bool IsDefault => GrabberId == NetworkBehaviourId.None && GrabbleId == NetworkBehaviourId.None;
 }
 
-public class DataCache
+public static class DataCache
 {
-    private Dictionary<NetworkBehaviourId, NetworkBehaviour> datasCached = new Dictionary<NetworkBehaviourId, NetworkBehaviour>();
-    private NetworkRunner runner;
+    private static Dictionary<NetworkBehaviourId, NetworkBehaviour> datasCached = new Dictionary<NetworkBehaviourId, NetworkBehaviour>();
 
-    public DataCache(NetworkRunner runner)
-    {
-        this.runner = runner;
-    }
-
-    public bool TryGet<T>(NetworkBehaviourId id, out T t) where T : NetworkBehaviour
+    public static bool TryGet<T>(NetworkRunner runner, NetworkBehaviourId id, out T t) where T : NetworkBehaviour
     {
         if (datasCached.ContainsKey(id))
         {

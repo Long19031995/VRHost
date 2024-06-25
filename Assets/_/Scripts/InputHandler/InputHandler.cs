@@ -39,6 +39,7 @@ public class InputHandler : MonoBehaviour
     public bool RightHandGrip => rightHandInput.GripValue == 1;
     public Vector2 MoveDirection => new Vector2(leftHandInput.RotateValue, leftHandInput.MoveValue);
     public Vector2 RotateDirection => new Vector2(0, rightHandInput.RotateValue);
+    public bool IsMoving => MoveDirection != Vector2.zero || RotateDirection != Vector2.zero;
 
     private void Awake()
     {

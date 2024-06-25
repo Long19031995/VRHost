@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6879422161872696442}
   - component: {fileID: 5621341831690750015}
   - component: {fileID: 3481230666220761857}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rbNet: {fileID: 3481230666220761857}
   side: 1
-  visual: {fileID: 6490086163317834933}
+  interpolate: {fileID: 6490086163317834933}
 --- !u!54 &5621341831690750015
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -685,7 +685,7 @@ GameObject:
   - component: {fileID: 3491056886057241641}
   - component: {fileID: 2000235631550559059}
   - component: {fileID: 8352007980950697395}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -723,7 +723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rbNet: {fileID: 8352007980950697395}
   side: 0
-  visual: {fileID: 4788327782806834313}
+  interpolate: {fileID: 4788327782806834313}
 --- !u!54 &2000235631550559059
 Rigidbody:
   m_ObjectHideFlags: 0
