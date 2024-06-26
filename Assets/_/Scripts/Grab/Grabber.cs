@@ -3,7 +3,7 @@ using Fusion.Addons.Physics;
 using UnityEngine;
 
 [DefaultExecutionOrder(1)]
-[RequireComponent(typeof(GrabberRenderHandler))]
+[RequireComponent(typeof(GrabberRender))]
 public class Grabber : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody3D rbNet;
@@ -20,6 +20,7 @@ public class Grabber : NetworkBehaviour
 
     private Transform target;
     private Grabble grabble;
+    private Collider[] colliders;
 
     public override void Spawned()
     {
@@ -27,6 +28,8 @@ public class Grabber : NetworkBehaviour
 
         target = new GameObject("Target").transform;
         target.SetParent(transform);
+
+        colliders = GetComponentsInChildren<Collider>();
     }
 
     public void SetPositionAndRotationTarget(Vector3 positionTarget, Quaternion rotationTarget)
@@ -59,11 +62,21 @@ public class Grabber : NetworkBehaviour
         {
             grabble = newGrabble;
             grabble.SetGrabber(this, HasInputAuthority);
+            SetTrigger(true);
         }
         else if (grabInfo.IsDefault)
         {
             grabble?.SetGrabber(null, HasInputAuthority);
             grabble = null;
+            SetTrigger(false);
+        }
+    }
+
+    private void SetTrigger(bool isTrigger)
+    {
+        foreach (var collider in colliders)
+        {
+            collider.isTrigger = isTrigger;
         }
     }
 }

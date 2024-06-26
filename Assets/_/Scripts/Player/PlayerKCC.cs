@@ -28,7 +28,7 @@ public class PlayerKCC : NetworkBehaviour
         var colliders = new Collider[1];
         if (Physics.OverlapSphereNonAlloc(point, 0.1f, colliders, 1 << LayerMask.NameToLayer("Grabble")) > 0)
         {
-            var grabble = colliders[0].GetComponentInChildren<Grabble>();
+            var grabble = colliders[0].GetComponentInParent<Grabble>();
             return grabble;
         }
 
