@@ -44,8 +44,10 @@ public class GrabberRender : NetworkBehaviour
 
     private void HandleRenderProxy()
     {
-        var handPosition = grabber.Side == GrabberSide.Left ? inputDataNetwork.LeftHandPosition : inputDataNetwork.RightHandPosition;
-        var handRotation = grabber.Side == GrabberSide.Left ? inputDataNetwork.LeftHandRotation : inputDataNetwork.RightHandRotation;
+        var positionTarget = grabber.Side == GrabberSide.Left ? inputDataNetwork.LeftHandPosition : inputDataNetwork.RightHandPosition;
+        var rotationTarget = grabber.Side == GrabberSide.Left ? inputDataNetwork.LeftHandRotation : inputDataNetwork.RightHandRotation;
+        var handPosition = Vector3.Lerp(handTarget.position, positionTarget, Time.deltaTime * 20);
+        var handRotation = Quaternion.Lerp(handTarget.rotation, rotationTarget, Time.deltaTime * 20);
         handTarget.SetPositionAndRotation(handPosition, handRotation);
 
         isMoving = inputDataNetwork.MoveDirection != Vector2.zero || inputDataNetwork.RotateDirection != Vector2.zero;

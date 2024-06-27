@@ -36,7 +36,7 @@ public class RunnerConnection : MonoBehaviour
             Quaternion rotationSpawn;
 
             countPlayer++;
-            var offset = 1.5f;
+            var offset = .6f;
             if (countPlayer == 1)
             {
                 positionSpawn = new Vector3(0, 0, -offset);
