@@ -21,14 +21,16 @@ public class Grabble : NetworkBehaviour
     {
         if (grabber != null) return default;
 
-        var offset = Extension.GetPoseOffset(visual, target);
+        var positionOffset = target.InverseTransformPoint(visual.position);
+        var rotationOffset = Quaternion.Inverse(visual.rotation) * target.rotation;
+
         return new GrabInfo()
         {
             GrabberSide = grabberSide,
             GrabberId = grabberId,
             GrabbleId = Id,
-            PositionOffset = offset.Position,
-            RotationOffset = offset.Rotation
+            PositionOffset = positionOffset,
+            RotationOffset = rotationOffset
         };
     }
 
@@ -43,10 +45,10 @@ public class Grabble : NetworkBehaviour
     {
         if (grabber != null)
         {
-            var poseCurrent = new PoseHand(transform.position, transform.rotation);
-            var poseTarget = Extension.GetPoseTarget(grabber.Target, grabber.GrabInfo.PositionOffset, grabber.GrabInfo.RotationOffset);
+            var positionTarget = grabber.Target.TransformPoint(grabber.GrabInfo.PositionOffset);
+            var rotationTarget = grabber.Target.rotation * Quaternion.Inverse(grabber.GrabInfo.RotationOffset);
 
-            rbNet.Rigidbody.SetVelocity(poseCurrent, poseTarget, Runner.DeltaTime);
+            rbNet.Rigidbody.SetVelocity(transform.position, transform.rotation, positionTarget, rotationTarget, Runner.DeltaTime);
             rbNet.Rigidbody.velocity /= 2;
         }
     }

@@ -2,45 +2,21 @@ using UnityEngine;
 
 public static class Extension
 {
-    public static PoseHand GetPoseOffset(Transform current, Transform target)
+    public static void SetVelocity(this Rigidbody rb, Vector3 positionCurrent, Quaternion rotationCurrent, Vector3 positionTarget, Quaternion rotationTarget, float deltaTime)
     {
-        var positionOffset = target.InverseTransformPoint(current.position);
-        var rotationOffset = Quaternion.Inverse(current.rotation) * target.rotation;
-
-        return new PoseHand(positionOffset, rotationOffset);
-    }
-
-    public static PoseHand GetPoseTarget(Transform current, Vector3 positionOffset, Quaternion rotationOffset)
-    {
-        var positionTarget = current.TransformPoint(positionOffset);
-        var rotationTarget = current.rotation * Quaternion.Inverse(rotationOffset);
-
-        return new PoseHand(positionTarget, rotationTarget);
-    }
-
-    public static void SetVelocity(this Rigidbody rb, PoseHand current, PoseHand target, float deltaTime)
-    {
-        rb.velocity = GetVelocity(current.Position, target.Position, deltaTime);
-        rb.angularVelocity = GetAngularVelocity(current.Rotation, target.Rotation, deltaTime);
-    }
-
-    public static void SetVelocity(this Rigidbody rb, Transform current, Transform target, float deltaTime)
-    {
-        rb.velocity = GetVelocity(current.position, target.position, deltaTime);
-        rb.angularVelocity = GetAngularVelocity(current.rotation, target.rotation, deltaTime);
-    }
-
-    public static Vector3 GetVelocity(Vector3 current, Vector3 target, float deltaTime)
-    {
-        var direction = target - current;
-        return direction / deltaTime;
+        rb.velocity = (positionTarget - positionCurrent) / deltaTime;
+        rb.angularVelocity = GetAngularVelocity(rotationCurrent, rotationTarget, deltaTime);
     }
 
     public static Vector3 GetAngularVelocity(Quaternion current, Quaternion target, float deltaTime)
     {
         (target * Quaternion.Inverse(current)).ToAngleAxis(out var angle, out var axis);
-        if (angle > 180) angle -= 360;
-        var directionAngular = angle * Mathf.Deg2Rad * axis;
-        return directionAngular / deltaTime;
+
+        return axis.IsInfinity() ? Vector3.zero : (angle > 180 ? angle - 360 : angle) * Mathf.Deg2Rad * axis / deltaTime;
+    }
+
+    public static bool IsInfinity(this Vector3 axis)
+    {
+        return float.IsInfinity(axis.x) || float.IsInfinity(axis.y) || float.IsInfinity(axis.z);
     }
 }

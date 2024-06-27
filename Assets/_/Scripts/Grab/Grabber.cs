@@ -50,7 +50,7 @@ public class Grabber : NetworkBehaviour
     {
         Object.RenderTimeframe = HasInputAuthority ? RenderTimeframe.Local : RenderTimeframe.Remote;
 
-        rbNet.Rigidbody.SetVelocity(transform, target, Runner.DeltaTime);
+        rbNet.Rigidbody.SetVelocity(transform.position, transform.rotation, target.position, target.rotation, Runner.DeltaTime);
         rbNet.Rigidbody.velocity /= 2;
 
         if (GetInput(out InputData inputData))

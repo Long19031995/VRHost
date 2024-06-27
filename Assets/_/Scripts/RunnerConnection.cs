@@ -10,6 +10,7 @@ public class RunnerConnection : MonoBehaviour
     [SerializeField] private NetworkObject playerPrefab;
 
     private Dictionary<PlayerRef, NetworkObject> playerObjects = new Dictionary<PlayerRef, NetworkObject>();
+    private int countPlayer;
 
     private void Awake()
     {
@@ -23,10 +24,7 @@ public class RunnerConnection : MonoBehaviour
     {
         if (runner.IsPlayer)
         {
-            var random = 0;
-            var position = new Vector3(Random.Range(-random, random), 0, Random.Range(random, random));
-            var rotation = Quaternion.identity;
-            Instantiate(inputHandler, position, rotation);
+            Instantiate(inputHandler);
         }
     }
 
@@ -34,7 +32,23 @@ public class RunnerConnection : MonoBehaviour
     {
         if (runner.IsServer)
         {
-            var player = runner.Spawn(playerPrefab, inputAuthority: playerRef);
+            Vector3 positionSpawn;
+            Quaternion rotationSpawn;
+
+            countPlayer++;
+            var offset = 1.5f;
+            if (countPlayer == 1)
+            {
+                positionSpawn = new Vector3(0, 0, -offset);
+                rotationSpawn = new Quaternion(0, 0, 0, 0);
+            }
+            else
+            {
+                positionSpawn = new Vector3(0, 0, offset);
+                rotationSpawn = new Quaternion(0, 180, 0, 0);
+            }
+
+            var player = runner.Spawn(playerPrefab, positionSpawn, rotationSpawn, playerRef);
             playerObjects.Add(playerRef, player);
         }
     }

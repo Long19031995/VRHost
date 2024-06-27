@@ -67,9 +67,10 @@ public class GrabberRender : NetworkBehaviour
         }
         else
         {
-            var pose = Extension.GetPoseTarget(handTarget, grabber.GrabInfo.PositionOffset, grabber.GrabInfo.RotationOffset);
-            position = Vector3.Lerp(grabble.transform.position, pose.Position, t);
-            rotation = Quaternion.Lerp(grabble.transform.rotation, pose.Rotation, t);
+            var positionTarget = handTarget.TransformPoint(grabber.GrabInfo.PositionOffset);
+            var rotationTarget = handTarget.rotation * Quaternion.Inverse(grabber.GrabInfo.RotationOffset);
+            position = Vector3.Lerp(grabble.transform.position, positionTarget, t);
+            rotation = Quaternion.Lerp(grabble.transform.rotation, rotationTarget, t);
             grabble.Visual.SetPositionAndRotation(position, rotation);
 
             position = grabble.Visual.position + grabber.Visual.position - grabber.Visual.TransformPoint(grabber.GrabInfo.PositionOffset);
